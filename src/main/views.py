@@ -6,3 +6,7 @@ from django.views.generic.base import View
 class MainPage(View):
     def get(self, request):
         return render(request, 'main/index.html')
+    
+class AuthPage(View):
+    def get(self, request):
+        return render(request, 'main/auth.html')

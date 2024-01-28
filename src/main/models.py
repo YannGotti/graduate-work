@@ -1,5 +1,6 @@
 from django.db import models
 
+
 #class FilmsOnMainPage(models.Model):
 #    film_id = models.IntegerField('ID Фильма')
 #    category = models.CharField('Категория', max_length=30)
