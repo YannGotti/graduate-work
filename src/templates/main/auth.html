@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>Авторизация</title>
 
 
     <link href="{% static 'css/base/bootstrap.min.css' %}" rel="stylesheet">
@@ -14,17 +14,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
-    <!--link rel="stylesheet" href="{% static 'css/main.css' %}"-->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
 </head>
 <body>
+
+    <div class="container d-flex align-items-center justify-content-center"  style="height: 100vh;">
+
+        <div class="row d-flex justify-content-center">
+
+            <div class="col-12 col-md-12 col-lg-4 login-image">
+                <img src="{% static 'image/login-image.webp' %}" alt="" style="width: 450px;">
+            </div>
+
+            <div class="col-12 col-md-12 col-lg-8 d-flex justify-content-center">
+                <div class="row d-flex justify-content-center">
+
+                    <img src="{% static 'image/waving-hand-emoji.png' %}" alt="" style="width: 50px; height: 30px;">
+
+                    <div class="col-12">
+                        <h1 class="text-h4-custom text-center" style="font-weight: 700;">ДОБРО ПОЖАЛОВАТЬ!</h1>
+                        <p class="text-h5-custom-offwhite text-center" >Пришло время войти или зарегистрироваться.</p>
+                    </div>
+        
+                    <div class="col-12 col-md-9 col-lg-8">
+        
+                        <div class="row d-flex justify-content-start">
+                            <div class="col-2">
+                                <button class="button-h5-unborders" id="login" onclick="showHrElement(this);">Вход
+                                    <hr class="hr-show animate__animated animate__fadeInDown">
+                                </button>
+                                
+                            </div>
+                            <div class="col-2">
+                                <button class="button-h5-unborders" id="registration" onclick="showHrElement(this);">Регистрация
+                                    <hr class="hr-hide">
+                                </button>
+                                
+                            </div>
+                        </div>
+        
+                    </div>
+
+                    <div class="col-12">
+
+                    </div>
+
+                </div>
+                
+            </div>
+            
+            
+        </div>
+
+    </div>
+
+
 
     {% if user.is_authenticated %}
         <script>
             window.location.replace("/");
         </script>
     {% endif %}
-
+    
+    <script src="{% static 'js/auth/animates.js' %}"></script>
     <script src="{% static 'js/base/bootstrap.min.js' %}"></script>
 
 </body>

@@ -1,0 +1,95 @@
+html, body {
+    overflow-x: hidden;
+}
+
+body::-webkit-scrollbar { width: 0 !important }
+
+.text-h1-custom
+{
+    font-weight: 500;
+    font-size: 36pt;
+}
+
+.text-h2-custom
+{
+    font-weight: 500;
+    font-size: 28pt;
+}
+
+.text-h3-custom
+{
+    font-weight: 500;
+    font-size: 24pt;
+}
+
+.text-h4-custom
+{
+    font-weight: 500;
+    font-size: 16pt;
+}
+
+.text-h5-custom
+{
+    font-weight: 500;
+    font-size: 13pt;
+}
+
+.text-h5-custom-offwhite{
+    font-weight: 500;
+    font-size: 13pt;
+    color: rgb(102, 102, 102);
+}
+
+
+.text-h6-custom
+{
+    font-weight: 500;
+    font-size: 9pt;
+}
+
+.button-h5-unborders
+{
+    background-color: rgba(240, 248, 255, 0) !important;
+    border: none;
+    font-weight: 500;
+    font-size: 13pt;
+    text-decoration: none;
+    color: var(--bs-heading-color);
+}
+
+
+.button-h5-unborders:hover
+{
+    border: none;
+    color: rgb(53, 53, 53);
+}
+
+.hr-hide 
+{
+    border : none;
+}
+
+.hr-show 
+{
+    border : 0.05px solid black;
+    border-color: var(--bs-heading-color) !important;
+    color: var(--bs-heading-color) !important;
+    background-color: var(--bs-heading-color) !important;
+}
+
+.login-image
+{
+    display: block !important;
+}
+
+@media (max-width: 1030px) 
+{
+    .login-image
+    {
+        display: none !important;
+    }
+
+}
+
+
+
