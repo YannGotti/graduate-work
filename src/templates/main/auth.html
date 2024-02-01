@@ -67,6 +67,8 @@
 
                             <button type="submit" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown" value="login" style="width: 100%;">Войти</button>
                             <span id="validation_form" class="text-h6-custom " style="color: red;"></span>
+                            <span id="field_success_validation_register" class="text-h6-custom" style="color: rgb(91, 204, 76);"></span>
+
                         </form>
                     </div>
 
@@ -106,9 +108,7 @@
 
                             <div class="dropdown">
 
-                                <button class="btn btn-light dropdown-toggle text-h5-custom animate__animated animate__fadeInDown" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;" id="type_input">
-                                    Учащийся
-                                </button>
+                                <button class="btn btn-light dropdown-toggle text-h5-custom animate__animated animate__fadeInDown" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;" id="type_input">Учащийся</button>
 
                                 <ul class="dropdown-menu text-center" style="width: 100%;">
                                   <li><a class="dropdown-item" href="#" onclick="replaceTypeInDropdown(this)">Учащийся</a></li>
@@ -124,12 +124,12 @@
                             <input type="text" class="form-control shadow animate__animated animate__fadeInDown" id="study_input" placeholder="ЮРГПУ НПИ Имени Платова">
                         </div>
 
-                        <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown mt-3" id="registration_final" style="width: 100%;">Зарегистрироваться</button>
-
+                        <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown mt-3" onclick="userRegistration()" id="registration_final" style="width: 100%;">Зарегистрироваться</button>
+                        <span id="field_validation_register" class="text-h6-custom" style="color: red;"></span>
+                        
                     </div>
 
                     <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown" id="registration_next_button" style="display: none;">Зарегистрироваться <img src="{% static 'image/arrow_right.png' %}" alt="" style="width: 25px;"></button>
-
 
 
                 </div>
@@ -145,7 +145,7 @@
 
     </div>
 
-
+    {% csrf_token %}
 
     {% if user.is_authenticated %}
         <script>
@@ -155,17 +155,23 @@
 
     <script>
 
-        function getKey(key = 'info') {
+        function getKey(key) {
           var p = window.location.search;
           p = p.match(new RegExp(key + '=([^&=]+)'));
           return p ? p[1] : false;
         }
       
-        let key = getKey();
+        let error = getKey('info');
+        let success = getKey('success');
       
-        if (key){
+        if (error){
           let validation_form = document.getElementById('validation_form');
           validation_form.textContent = 'Не верный логин или пароль!';
+        }
+
+        if (success){
+          let validation_form = document.getElementById('field_success_validation_register');
+          validation_form.textContent = 'Успешная регистрация!';
         }
       
       
