@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function(){
     const emailInput = $('#email_input');
     const emailError = $('#email_input_error');
 
+    const registration_next_button = $('#registration_next_button');
+
     function updateError(element, isValid, errorMessage) {
         if (isValid) {
             $(element).text('');
@@ -65,11 +67,17 @@ document.addEventListener('DOMContentLoaded', function(){
     emailInput.on('input', function() {
         updateSubmitButton();
     });
+    
 
     passwordFields.forEach((field) => {
         $(field).on('input', function() {
             updateSubmitButton();
         });
+    });
+
+    registration_next_button.click(function() {
+        updateSubmitButton();
+        return
     });
 
     function validateEmail(email) {
@@ -93,6 +101,10 @@ document.addEventListener('DOMContentLoaded', function(){
 function showOrHideButtonRegister(isValid) {
     const registrationNextButton = document.getElementById('registration_next_button');
     registrationNextButton.style.display = isValid ? 'block' : 'none';
+
+    if (isValid){
+        registrationNextButton.onclick = registerNextStep;
+    }
 }
 
   

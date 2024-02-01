@@ -21,21 +21,20 @@
 
     <div class="container-fluid d-flex align-items-center justify-content-center"  style="height: 100vh;">
 
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center" style="height: 500px;">
 
-            <div class="col-12 col-md-6 col-lg-5 login-image">
-                <img id="login_image" src="{% static 'image/login-image.png' %}" alt="" style="width: 325px;" >
-                <img id="registration_image" src="{% static 'image/login-image.png' %}" alt="" style="width: 325px; display: none;" >
+            <div class="col-12 col-md-6 col-lg-4 login-image">
+                <img id="login_image" src="{% static 'image/login-image.png' %}" alt="" style="width: 325px;">
             </div>
 
-            <div class="col-12 col-md-6 col-lg-5 ">
+            <div class="col-12 col-md-6 col-lg-4">
                 <div class="row">
                     <h1 class="text-h4-custom text-center" style="font-weight: 700;">ДОБРО ПОЖАЛОВАТЬ!</h1>
                     <p class="text-h5-custom-offwhite text-center" >Пришло время войти или зарегистрироваться.</p>
                 </div>
 
-                <div class="row  d-flex justify-content-start">
-        
+                <div class="row  d-flex justify-content-start animate__animated animate__fadeIn" id="auth_buttons" style="display: none">
+                    
                     <div class="col-2">
                         <button class="button-h5-unborders" id="login_button" onclick="showHrElement(this);">Вход
                             <hr class="hr-show animate__animated animate__fadeInDown">
@@ -52,47 +51,80 @@
 
 
                 <div class="row d-flex justify-content-center">
-                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="login_form">
+                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="login_form" style="display: block;">
 
-                        <div class="mb-3 ">
-                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Почта</label>
-                            <input type="email" class="form-control shadow" id="login_email_input" placeholder="user@mail.ru">
-                        </div>
+                        <form name="login_form_auth" id="login_form_auth" method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="mb-3 ">
+                                <label for="exampleFormControlInput1" class="form-label text-h5-custom">Почта</label>
+                                <input type="email" name="username" class="form-control shadow animate__animated animate__fadeInDown" id="login_email_input" placeholder="user@mail.ru">
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Пароль</label>
-                            <input type="password" class="form-control shadow" id="login_password_input" placeholder="*****">
-                        </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label text-h5-custom">Пароль</label>
+                                <input type="password" name="password" class="form-control shadow animate__animated animate__fadeInDown" id="login_password_input" placeholder="*****">
+                            </div>
 
+                            <button type="submit" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown" value="login" style="width: 100%;">Войти</button>
+                            <span id="validation_form" class="text-h6-custom " style="color: red;"></span>
+                        </form>
                     </div>
 
                     <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="registration_form" style="display: none;">
 
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label text-h5-custom">Почта</label>
-                            <input type="email" class="form-control shadow" id="email_input" placeholder="user@mail.ru">
-                            <span id="email_input_error" class="text-h6-custom" style="color: red;"></span>
+                            <input type="email" class="form-control shadow animate__animated animate__fadeInDown" id="email_input" placeholder="user@mail.ru">
+                            <span id="email_input_error" class="text-h6-custom " style="color: red;"></span>
                         </div>
 
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label text-h5-custom">Полное имя</label>
-                            <input type="fullname" class="form-control shadow" id="fullname_input" placeholder="Иванов Иван Иванович">
-                            <span id="fullname_input_error" class="text-h6-custom" style="color: red;"></span>
+                            <input type="fullname" class="form-control shadow animate__animated animate__fadeInDown" id="fullname_input" placeholder="Иванов Иван Иванович">
+                            <span id="fullname_input_error" class="text-h6-custom " style="color: red;"></span>
                         </div>
 
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label text-h5-custom">Пароль</label>
-                            <input type="password" class="form-control shadow" id="password_input" placeholder="******">
-                            <span id="password_input_error" class="text-h6-custom" style="color: red;"></span>
+                            <input type="password" class="form-control shadow animate__animated animate__fadeInDown" id="password_input" placeholder="******">
+                            <span id="password_input_error" class="text-h6-custom " style="color: red;"></span>
                         </div>
 
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label text-h5-custom">Повтор пароля</label>
-                            <input type="password" class="form-control shadow" id="repeat_password_input" placeholder="******">
-                            <span id="match-error" class="text-h6-custom" style="color: red;"></span>
+                            <input type="password" class="form-control shadow animate__animated animate__fadeInDown" id="repeat_password_input" placeholder="******">
+                            <span id="match-error" class="text-h6-custom " style="color: red;"></span>
 
                         </div>
 
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn mt-3" id="registration_form_two_step" style="display: none;">
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Кто вы?</label>
+
+                            <div class="dropdown">
+
+                                <button class="btn btn-light dropdown-toggle text-h5-custom animate__animated animate__fadeInDown" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%;" id="type_input">
+                                    Учащийся
+                                </button>
+
+                                <ul class="dropdown-menu text-center" style="width: 100%;">
+                                  <li><a class="dropdown-item" href="#" onclick="replaceTypeInDropdown(this)">Учащийся</a></li>
+                                  <li><a class="dropdown-item" href="#" onclick="replaceTypeInDropdown(this)" >Преподаватель</a></li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Место обучения / работы</label>
+                            <input type="text" class="form-control shadow animate__animated animate__fadeInDown" id="study_input" placeholder="ЮРГПУ НПИ Имени Платова">
+                        </div>
+
+                        <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown mt-3" id="registration_final" style="width: 100%;">Зарегистрироваться</button>
 
                     </div>
 
@@ -102,13 +134,10 @@
 
                 </div>
 
-                <hr>
+                <hr class="animate__animated animate__fadeInDown">
 
 
             </div>
-
-        
-                    
                 
             
             
@@ -124,14 +153,39 @@
         </script>
     {% endif %}
 
+    <script>
+
+        function getKey(key = 'info') {
+          var p = window.location.search;
+          p = p.match(new RegExp(key + '=([^&=]+)'));
+          return p ? p[1] : false;
+        }
+      
+        let key = getKey();
+      
+        if (key){
+          let validation_form = document.getElementById('validation_form');
+          validation_form.textContent = 'Не верный логин или пароль!';
+        }
+      
+      
+    </script>
+
+
     <script  src="{% static 'js/auth/client_validation.js' %}"></script>
 
     <script  src="{% static 'js/auth/animates.js' %}"></script>
 
-    <script src="{% static 'js/base/bootstrap.min.js' %}"></script>
+    <script  src="{% static 'js/auth/register_logic.js' %}"></script>
+
 
     <script src="{% static 'js/base/jquery.min.js' %}"></script>
     <script src="{% static 'js/base/jquery.inputmask.min.js' %}"></script>
+
+    <script src="{% static 'js/base/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/base/popper.min.js' %}"></script>
+
 
 </body>
 </html>

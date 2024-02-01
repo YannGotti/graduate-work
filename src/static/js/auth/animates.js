@@ -23,6 +23,7 @@ function showHrElement(element) {
     const loginForm = document.getElementById('login_form');
 
     const registrationNextButton = document.getElementById('registration_next_button');
+    const registration_form_two_step = document.getElementById('registration_form_two_step');
 
 
     if (element === registrationButton) {
@@ -31,6 +32,7 @@ function showHrElement(element) {
 
         registrationNextButton.style.display = "block"
 
+        registration_form_two_step.style.display = "none"
     }
 
     if (element === loginButton) {
@@ -39,5 +41,7 @@ function showHrElement(element) {
 
         registrationNextButton.style.display = "none"
 
+
+        registration_form_two_step.style.display = "none"
     }
 }
