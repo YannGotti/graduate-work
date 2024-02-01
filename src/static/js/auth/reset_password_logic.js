@@ -31,6 +31,7 @@ function sendMailResetPassword(){
         success: function (data) {
             if (data.status == "error"){
                 resetMessageErrorNotUser.style.display = "block";
+                resetProgress.style.display = "none";
             }
 
             if (data.status == "success") {
