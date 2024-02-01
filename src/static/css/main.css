@@ -82,6 +82,12 @@ body::-webkit-scrollbar { width: 0 !important }
     display: block !important;
 }
 
+.border-custom
+{
+    border: 2px solid black;
+    
+}
+
 @media (max-width: 1030px) 
 {
     .login-image

@@ -12,57 +12,104 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="{% static 'css/base/animate.min.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
 </head>
 <body>
 
-    <div class="container d-flex align-items-center justify-content-center"  style="height: 100vh;">
+    <div class="container-fluid d-flex align-items-center justify-content-center"  style="height: 100vh;">
 
         <div class="row d-flex justify-content-center">
 
-            <div class="col-12 col-md-12 col-lg-4 login-image">
-                <img src="{% static 'image/login-image.webp' %}" alt="" style="width: 450px;">
+            <div class="col-12 col-md-6 col-lg-5 login-image">
+                <img id="login_image" src="{% static 'image/login-image.png' %}" alt="" style="width: 325px;" >
+                <img id="registration_image" src="{% static 'image/login-image.png' %}" alt="" style="width: 325px; display: none;" >
             </div>
 
-            <div class="col-12 col-md-12 col-lg-8 d-flex justify-content-center">
+            <div class="col-12 col-md-6 col-lg-5 ">
+                <div class="row">
+                    <h1 class="text-h4-custom text-center" style="font-weight: 700;">ДОБРО ПОЖАЛОВАТЬ!</h1>
+                    <p class="text-h5-custom-offwhite text-center" >Пришло время войти или зарегистрироваться.</p>
+                </div>
+
+                <div class="row  d-flex justify-content-start">
+        
+                    <div class="col-2">
+                        <button class="button-h5-unborders" id="login_button" onclick="showHrElement(this);">Вход
+                            <hr class="hr-show animate__animated animate__fadeInDown">
+                        </button>
+                        
+                    </div>
+                    <div class="col-2">
+                        <button class="button-h5-unborders" id="registration_button" onclick="showHrElement(this);">Регистрация
+                            <hr class="hr-hide">
+                        </button>
+                        
+                    </div>
+                </div>
+
+
                 <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="login_form">
 
-                    <img src="{% static 'image/waving-hand-emoji.png' %}" alt="" style="width: 50px; height: 30px;">
-
-                    <div class="col-12">
-                        <h1 class="text-h4-custom text-center" style="font-weight: 700;">ДОБРО ПОЖАЛОВАТЬ!</h1>
-                        <p class="text-h5-custom-offwhite text-center" >Пришло время войти или зарегистрироваться.</p>
-                    </div>
-        
-                    <div class="col-12 col-md-9 col-lg-8">
-        
-                        <div class="row d-flex justify-content-start">
-                            <div class="col-2">
-                                <button class="button-h5-unborders" id="login" onclick="showHrElement(this);">Вход
-                                    <hr class="hr-show animate__animated animate__fadeInDown">
-                                </button>
-                                
-                            </div>
-                            <div class="col-2">
-                                <button class="button-h5-unborders" id="registration" onclick="showHrElement(this);">Регистрация
-                                    <hr class="hr-hide">
-                                </button>
-                                
-                            </div>
+                        <div class="mb-3 ">
+                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Почта</label>
+                            <input type="email" class="form-control shadow" id="login_email_input" placeholder="user@mail.ru">
                         </div>
-        
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Пароль</label>
+                            <input type="password" class="form-control shadow" id="login_password_input" placeholder="*****">
+                        </div>
+
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="registration_form" style="display: none;">
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Почта</label>
+                            <input type="email" class="form-control shadow" id="email_input" placeholder="user@mail.ru">
+                            <span id="email_input_error" class="text-h6-custom" style="color: red;"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Полное имя</label>
+                            <input type="fullname" class="form-control shadow" id="fullname_input" placeholder="Иванов Иван Иванович">
+                            <span id="fullname_input_error" class="text-h6-custom" style="color: red;"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Пароль</label>
+                            <input type="password" class="form-control shadow" id="password_input" placeholder="******">
+                            <span id="password_input_error" class="text-h6-custom" style="color: red;"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Повтор пароля</label>
+                            <input type="password" class="form-control shadow" id="repeat_password_input" placeholder="******">
+                            <span id="match-error" class="text-h6-custom" style="color: red;"></span>
+
+                        </div>
+
 
                     </div>
+
+                    <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown" id="registration_next_button" style="display: none;">Зарегистрироваться <img src="{% static 'image/arrow_right.png' %}" alt="" style="width: 25px;"></button>
+
+
 
                 </div>
-                
+
+                <hr>
+
+
             </div>
+
+        
+                    
+                
             
             
         </div>
@@ -76,9 +123,15 @@
             window.location.replace("/");
         </script>
     {% endif %}
-    
-    <script src="{% static 'js/auth/animates.js' %}"></script>
+
+    <script  src="{% static 'js/auth/client_validation.js' %}"></script>
+
+    <script  src="{% static 'js/auth/animates.js' %}"></script>
+
     <script src="{% static 'js/base/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/base/jquery.min.js' %}"></script>
+    <script src="{% static 'js/base/jquery.inputmask.min.js' %}"></script>
 
 </body>
 </html>

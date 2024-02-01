@@ -1,5 +1,3 @@
-
-
 function showHrElement(element) {
     const hrElement = element.querySelector('hr');
 
@@ -11,11 +9,35 @@ function showHrElement(element) {
         targetHr.classList.remove("hr-show", "animate__animated", "animate__fadeInDown");
     }
 
-    if (element.id === "login") {
-        updateHrVisibility(document.getElementById('registration'));
+    function updateFormVisibility(hideElement, showElement) {
+
+        hideElement.style.display = "none";
+
+        showElement.style.display = "block";
+
     }
 
-    if (element.id === "registration") {
-        updateHrVisibility(document.getElementById('login'));
+    const registrationButton = document.getElementById('registration_button');
+    const loginButton = document.getElementById('login_button');
+    const registrationForm = document.getElementById('registration_form');
+    const loginForm = document.getElementById('login_form');
+
+    const registrationNextButton = document.getElementById('registration_next_button');
+
+
+    if (element === registrationButton) {
+        updateHrVisibility(loginButton);
+        updateFormVisibility(loginForm, registrationForm);
+
+        registrationNextButton.style.display = "block"
+
+    }
+
+    if (element === loginButton) {
+        updateHrVisibility(registrationButton);
+        updateFormVisibility(registrationForm, loginForm);
+
+        registrationNextButton.style.display = "none"
+
     }
 }
