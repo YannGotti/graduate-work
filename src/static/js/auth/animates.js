@@ -19,16 +19,36 @@ function showHrElement(element) {
 
     const registrationButton = document.getElementById('registration_button');
     const loginButton = document.getElementById('login_button');
+    const resetPasswordButton = document.getElementById('reset_password_button');
+
     const registrationForm = document.getElementById('registration_form');
     const loginForm = document.getElementById('login_form');
+    const resetPasswordForm = document.getElementById('reset_password_form');
 
     const registrationNextButton = document.getElementById('registration_next_button');
     const registration_form_two_step = document.getElementById('registration_form_two_step');
 
+    if (element === resetPasswordButton){
+        updateHrVisibility(loginButton);
+        updateHrVisibility(registrationButton);
+
+        updateFormVisibility(loginForm, resetPasswordForm);
+        updateFormVisibility(registrationForm, resetPasswordForm);
+
+        registrationNextButton.style.display = "none"
+        registration_form_two_step.style.display = "none"
+
+    }
+
 
     if (element === registrationButton) {
         updateHrVisibility(loginButton);
+        updateHrVisibility(resetPasswordButton);
+
+
+
         updateFormVisibility(loginForm, registrationForm);
+        updateFormVisibility(resetPasswordForm, registrationButton);
 
         registrationNextButton.style.display = "block"
 
@@ -37,7 +57,13 @@ function showHrElement(element) {
 
     if (element === loginButton) {
         updateHrVisibility(registrationButton);
+        updateHrVisibility(resetPasswordButton);
+
+
         updateFormVisibility(registrationForm, loginForm);
+        updateFormVisibility(resetPasswordForm, loginForm);
+
+
 
         registrationNextButton.style.display = "none"
 

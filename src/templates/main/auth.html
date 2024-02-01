@@ -41,16 +41,82 @@
                         </button>
                         
                     </div>
-                    <div class="col-2">
+                    <div class="col-5">
                         <button class="button-h5-unborders" id="registration_button" onclick="showHrElement(this);">Регистрация
                             <hr class="hr-hide">
                         </button>
+                        
+                    </div>
+
+                    <div class="col-5 text-right">
+                        <button class="button-h5-unborders text-end" style="color: rgb(121, 121, 121);" id="reset_password_button" onclick="showHrElement(this);">Восстановить пароль
+                            <hr class="hr-hide">
+                        </button>
+
+
                         
                     </div>
                 </div>
 
 
                 <div class="row d-flex justify-content-center">
+
+
+                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="reset_password_form" style="display: none;">
+                        <div id="reset_message" style="display: block;">
+
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label text-h5-custom">Почта</label>
+                                <input type="email" name="email" class="form-control shadow animate__animated animate__fadeInDown" id="reset_email_input" placeholder="user@mail.ru">
+                            </div>
+                        
+                        
+                            <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown mb-2" onclick="sendMailResetPassword()" style="width: 100%;" id="success_reset_password_button">Восстановить
+                                
+                            </button>
+                            <label class="form-label text-h6-custom">После нажатия кнопки на вашу почту будет отправлен уникальный код для восстановления.</label>
+
+                            <label class="form-label text-h6-custom" id="success_password_reset" style="display: none; color: rgb(111, 255, 171);">Пароль успешно сменен!</label>
+
+                            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" id="reset_progress" style="width: 100%; display: none;"></div>
+                            </div>
+
+                            
+                        </div>
+
+                        <label id="reset_message_error_not_user" class="form-label text-h6-custom" style="display: none; color: rgb(253, 0, 0);">Такого аккаунта не существует.</label>
+                        
+                        <div id="validation_reset_form" style="display: none;">
+                            <input type="text" name="code" class="form-control text-h5-custom text-center shadow animate__animated animate__fadeInDown mb-2" id="code_reset" placeholder="000000">
+                            <label id="reset_message_send" class="form-label text-h6-custom" style="display: none;">Сообщение с кодом было отправлено на вашу почту.</label>
+                            <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown" onclick="verifyCodeResetPassword()"  id="validate_reset_password_button" style="width: 100%;">Подтвердить код</button>
+                            <label id="not_verify_message" class="form-label text-h6-custom" style="display: none; color: rgb(253, 0, 0);">Ваш код не вверный!</label>
+
+                        </div>
+
+                        <div id="reset_replace_password_form" style="display: none;">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label text-h5-custom">Новый пароль</label>
+                                <input type="password" class="form-control shadow animate__animated animate__fadeInDown" id="reset_password_input" placeholder="******">
+                                <span id="reset_password_input_error" class="text-h6-custom " style="color: red;"></span>
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label text-h5-custom">Повтор нового пароля</label>
+                                <input type="password" class="form-control shadow animate__animated animate__fadeInDown" id="reset_repeat_password_input" placeholder="******">
+                                <span id="reset_match-error" class="text-h6-custom " style="color: red;"></span>
+
+                                <label id="reset_message_send" class="form-label text-h6-custom">Измененный пароль моментально вступит в силу.</label>
+                                <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown" onclick="resetPassword()"  id="replace_reset_password_button" style="width: 100%; display: none;">Изменить пароль</button>
+                                <span id="reset_password_error" class="text-h6-custom " style="display: none; color: red;">Непредвиденная ошибка! Попробуйте позже.</span>
+    
+                            </div>
+                        </div>
+
+                    </div>
+
+
                     <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="login_form" style="display: block;">
 
                         <form name="login_form_auth" id="login_form_auth" method="post" action="{% url 'login' %}">
@@ -68,7 +134,6 @@
                             <button type="submit" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown" value="login" style="width: 100%;">Войти</button>
                             <span id="validation_form" class="text-h6-custom " style="color: red;"></span>
                             <span id="field_success_validation_register" class="text-h6-custom" style="color: rgb(91, 204, 76);"></span>
-
                         </form>
                     </div>
 
@@ -126,15 +191,18 @@
 
                         <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown mt-3" onclick="userRegistration()" id="registration_final" style="width: 100%;">Зарегистрироваться</button>
                         <span id="field_validation_register" class="text-h6-custom" style="color: red;"></span>
+
+                        <img src="{% static 'image/arrow_left.png' %}" onclick="registerBackStep()" style="width: 25px;" alt="">
+
                         
                     </div>
 
                     <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown" id="registration_next_button" style="display: none;">Зарегистрироваться <img src="{% static 'image/arrow_right.png' %}" alt="" style="width: 25px;"></button>
-
+                    
 
                 </div>
 
-                <hr class="animate__animated animate__fadeInDown">
+
 
 
             </div>
@@ -178,19 +246,25 @@
     </script>
 
 
+    <script src="{% static 'js/base/jquery.min.js' %}"></script>
+    <script src="{% static 'js/base/jquery.inputmask.min.js' %}"></script>
+    <script src="{% static 'js/base/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/base/popper.min.js' %}"></script>
+
+
+
+
     <script  src="{% static 'js/auth/client_validation.js' %}"></script>
 
     <script  src="{% static 'js/auth/animates.js' %}"></script>
 
+
     <script  src="{% static 'js/auth/register_logic.js' %}"></script>
 
+    <script  src="{% static 'js/auth/reset_password_logic.js' %}"></script>
 
-    <script src="{% static 'js/base/jquery.min.js' %}"></script>
-    <script src="{% static 'js/base/jquery.inputmask.min.js' %}"></script>
 
-    <script src="{% static 'js/base/bootstrap.bundle.min.js' %}"></script>
-
-    <script src="{% static 'js/base/popper.min.js' %}"></script>
+    
 
 
 </body>

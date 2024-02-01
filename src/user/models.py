@@ -7,6 +7,9 @@ class CustomUser(AbstractUser):
     date_register = models.DateField('Дата регистрации', auto_now_add=True)
     email = models.EmailField('Почта пользователя', max_length=254)
 
+    reset_code = models.CharField('Резервный код', max_length=250)
+    verify_code = models.BooleanField('Верифицирован ли код?', default = False)
+
     USER_CHOICES = [
         ('преподаватель', 'Преподаватель'),
         ('учащийся', 'Учащийся'),
@@ -16,6 +19,7 @@ class CustomUser(AbstractUser):
         'Тип пользователя',
         max_length=20,
         choices=USER_CHOICES,
+        default="учащийся"
     )
 
     userPlaceOfStudy = models.CharField('Место обучения', max_length=250)

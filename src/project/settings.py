@@ -123,3 +123,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+# SMTP CONFIGURATION
+SMTP_SERVER = 'smtp.mail.ru'
+SMTP_PORT = 465
+SMTP_USERNAME = 'django-server-test@mail.ru'
+SMTP_PASSWORD = 'Bdinsh4UfS3Jz4D9Krpi'

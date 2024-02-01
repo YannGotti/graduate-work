@@ -8,6 +8,15 @@ function registerNextStep() {
     showElement('registration_form_two_step');
 }
 
+function registerBackStep(){
+
+    hideElement('registration_form_two_step');
+
+    showElement('registration_form');
+    showElement('auth_buttons');
+    showElement('registration_next_button');
+}
+
 function hideElement(elementId) {
     const element = document.getElementById(elementId);
     if (element) {

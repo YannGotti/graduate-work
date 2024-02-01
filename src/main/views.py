@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.core import serializers
 from django.views.generic.base import View
+from django.contrib.auth import login
 from user.models import CustomUser
+from .smtp import SMTPServer
+import random
 
 class MainPage(View):
     def get(self, request):
@@ -28,4 +31,68 @@ class RegisterUser(View):
         user.set_password(data.get('password'))
         user.save()
 
+        login(self.request, user)
         return HttpResponse('Ok')
+    
+
+class SendResetPassword(View):
+    def post(self, request):
+        if request.method == 'POST':
+            email = request.POST.get('email')
+            try:
+                user = CustomUser.objects.get(email=email)
+            except CustomUser.DoesNotExist:
+                return JsonResponse({'status': 'error'})
+            
+            reset_code = str(random.randint(100000, 999999))
+            user.reset_code = reset_code
+            user.verify_code = False
+            user.save()
+
+            smtp_server = SMTPServer()
+            smtp_server.send_message(f'Ваша учетная запись - {user.username}. АКТИВАЦИЯ АККАУНТА', GenerateMail(reset_code), user.email, html_content = None)
+
+            return JsonResponse({'status': 'success'})
+        
+class VerifyCode(View):
+    def post(self, request):
+        if request.method == 'POST':
+            email = request.POST.get('email')
+            reset_code = request.POST.get('reset_code')
+            try:
+                user = CustomUser.objects.get(email=email)
+            except CustomUser.DoesNotExist:
+                return JsonResponse({'status': 'error'})
+            
+            
+            if (user.reset_code != reset_code):
+                return JsonResponse({'status': 'not_verify'})
+            else:
+                user.verify_code = True
+                user.save()
+                return JsonResponse({'status': 'success'})
+
+class ResetPassword(View):
+    def post(self, request):
+        data = request.POST
+        email = request.POST.get('email')
+
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            return JsonResponse({'status': 'error'})
+        
+        if (user.verify_code == False):
+            return JsonResponse({'status': 'error'})
+        
+        user.set_password(data.get('password'))
+        user.verify_code = False
+        user.save()
+
+        return JsonResponse({'status': 'success'})
+
+
+def GenerateMail(reset_code):
+    message = f"<p>Здравствуйте, ваш код для восстановления пароля: {reset_code}</p>"
+    
+    return message
