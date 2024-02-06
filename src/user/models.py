@@ -24,3 +24,4 @@ class CustomUser(AbstractUser):
 
     userPlaceOfStudy = models.CharField('Место обучения', max_length=250)
     fullName = models.CharField('ФИО пользователя', max_length=250)
+    name = models.CharField('Уникальное имя пользователя', max_length=250)

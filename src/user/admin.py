@@ -19,7 +19,8 @@ class UserAdminPanel(UserAdmin):
                     'email',
                     'date_register',
                     'type_user',
-                    'fullName'
+                    'fullName',
+                    'name'
                 )
             }
         )
@@ -33,7 +34,8 @@ class UserAdminPanel(UserAdmin):
                 'fields': (
                     'photo_profile',
                     'type_user',
-                    'fullName'
+                    'fullName',
+                    'name'
                 )
             }
         )

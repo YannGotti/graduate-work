@@ -17,12 +17,17 @@ document.addEventListener('DOMContentLoaded', function(){
     const fullNameInput = $('#fullname_input');
     const fullNameError = $('#fullname_input_error');
 
+    const nameInput = $('#name_input');
+    const nameError = $('#name_input_error');
+
     const emailInput = $('#email_input');
     const emailError = $('#email_input_error');
 
     const registration_next_button = $('#registration_next_button');
 
     function updateError(element, isValid, errorMessage) {
+
+        console.log(isValid)
         if (isValid) {
             $(element).text('');
         } else {
@@ -31,14 +36,16 @@ document.addEventListener('DOMContentLoaded', function(){
         return isValid;
     }
 
-    function validateFullNameAndEmail() {
+    function validateFullNameAndEmailAndName() {
+        const name = nameInput.val();
         const fullName = fullNameInput.val();
         const email = emailInput.val();
 
         const fullNameValid = updateError(fullNameError, validateFullName(fullName), 'Введите корректные имя, фамилию и отчество.');
+        const nameValid = updateError(nameError, validateName(name), 'Введите корректный никнейм.');
         const emailValid = updateError(emailError, validateEmail(email), 'Введите корректный email.');
 
-        return [fullNameValid, emailValid];
+        return [fullNameValid, emailValid, nameValid];
     }
 
     function validatePasswords() {
@@ -52,10 +59,11 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function updateSubmitButton() {
-        const [fullNameValid, emailValid] = validateFullNameAndEmail();
+
+        const [fullNameValid, emailValid, nameValid] = validateFullNameAndEmailAndName();
         const [passwordValid, matchValid] = validatePasswords();
 
-        const isValid = fullNameValid && emailValid && passwordValid && matchValid;
+        const isValid = fullNameValid && emailValid && nameValid && passwordValid && matchValid;
 
         showOrHideButtonRegister(isValid)
     }
@@ -64,10 +72,13 @@ document.addEventListener('DOMContentLoaded', function(){
         updateSubmitButton();
     });
 
+    nameInput.on('input', function() {
+        updateSubmitButton();
+    });
+
     emailInput.on('input', function() {
         updateSubmitButton();
     });
-    
 
     passwordFields.forEach((field) => {
         $(field).on('input', function() {
@@ -88,6 +99,12 @@ document.addEventListener('DOMContentLoaded', function(){
     function validateFullName(fullName) {
         const regex = /^[А-Яа-яЁё\s\-']+$/;
         return regex.test(fullName);
+    }
+
+    function validateName(name) {
+        const regex = /^[A-Za-z\s\-']{8,27}$/;
+        console.log(regex.test(name))
+        return regex.test(name);
     }
 
     function validatePassword(password) {

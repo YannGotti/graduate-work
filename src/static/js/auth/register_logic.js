@@ -60,12 +60,14 @@ function userRegistration() {
 
     const email = document.getElementById('email_input').value;
     const fullname = document.getElementById('fullname_input').value;
+    const name = document.getElementById('name_input').value;
     const password = document.getElementById('password_input').value;
     const type = document.getElementById('type_input').textContent;
     const study = document.getElementById('study_input').value;
 
     const userData = {
         fullName: fullname,
+        name: name,
         password: password,
         email: email,
         userPlaceOfStudy: study,

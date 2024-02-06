@@ -1,8 +1,13 @@
 html, body {
     overflow-x: hidden;
+    
+}
+
+body {
     background: rgb(235,229,255);
     background: linear-gradient(180deg, rgba(235,229,255,1) 0%, rgba(255,255,255,1) 50%, rgba(226,196,244,1) 100%);
 }
+
 
 body::-webkit-scrollbar { width: 0 !important }
 

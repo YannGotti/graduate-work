@@ -26,7 +26,10 @@ class RegisterUser(View):
         if (CustomUser.objects.filter(username = data.get("email"))):
             return HttpResponse('Not')
         
-        user = CustomUser(username = data.get('email'), email = data.get('email'), userPlaceOfStudy = data.get('userPlaceOfStudy'), password = data.get('password'),
+        if (CustomUser.objects.filter(name = data.get("name"))):
+            return HttpResponse('Not')
+        
+        user = CustomUser(username = data.get('email'), email = data.get('email'), userPlaceOfStudy = data.get('userPlaceOfStudy'), name = data.get('name'), password = data.get('password'),
                         type_user = data.get('type_user'), fullName= data.get('fullName'))
         user.set_password(data.get('password'))
         user.save()

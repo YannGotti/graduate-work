@@ -152,6 +152,12 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label text-h5-custom">Имя пользователя</label>
+                            <input type="name" class="form-control shadow animate__animated animate__fadeInDown" id="name_input" placeholder="username">
+                            <span id="name_input_error" class="text-h6-custom " style="color: red;"></span>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label text-h5-custom">Пароль</label>
                             <input type="password" class="form-control shadow animate__animated animate__fadeInDown" id="password_input" placeholder="******">
                             <span id="password_input_error" class="text-h6-custom " style="color: red;"></span>
@@ -252,18 +258,10 @@
     <script src="{% static 'js/base/popper.min.js' %}"></script>
 
 
-
-
     <script  src="{% static 'js/auth/client_validation.js' %}"></script>
-
     <script  src="{% static 'js/auth/animates.js' %}"></script>
-
-
     <script  src="{% static 'js/auth/register_logic.js' %}"></script>
-
     <script  src="{% static 'js/auth/reset_password_logic.js' %}"></script>
-
-
     
 
 
