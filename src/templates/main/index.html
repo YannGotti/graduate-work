@@ -8,10 +8,4 @@
 </div>
 
 
-{% if not user.is_authenticated %}
-    <script>
-        window.location.replace("/auth/");
-    </script>
-{% endif %}
-
 {% endblock %}

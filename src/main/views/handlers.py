@@ -1,20 +1,10 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
-from django.core import serializers
 from django.views.generic.base import View
 from django.contrib.auth import login
 from user.models import CustomUser
-from .smtp import SMTPServer
+from ..smtp import SMTPServer
 import random
-
-class MainPage(View):
-    def get(self, request):
-        return render(request, 'main/index.html')
-    
-class AuthPage(View):
-    def get(self, request):
-        return render(request, 'main/auth.html')
-    
 
 class RegisterUser(View):
     def post(self, request):

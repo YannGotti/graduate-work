@@ -11,8 +11,8 @@ class CustomUser(AbstractUser):
     verify_code = models.BooleanField('Верифицирован ли код?', default = False)
 
     USER_CHOICES = [
-        ('преподаватель', 'Преподаватель'),
-        ('учащийся', 'Учащийся'),
+        ('Преподаватель', 'Преподаватель'),
+        ('Учащийся', 'Учащийся'),
     ]
 
     type_user = models.CharField(

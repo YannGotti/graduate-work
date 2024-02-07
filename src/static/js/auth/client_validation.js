@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function validateName(name) {
-        const regex = /^[A-Za-z\s\-']{8,27}$/;
+        const regex = /^[A-Za-z\s\-']{5,27}$/;
         console.log(regex.test(name))
         return regex.test(name);
     }

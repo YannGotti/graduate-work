@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+<div class="container animate__animated animate__fadeIn p-5"  style="height: 100vh;">
+
+    {% if user_profile.id == user.id %}
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-12 col-md-12 col-lg-4">
+            <div class="row">
+                <input type="file" id="fileInput" accept="image/png, image/jpeg" style="display: none;">
+                <label  for="fileInput" id="imagePreview">
+                    <img src="/media/{{ user_profile.photo_profile }}" class="" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-content="Сменить фото" alt="" style="border-radius: 50%; width: 270px; height: 270px;" >
+                </label>
+            </div>
+
+            <div class="row mt-3">
+                <h1 class="text-h4-custom">{{ user_profile.name }}</h1>
+                <h1 class="text-h5-custom">{{ user_profile.fullName }}</h1>
+                <h1 class="text-h5-custom">{{ user_profile.type_user }}</h1>
+
+            </div>
+
+            
+        
+        </div>
+
+        <div class="col-12 col-md-12 col-lg-8">
+
+        </div>
+
+
+
+    </div>
+
+    {% else %}
+    <div class="row d-flex justify-content-center">
+
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
