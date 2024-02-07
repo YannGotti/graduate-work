@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg animate__animated animate__fadeInDown mt-3">
+    <nav class="navbar navbar-expand-lg animate__animated animate__fadeInDown p-3 mb-4 shadow-sm">
         <div class="container-fluid d-flex justify-content-end">
           
           
@@ -27,43 +27,50 @@
           <div class="hstack gap-2 d-flex align-items-center">
 
             <div class="input-group">
-              <input type="text"class="form-control text-h5-custom" style="height: 35px; width: 200px;" placeholder="Имя документа" aria-label="Имя пользователя получателя" aria-describedby="button-addon2">
+              <input type="text"class="form-control text-h5-custom" style="height: 35px; width: 200px;" placeholder="Поиск" aria-describedby="button-addon2">
               <button class="btn btn-light d-flex align-items-center" style="height: 35px;" type="button" id="button-addon2"><img src="{% static 'image/search_icon.png' %}" alt="" style="width: 20px;"></button>
             </div>
 
-            {% if user.type_user == "преподаватель" %}
+            {% if user.type_user == "Преподаватель" %}
 
                 <div class="dropdown">
 
-                  <button class="btn btn-light text-h5-custom dropdown-toggle d-flex align-items-center justify-content-between"  style="width: 70px; height: 35px; border-top-right-radius: 15px;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button class="btn btn-light text-h5-custom dropdown-toggle d-flex align-items-center justify-content-between"  style="width: 70px; height: 35px; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{% static 'image/plus_icon.png' %}" alt="" style="width: 15px;">
                   </button>
                   
                   <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton1" style="margin-left: -55px;">
-                    <li><a class="dropdown-item text-h5-custom" href="#">Загрузить материал</a></li>
+                    <li><a class="dropdown-item text-h5-custom" href="#">Добавить материал</a></li>
                     <li><a class="dropdown-item text-h5-custom" href="#">Another action</a></li>
                   </ul>
                 </div>
             {% endif %}
 
             
-            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Профиль">
-              <a class="navbar-brand" href="/{{ user.name }}"><img src="/media/{{ user.photo_profile }}" alt="" style="width: 35px; height: 35px; border-radius: 15px; border-top-left-radius: 0px;"></a>
-            </span>
+            <a class="navbar-brand" href="/{{ user.name }}"><img src="/media/{{ user.photo_profile }}" alt="" style="width: 35px; height: 35px; border-radius: 5px;" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Профиль"></a>
 
           </div>
-
           
-
         </div>
       </nav>
 
 
-    <hr>
+
 
 
     {% block content %}
     {% endblock %}
+
+
+    <div class="container mt-4 mb-4">
+      <div class="hstack gap-2 d-flex align-items-center justify-content-center">
+        <a href="/" style="text-decoration: none;"><img src="{% static 'image/main_icon2.png' %}" style="width: 25px; height: 25px;" alt=""></a>
+        <h1 class="text-h6-custom mt-2 me-5">© 2024 Mironov, Inc.</h1>
+
+        <a href="/" class="text-h6-custom" style="text-decoration: none;">Пользовательское соглашение</a>
+        <a href="/" class="text-h6-custom" style="text-decoration: none;">Обратная связь</a>
+      </div>
+    </div>
 
     
 
