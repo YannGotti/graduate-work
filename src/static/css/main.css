@@ -4,6 +4,8 @@ body {
 }
 
 
+body::-webkit-scrollbar { width: 0 !important }
+
 .text-h1-custom
 {
     font-weight: 500;

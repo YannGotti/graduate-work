@@ -7,6 +7,7 @@ handler404 = custom_handler404
 urlpatterns = [
     path('', MainPage.as_view(), name='main_page'),
     path('auth/', AuthPage.as_view(), name='auth_page'),
+    path('new/', NewMaterial.as_view(), name='new_material'),
     path('<username>', ProfilePage.as_view(), name='profile_page'),
 
 

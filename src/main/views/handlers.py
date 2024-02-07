@@ -59,6 +59,8 @@ class VerifyCode(View):
             
             
             if (user.reset_code != reset_code):
+                user.verify_code = False
+                user.save()
                 return JsonResponse({'status': 'not_verify'})
             else:
                 user.verify_code = True
