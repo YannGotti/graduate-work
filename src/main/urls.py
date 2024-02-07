@@ -15,4 +15,7 @@ urlpatterns = [
     path('auth/reset_password/reset/', ResetPassword.as_view()),
     path('auth/reset_password/verify_code/', VerifyCode.as_view()),
     path('auth/register/', RegisterUser.as_view()),
+
+    path('new/create/', CreateMaterial.as_view(), name='create_material'),
+
 ]

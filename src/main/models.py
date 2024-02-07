@@ -3,7 +3,11 @@ from django.db import models
 
 class EducationMaterial(models.Model):
     name = models.CharField('Название', max_length=150)
-    description = models.CharField('Описание', max_length=350)
+    fullName = models.CharField('Полное название', max_length=300, null=True)
+    description = models.CharField('Описание', max_length=350, null=True)
+    theme = models.CharField('Тематика/предмет', max_length=350)
+    author = models.CharField('Автор', max_length=350, null=True)
+    source = models.URLField('Источник', max_length=300, null=True)
 
     isPrivate = models.BooleanField('Приватный ли?', default=False)
 

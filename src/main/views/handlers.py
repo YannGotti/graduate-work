@@ -4,6 +4,7 @@ from django.views.generic.base import View
 from django.contrib.auth import login
 from user.models import CustomUser
 from ..smtp import SMTPServer
+from ..forms import CreateMaterialForm
 import random
 
 class RegisterUser(View):
@@ -86,6 +87,26 @@ class ResetPassword(View):
 
         return JsonResponse({'status': 'success'})
 
+
+class CreateMaterial(View):
+    def post(self, request):
+        if request.method == 'POST':
+
+            print(request.FILES)
+            print(request.POST)
+
+            form = CreateMaterialForm(request.POST, request.FILES)
+            if form.is_valid():
+
+                education_material = form.save(commit=False)
+                education_material.user = request.user  
+                education_material.save()
+                print('yes')
+                return JsonResponse({'status': 'success'})
+            else:
+                form = CreateMaterialForm()
+
+            return JsonResponse({'status': 'error'})
 
 def GenerateMail(reset_code):
     message = f"<p>Здравствуйте, ваш код для восстановления пароля: {reset_code}</p>"

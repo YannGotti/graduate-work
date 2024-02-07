@@ -3,13 +3,133 @@
 
 {% block content %}
 
-<div class="container d-flex align-items-center justify-content-center"  style="height: 83vh;">
-    <div class="text-center">
-        <h1 class="text-h2-custom">Ошибка 404</h1>
-        <h2 class="text-h4-custom mt-3">Страница не найдена</h2>
-        <p class="text-h5-custom">К сожалению, страница, которую вы ищете, может быть недоступна или не существует.</p>
-        <p class="text-h5-custom">Вернуться на <a href="/">главную</a>.</p>
+<div class="container animate__animated animate__fadeIn"  style="height: 100vh;">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-12 col-lg-7">
+            <h1 class="text-h4-custom" style="font-weight: 600;">Создание материала</h1>
+            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">Обязательные поля помечены символом -  * </p>
+            <hr>
+
+            <form action="{% url 'create_material' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="hstack gap-3 d-flex align-items-center">
+                    <div>
+                        <p class="text-h5-custom">Владелец *</p>
+
+                        <button type="button" class="btn btn-light d-flex justify-content-between " style="height: 35px; width: 120px;">
+                            <img src="/media/{{ user.photo_profile }}" alt="" style="width: 20px; height: 20px; border-radius: 10px;">
+                            <p class="text-h6-custom">{{ user.name }}</p>
+                        </button>
+                    </div>
+                    
+
+                    <h1 class="text-h3-custom " style="margin-top: 45px;">/</h1>
+
+                    <div>
+                        <p class="text-h5-custom">Название *</p>
+                        <input type="name" class="form-control text-h5-custom bg-light " name="name" style="height: 35px;">
+                    </div>
+
+
+                </div>
+
+                <p class="text-h6-custom">Короткое наименование для быстрого поиска.</p>
+
+                <hr>
+
+                <div>
+                    <div class="hstack gap-1 d-flex align-items-center">
+                        <p class="text-h6-custom">Полное название </p>
+                        <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                    </div>
+
+
+                    <input type="fullName" class="form-control text-h5-custom bg-light mb-2" name="fullName" style="height: 35px;">
+
+                    <div class="hstack gap-1 d-flex align-items-center">
+                        <p class="text-h6-custom">Описание</p>
+                        <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                    </div>
+
+                    <input type="description" class="form-control text-h5-custom bg-light mb-2" name="description" style="height: 35px;">
+                </div>
+
+                <hr>
+
+                <div class="hstack gap-3 d-flex align-items-center">
+                    <div>
+                        <p class="text-h6-custom">Всеобщедоступный материал?</p>
+                        <div class="form-check form-switch" style="height: 35px;">
+                            <input class="form-check-input bg-success" type="checkbox" role="switch" id="isPrivate" name="isPrivate" checked>
+                        </div>
+                        <p class="text-h6-custom">по умолчанию - да</p>
+                    </div>
+
+                    <div style="width: 100%;">
+                        <p class="text-h6-custom mb-4">Тематика / Предмет *</p>
+                        <select class="form-select form-select-sm mb-3 text-h6-custom " id="theme" name="theme" aria-label=".form-select-sm" style="height: 35px;">
+                            <option value="Учебник" selected>Учебник</option>
+                            <option value="Лекция">Лекция</option>
+                            <option value="Задачник">Задачник</option>
+                            <option value="Статья">Статья</option>
+                            <option value="Видеоурок">Видеоурок</option>
+                            <option value="Презентация">Презентация</option>
+                            <option value="Тест">Тест</option>
+                            <option value="Исследование">Исследование</option>
+                            <option value="Эксперимент">Эксперимент</option>
+                            <option value="Курс">Курс</option>
+                            <option value="Другое">Другое</option>
+                        </select>
+                        <p class="text-h6-custom">Параметр фильтрации</p>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <div class="hstack gap-3 d-flex align-items-center">
+                    <div style="width: 100%;">
+                        <div class="hstack gap-1 d-flex align-items-center">
+                            <p class="text-h6-custom">Автор </p>
+                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                        </div>
+                        <input type="author" class="form-control text-h5-custom bg-light mb-2" name="author" style="height: 35px;">
+                    </div>
+    
+                    <div style="width: 100%;">
+                        <div class="hstack gap-1 d-flex align-items-center">
+                            <p class="text-h6-custom">Источник</p>
+                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                        </div>
+                        <input type="source" class="form-control text-h5-custom bg-light mb-2" name="source" style="height: 35px;">
+                    </div>
+                </div>
+
+
+                <div class="hstack gap-1 d-flex align-items-center">
+                    <p class="text-h6-custom">Файл материала </p>
+                    <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                </div>
+                <input class="form-control text-h6-custom" type="file" name="formFileMaterial" id="formFileMaterial" style="height: 35px;">
+                <hr>
+
+                <input class="form-control text-h6-custom" value="{{user.id}}" type="user" name="user" id="user" hidden>
+
+
+                <div class="row d-flex justify-content-end">
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-success text-h6-custom" style="width: 100%; height: 35px;">Создать</button>
+                    </div>
+                </div>
+
+
+
+            </form>
+            
+        </div>
     </div>
+    
 </div>
 
 
