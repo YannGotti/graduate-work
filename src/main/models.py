@@ -9,7 +9,7 @@ class EducationMaterial(models.Model):
     author = models.CharField('Автор', max_length=350, null=True)
     source = models.URLField('Источник', max_length=300, null=True)
 
-    isPrivate = models.BooleanField('Приватный ли?', default=False)
+    isPrivate = models.BooleanField('Публичный ли?', default=True)
 
     file = models.FileField('Файл материала', upload_to='materials/', blank=True, null=True)
 

@@ -26,17 +26,18 @@
 
                     <h1 class="text-h3-custom " style="margin-top: 45px;">/</h1>
 
-                    <div>
+                    <div style="width: 100%;">
                         <p class="text-h5-custom">Название *</p>
-                        <input type="name" class="form-control text-h5-custom bg-light " name="name" style="height: 35px;">
+                        <input type="name" class="form-control text-h5-custom bg-light " id="input_name" name="name" style="height: 35px;">
                     </div>
 
 
                 </div>
 
-                <p class="text-h6-custom">Короткое наименование для быстрого поиска.</p>
-
-                <hr>
+                <div class="hstack gap-1 d-flex align-items-center">
+                    <p class="text-h6-custom">Короткое наименование для быстрого поиска.</p>
+                    <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(пример - программирование-в-среде-vscode)</p>
+                </div>
 
                 <div>
                     <div class="hstack gap-1 d-flex align-items-center">
@@ -45,7 +46,7 @@
                     </div>
 
 
-                    <input type="fullName" class="form-control text-h5-custom bg-light mb-2" name="fullName" style="height: 35px;">
+                    <input type="fullName" class="form-control text-h5-custom bg-light mb-2" name="fullName" id="fullName" style="height: 35px;">
 
                     <div class="hstack gap-1 d-flex align-items-center">
                         <p class="text-h6-custom">Описание</p>
@@ -111,13 +112,16 @@
                     <p class="text-h6-custom">Файл материала </p>
                     <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
                 </div>
-                <input class="form-control text-h6-custom" type="file" name="formFileMaterial" id="formFileMaterial" style="height: 35px;">
+                <input class="form-control text-h6-custom" type="file" accept=".pdf, .doc, .docx, .ppt, .pptx" name="file" id="file" style="height: 35px;">
                 <hr>
 
                 <input class="form-control text-h6-custom" value="{{user.id}}" type="user" name="user" id="user" hidden>
 
 
-                <div class="row d-flex justify-content-end">
+                <div class="row d-flexjustify-content-between mb-5">
+                    <div class="col-9">
+                        <p class="text-h6-custom text-danger" id="validation_form"></p>
+                    </div>
                     <div class="col-3">
                         <button type="submit" class="btn btn-success text-h6-custom" style="width: 100%; height: 35px;">Создать</button>
                     </div>
@@ -131,6 +135,50 @@
     </div>
     
 </div>
+
+
+
+<script>
+
+    function getKey(key) {
+      var p = window.location.search;
+      p = p.match(new RegExp(key + '=([^&=]+)'));
+      return p ? p[1] : false;
+    }
+  
+    let error = getKey('error');
+    
+    if (error == 'MaterialExist'){
+      let validation_form = document.getElementById('validation_form');
+      validation_form.textContent = 'У вас уже есть материал с таким кратким именем!';
+    }
+
+    if (error == 'UserExist'){
+      let validation_form = document.getElementById('validation_form');
+      validation_form.textContent = 'Непредвиденная ошибка, попробуйте позже!';
+    }
+
+    if (error == 'NotValidation'){
+      let validation_form = document.getElementById('validation_form');
+      validation_form.textContent = 'Одно из полей заполнено не верно, проверьте написание!';
+    }
+  
+</script>
+
+<script  src="{% static 'js/base/jquery.min.js' %}"></script>
+<script src="{% static 'js/base/jquery.inputmask.min.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#input_name').inputmask({
+            regex: "[^\\s]*",
+            greedy: false,
+            clearIncomplete: true,
+            placeholder: '',
+            showMaskOnHover: false,
+        });
+    });
+</script>
 
 
 {% endblock %}

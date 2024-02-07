@@ -19,7 +19,7 @@ class ProfilePage(View):
         
         user = get_object_or_404(CustomUser, name=username)
 
-        materials = EducationMaterial.objects.filter()
+        materials = EducationMaterial.objects.filter(user=user)
         
         return render(request, 'main/profile.html', context={'user_profile':user, 'title': username})
     

@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import login
 from user.models import CustomUser
+from main.models import EducationMaterial
 from ..smtp import SMTPServer
 from ..forms import CreateMaterialForm
 import random
@@ -91,22 +92,27 @@ class ResetPassword(View):
 class CreateMaterial(View):
     def post(self, request):
         if request.method == 'POST':
-
-            print(request.FILES)
-            print(request.POST)
-
             form = CreateMaterialForm(request.POST, request.FILES)
+
             if form.is_valid():
+                name = form.cleaned_data['name']
+
+                try:
+                    user = form.cleaned_data['user']
+                except CustomUser.DoesNotExist:
+                    return redirect(f'/new/?error=UserExist')
+
+                if (EducationMaterial.objects.filter(name = name, user=user)):
+                    return redirect(f'/new/?error=MaterialExist')
+
 
                 education_material = form.save(commit=False)
-                education_material.user = request.user  
+                education_material.user = user  
                 education_material.save()
-                print('yes')
-                return JsonResponse({'status': 'success'})
+                return redirect(f'/{user.name}')
+            
             else:
-                form = CreateMaterialForm()
-
-            return JsonResponse({'status': 'error'})
+                return redirect(f'/new/?error=NotValidation')
 
 def GenerateMail(reset_code):
     message = f"<p>Здравствуйте, ваш код для восстановления пароля: {reset_code}</p>"
