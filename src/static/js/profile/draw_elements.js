@@ -2,6 +2,8 @@
 
 function drawMarkMaterials(data){
 
+    console.log(data)
+
     for (const mark of data) {
         if (mark.is_tracked)
         {

@@ -24,47 +24,19 @@ class ProfilePage(View):
         if (user == request.user):
             if (user.type_user == "Преподаватель"):
                 materials = EducationMaterial.objects.filter(user=user)
-                marks = []
 
-                for material in materials:
-                    is_tracked = MaterialMark.objects.filter(user=user, material=material).exists()
-                    count_mark = MaterialMark.objects.filter(material=material).count()
-                    data = {
-                        'material_id' : material.id,
-                        'is_tracked' : is_tracked,
-                        'count_mark' : count_mark
-                    }
-
-                    marks.append(data)
+                marks = create_json_list(materials, user)
 
                 marks = json.dumps(marks, sort_keys=True)
-
                 return render(request, 'main/profile.html', context={'user_profile':user, 'title': username, 'materials': materials, 'marks': marks})
             else:
                 materials = EducationMaterial.objects.all()
 
-                marks = []
-
-                ids = []
-
-                for material in materials:
-                    is_tracked = MaterialMark.objects.filter(user=user, material=material).exists()
-
-                    if (not is_tracked):
-                        ids.append(material.id)
-
-                    count_mark = MaterialMark.objects.filter(material=material).count()
-                    data = {
-                        'material_id' : material.id,
-                        'is_tracked' : is_tracked,
-                        'count_mark' : count_mark
-                    }
-
-                    marks.append(data)
-
-                marks = json.dumps(marks, sort_keys=True)
+                marks, ids = create_json_list(materials, user, True)
 
                 materials = EducationMaterial.objects.exclude(id__in=ids)
+
+                marks = json.dumps(marks, sort_keys=True)
                 
                 return render(request, 'main/profile.html', context={'user_profile':user, 'title': username, 'materials': materials, 'marks': marks})
             
@@ -72,18 +44,7 @@ class ProfilePage(View):
             materials = EducationMaterial.objects.filter(user=user, isPublic=True)
 
             try:
-                marks = []
-
-                for material in materials:
-                    is_tracked = MaterialMark.objects.filter(user=request.user, material=material).exists()
-                    count_mark = MaterialMark.objects.filter(material=material).count()
-                    data = {
-                        'material_id' : material.id,
-                        'is_tracked' : is_tracked,
-                        'count_mark' : count_mark
-                    }
-
-                    marks.append(data)
+                marks = create_json_list(materials, request.user)
 
                 marks = json.dumps(marks, sort_keys=True)
             except:
@@ -96,6 +57,33 @@ class ProfilePage(View):
 class NewMaterial(View):
     def get(self, request):
         return render(request, 'main/newMaterial.html', context={'title':'Новый материал'})
+
+
+def create_json_list(materials, user, include_ids=False):
+    marks = []
+    ids = []
+
+    for material in materials:
+        is_tracked = MaterialMark.objects.filter(user=user, material=material).exists()
+
+        if not is_tracked and include_ids:
+            ids.append(material.id)
+
+        count_mark = MaterialMark.objects.filter(material=material).count()
+        data = {
+            'material_id': material.id,
+            'is_tracked': is_tracked,
+            'count_mark': count_mark
+        }
+
+        marks.append(data)
+
+    if include_ids:
+        return marks, ids
+    else:
+        return marks
+
+
 
 def custom_handler404(request, exception):
     response = render('404.html', context={'title':'Страница не найдена.'},
