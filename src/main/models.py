@@ -9,11 +9,13 @@ class EducationMaterial(models.Model):
     author = models.CharField('Автор', max_length=350, null=True)
     source = models.URLField('Источник', max_length=300, null=True)
 
-    isPrivate = models.BooleanField('Публичный ли?', default=True)
+    isPublic = models.BooleanField('Публичный ли?', default=True)
 
     file = models.FileField('Файл материала', upload_to='materials/', blank=True, null=True)
 
+    icon = models.FileField('Иконка материала', upload_to='icons_materials/', default='icons_materials/default.png', blank=True, null=True)
     user = models.ForeignKey("user.CustomUser", verbose_name='Кому пренадлежит', on_delete=models.CASCADE)
+    created_at = models.DateTimeField('Дата создания', auto_now_add=True)
 
     def __str__(self):
         return f'{self.name}, {self.description}'
@@ -21,6 +23,19 @@ class EducationMaterial(models.Model):
     class Meta:
         verbose_name = 'Материал'
         verbose_name_plural = 'Материалы'
+
+
+class MaterialMark(models.Model):
+    user = models.ForeignKey("user.CustomUser", verbose_name='Пользователь', on_delete=models.CASCADE)
+    material = models.ForeignKey("main.EducationMaterial", verbose_name='Материал', on_delete=models.CASCADE)
+    created_at = models.DateTimeField('Дата отслеживания', auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user}, {self.material}'
+
+    class Meta:
+        verbose_name = 'Закладка'
+        verbose_name_plural = 'Закладки'
 
 #class FilmsOnMainPage(models.Model):
 #    film_id = models.IntegerField('ID Фильма')

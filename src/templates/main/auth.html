@@ -19,9 +19,9 @@
 </head>
 <body>
 
-    <div class="container-fluid d-flex align-items-center justify-content-center"  style="height: 120vh;">
+    <div class="container-fluid d-flex  justify-content-center"  style="height: 100vh;">
 
-        <div class="row d-flex justify-content-center" style="height: 500px;">
+        <div class="row d-flex justify-content-center mt-5" style="height: 500px;">
 
             <div class="col-12 col-md-6 col-lg-4 login-image">
                 <img id="login_image" src="{% static 'image/login-image.png' %}" alt="" style="width: 325px;">
@@ -62,7 +62,7 @@
                 <div class="row d-flex justify-content-center">
 
 
-                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="reset_password_form" style="display: none;">
+                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="reset_password_form" style="display: none; width:350px;">
                         <div id="reset_message" style="display: block;">
 
                             <div class="mb-3">
@@ -117,7 +117,7 @@
                     </div>
 
 
-                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="login_form" style="display: block;">
+                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="login_form" style="display: block; width:350px;">
 
                         <form name="login_form_auth" id="login_form_auth" method="post" action="{% url 'login' %}">
                             {% csrf_token %}
@@ -137,7 +137,7 @@
                         </form>
                     </div>
 
-                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="registration_form" style="display: none;">
+                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn" id="registration_form" style="display: none; width:350px;">
 
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label text-h5-custom">Почта</label>
@@ -173,7 +173,7 @@
 
                     </div>
 
-                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn mt-3" id="registration_form_two_step" style="display: none;">
+                    <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn mt-3" id="registration_form_two_step" style="display: none; width:350px;">
 
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label text-h5-custom">Кто вы?</label>

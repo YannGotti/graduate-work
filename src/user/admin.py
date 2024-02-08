@@ -20,7 +20,8 @@ class UserAdminPanel(UserAdmin):
                     'date_register',
                     'type_user',
                     'fullName',
-                    'name'
+                    'name',
+                    'userPlaceOfStudy'
                 )
             }
         )
@@ -35,7 +36,8 @@ class UserAdminPanel(UserAdmin):
                     'photo_profile',
                     'type_user',
                     'fullName',
-                    'name'
+                    'name',
+                    'userPlaceOfStudy'
                 )
             }
         )

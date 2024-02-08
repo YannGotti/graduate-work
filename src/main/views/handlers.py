@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import redirect, HttpResponse, get_object_or_404
 from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import login
 from user.models import CustomUser
-from main.models import EducationMaterial
-from ..smtp import SMTPServer
-from ..forms import CreateMaterialForm
+from main.models import EducationMaterial, MaterialMark
+from main.smtp import SMTPServer
+from main.forms import CreateMaterialForm, MaterialMarkForm
+from django.core.serializers import serialize
+from rest_framework.views import APIView
 import random
+import json
 
 class RegisterUser(View):
     def post(self, request):
@@ -113,6 +116,48 @@ class CreateMaterial(View):
             
             else:
                 return redirect(f'/new/?error=NotValidation')
+
+
+class MarkMaterial(APIView):
+    def get(self, request):
+        data = request.GET
+
+        user = CustomUser.objects.get(id = data.get('user_id'))
+
+        materials = MaterialMark.objects.filter(user=user)
+
+        serialized_materials = serialize('json', materials)
+
+        return JsonResponse({'status': 'success', 'materials':serialized_materials})
+
+
+    def post(self, request):
+        if request.method == 'POST':
+            form = MaterialMarkForm(request.POST)
+            if form.is_valid():
+                owner_material = form.cleaned_data['material'].user
+
+                mark_material = form.save(commit=False)
+                mark_material.save()
+
+                return redirect(f'/{owner_material.name}')
+               
+        else:
+            return JsonResponse({'status': 'error'})
+        
+    def delete(sel, request):
+        form = MaterialMarkForm(request.POST)
+        if form.is_valid():
+            material = form.cleaned_data['material']
+            user = form.cleaned_data['user']
+            mark_material = get_object_or_404(MaterialMark, material=material, user = user)
+
+            mark_material.delete()
+            return JsonResponse({'status': 'success'})
+
+
+
+
 
 def GenerateMail(reset_code):
     message = f"<p>Здравствуйте, ваш код для восстановления пароля: {reset_code}</p>"

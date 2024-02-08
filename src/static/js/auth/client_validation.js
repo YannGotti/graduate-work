@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     function updateError(element, isValid, errorMessage) {
 
-        console.log(isValid)
         if (isValid) {
             $(element).text('');
         } else {
@@ -102,8 +101,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function validateName(name) {
-        const regex = /^[A-Za-z\s\-']{5,27}$/;
-        console.log(regex.test(name))
+        const regex = /^[A-Za-z\d\s\-']{5,27}$/;
         return regex.test(name);
     }
 

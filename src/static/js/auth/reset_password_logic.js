@@ -169,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function(){
         const [passwordValid, matchValid] = validatePasswords();
 
         const isValid = passwordValid && matchValid;
-        console.log(isValid)
 
         showOrHideButtonResetRegister(isValid)
     }

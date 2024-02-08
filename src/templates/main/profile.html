@@ -4,9 +4,8 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
-<div class="container animate__animated animate__fadeIn"  style="height: 83vh;">
+<div class="container animate__animated animate__fadeIn"  style="height: 120vh;">
 
-    {% if user_profile.id == user.id %}
 
     <div class="row d-flex justify-content-center">
 
@@ -14,7 +13,7 @@
             <div class="row">
                 <input type="file" id="fileInput" accept="image/png, image/jpeg" style="display: none;">
                 <label  for="fileInput" id="imagePreview">
-                    <img src="/media/{{ user_profile.photo_profile }}" class="imagePreview" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-content="Сменить фото" alt="" style="border-radius: 50%; width: 270px; height: 270px;" >
+                    <img src="/media/{{ user_profile.photo_profile }}" class="imagePreview" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-content="Сменить фото" alt="" style="border-radius: 10%; width: 270px; height: 270px;" >
                 </label>
             </div>
 
@@ -22,6 +21,7 @@
                 <h1 class="text-h4-custom">{{ user_profile.name }}</h1>
                 <h1 class="text-h5-custom">{{ user_profile.fullName }}</h1>
                 <h1 class="text-h5-custom">{{ user_profile.type_user }}</h1>
+                <h1 class="text-h6-custom">{{ user_profile.userPlaceOfStudy }}</h1>
 
             </div>
             
@@ -33,12 +33,12 @@
             {% if user.type_user == "Преподаватель" %}
               
             <div class="hstack gap-2 d-flex align-items-center">
-                <input type="text"class="form-control text-h5-custom" style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2">
+                <input type="text"class="form-control text-h5-custom " style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2">
 
                 <div class="dropdown">
 
                     <button class="btn btn-light text-h5-custom dropdown-toggle d-flex justify-content-center align-items-center justify-content-between" style="width: 70px; height: 35px;"  type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{% static 'image/filter_icon.png' %}" alt="" style="width: 15px;">
+                        <img src="{% static 'image/filter_icon_black.png' %}" alt="" style="width: 15px;">
                     </button>
                     
                     <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2">
@@ -47,9 +47,12 @@
                     </ul>
                 </div>
 
+                {% if user_profile == user %}
                 <a href="{% url 'new_material' %}" class="btn btn-success text-h5-custom dropdown-toggle d-flex align-items-center justify-content-between"  style="width: 70px; height: 35px; border-top-right-radius: 15px;" type="button">
                     <img src="{% static 'image/white_plus_icon.png' %}" alt="" style="width: 15px;">
                 </a>
+                {% endif %}
+                
 
             </div>
 
@@ -60,7 +63,7 @@
                 <div class="dropdown">
 
                     <button class="btn btn-light text-h5-custom dropdown-toggle d-flex justify-content-center align-items-center justify-content-between" style="width: 70px; height: 35px;"  type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{% static 'image/filter_icon.png' %}" alt="" style="width: 15px;">
+                        <img src="{% static 'image/filter_icon_black.png' %}" alt="" style="width: 15px;">
                     </button>
                     
                     <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2">
@@ -77,13 +80,77 @@
 
             <div class="row">
 
+                {% for material in materials %}
+                <div class="col-12">
 
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-3 col-lg-3" style="width: 100px;">
+                            <img src="/media/{{material.icon}}" alt="" style="border-radius: 15px; width: 70px; height: 70px; overflow: hidden; object-fit: cover;">
+                        </div>
+                        <div class="col-9 col-lg-7">
+                            <div class="hstack gap-3 d-flex align-items-center mb-2">
+                                <a href="" class="text-h5-custom text-success" style="text-decoration: none;">{{material.name}}</a>
+                                {% if material.isPublic %}
+                                    <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(Публичный)</p>
+                                {% else %}
+                                    <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(Приватный)</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="hstack gap-4 d-flex align-items-center mb-2">
+                                <a href="/{{material.user.name}}" class="text-h6-custom text-dark">{{material.user.name}}</a>
+
+                                <a href="" class="text-h6-custom text-dark" style="text-decoration: none;">{{material.theme}}</a>
+
+                                <div class="hstack gap-1 d-flex align-items-center ">
+                                    <img src="{% static 'image/star_fill.png' %}" alt=""  style="width: 15px; height: 15x;">
+                                    <h1 class="text-h6-custom mt-2" id="count_mark_{{material.id}}"></h1>
+                                </div>
+
+                                <h1 class="text-h6-custom text-dark mt-2">{{material.created_at}}</h1>
+
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-2 d-flex justify-content-end" id="del_form_{{material.id}}" style="display: none !important;">
+                            <form action="/mark/" id="deleteForm">
+                                {% csrf_token %}
+                                <input type="text" value="{{ user.id }}" name="user" id="del_mark_user_input_{{material.id}}" hidden>
+                                <input type="text" value="{{ material.id }}" name="material" id="del_mark_material_input_{{material.id}}" hidden>
+
+                                <button type="button" onclick="deleteItem('{{material.id}}')" class="btn btn-success d-flex align-items-center justify-content-between" style="height: 35px; width: 100%;">
+                                    <img src="{% static 'image/star_fill.png' %}" alt="" style="width: 15px; height: 15x;">
+                                    <h1 class="text-h6-custom mt-2">Отслеживать</h1>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-12 col-lg-2 d-flex justify-content-end" id="create_form_{{material.id}}" style="display: none !important;">
+                            <form action="/mark/" method="post">
+                                {% csrf_token %}
+                                <input type="text" value="{{ user.id }}" name="user" hidden>
+                                <input type="text" value="{{ material.id }}" name="material" hidden>
+
+                                <button type="submit" class="btn btn-outline-success d-flex align-items-center justify-content-between" style="height: 35px; width: 100%;">
+                                    <img src="{% static 'image/star_blank.png' %}" alt="" style="width: 15px; height: 15x;">
+                                    <h1 class="text-h6-custom mt-2">Отслеживать</h1>
+                                </button>
+                            </form>
+                        </div>
+                        
+                    </div>
+
+                    <hr class="mt-3">
+
+                </div>
+                {% endfor %}
+
+                {% if materials|length == 0 %}
+                  
                 <div class="col-12 col-lg-12 ">
 
                     <div class="row d-flex justify-content-center">
                         <div class="col-3" style="width: 100px;">
                             <div class="sub-rect pure-background animated-background" ></div>
-                            <!--img src="{% static 'image/docx_icon.png' %}" alt="" style="border-radius: 100%; width: 50px; height: 50px; overflow: hidden; object-fit: cover;"-->
                         </div>
                         <div class="col-9 animated-background">
                         </div>
@@ -92,6 +159,37 @@
                     <hr class="mt-3">
 
                 </div>
+
+                <div class="col-12 col-lg-12 ">
+
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-3" style="width: 100px;">
+                            <div class="sub-rect pure-background animated-background" ></div>
+                        </div>
+                        <div class="col-9 animated-background">
+                        </div>
+                    </div>
+
+                    <hr class="mt-3">
+
+                </div>
+
+                <div class="col-12 col-lg-12 ">
+
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-3" style="width: 100px;">
+                            <div class="sub-rect pure-background animated-background" ></div>
+                        </div>
+                        <div class="col-9 animated-background">
+                        </div>
+                    </div>
+
+                    <hr class="mt-3">
+
+                </div>
+
+                {% endif %}
+
                 
 
             </div>
@@ -103,12 +201,16 @@
 
     </div>
 
-    {% else %}
-    <div class="row d-flex justify-content-center">
-
-    </div>
-    {% endif %}
+    
 
 </div>
+
+<script  src="{% static 'js/base/jquery.min.js' %}"></script>
+<script  src="{% static 'js/profile/ajax.js' %}"></script>
+<script  src="{% static 'js/profile/draw_elements.js' %}"></script>
+
+<script>
+    drawMarkMaterials(JSON.parse('{{ marks|safe }}'));
+</script>
 
 {% endblock %}

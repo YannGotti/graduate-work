@@ -16,6 +16,14 @@
 
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
+    {% if not user.is_authenticated %}
+      <script>
+          window.location.replace("/auth/");
+      </script>
+    {% endif %}
+
+    <script  src="{% static 'js/base/js.cookie.min.js' %}"></script>
+
 </head>
 <body>
 
@@ -79,11 +87,7 @@
     <script src="{% static 'js/base/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/base/popper.min.js' %}"></script>
 
-    {% if not user.is_authenticated %}
-      <script>
-          window.location.replace("/auth/");
-      </script>
-    {% endif %}
+    
 
     <script>
       const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')

@@ -62,7 +62,7 @@
                     <div>
                         <p class="text-h6-custom">Всеобщедоступный материал?</p>
                         <div class="form-check form-switch" style="height: 35px;">
-                            <input class="form-check-input bg-success" type="checkbox" role="switch" id="isPrivate" name="isPrivate" checked>
+                            <input class="form-check-input bg-success" type="checkbox" role="switch" id="isPublic" name="isPublic" checked>
                         </div>
                         <p class="text-h6-custom">по умолчанию - да</p>
                     </div>
@@ -107,16 +107,28 @@
                     </div>
                 </div>
 
+                <div class="hstack gap-3 d-flex align-items-center">
 
-                <div class="hstack gap-1 d-flex align-items-center">
-                    <p class="text-h6-custom">Файл материала </p>
-                    <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                    <div style="width: 100%;">
+                        <div class="hstack gap-1 d-flex align-items-center">
+                            <p class="text-h6-custom">Файл материала </p>
+                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                        </div>
+                        <input class="form-control text-h6-custom" type="file" accept=".pdf, .doc, .docx, .ppt, .pptx" name="file" id="file" >
+                    </div>
+                    <div style="width: 100%;">
+                        <div class="hstack gap-1 d-flex align-items-center">
+                            <p class="text-h6-custom">Иконка материала </p>
+                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                        </div>
+                        <input class="form-control text-h6-custom" type="file" accept=".png, .jpg, .webp" name="icon" id="icon" >
+                    </div>
+
                 </div>
-                <input class="form-control text-h6-custom" type="file" accept=".pdf, .doc, .docx, .ppt, .pptx" name="file" id="file" style="height: 35px;">
+
                 <hr>
 
                 <input class="form-control text-h6-custom" value="{{user.id}}" type="user" name="user" id="user" hidden>
-
 
                 <div class="row d-flexjustify-content-between mb-5">
                     <div class="col-9">
@@ -178,6 +190,7 @@
             showMaskOnHover: false,
         });
     });
+    
 </script>
 
 

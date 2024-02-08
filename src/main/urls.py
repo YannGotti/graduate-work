@@ -17,5 +17,6 @@ urlpatterns = [
     path('auth/register/', RegisterUser.as_view()),
 
     path('new/create/', CreateMaterial.as_view(), name='create_material'),
+    path('mark/', MarkMaterial.as_view(), name='mark_material'),
 
 ]
