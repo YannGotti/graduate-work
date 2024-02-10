@@ -139,8 +139,8 @@ class MarkMaterial(APIView):
 
                 mark_material = form.save(commit=False)
 
-                if (MaterialMark.objects.get(material = mark_material.material, user = mark_material.user)):
-                    return JsonResponse({'status': 'error'})
+                if (MaterialMark.objects.filter(material = mark_material.material, user = mark_material.user)):
+                    return redirect(f'/{owner_material.name}')
 
                 mark_material.save()
 
@@ -154,8 +154,12 @@ class MarkMaterial(APIView):
         if form.is_valid():
             material = form.cleaned_data['material']
             user = form.cleaned_data['user']
-            mark_material = get_object_or_404(MaterialMark, material=material, user = user)
 
+            try:
+                mark_material = MaterialMark.objects.filter(material = material, user = user)
+            except MaterialMark.DoesNotExist:
+                return redirect(f'/{material.name}')
+            
             mark_material.delete()
             return JsonResponse({'status': 'success'})
 
