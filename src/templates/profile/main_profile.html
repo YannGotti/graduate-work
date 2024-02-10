@@ -4,7 +4,7 @@
 {% block profile_content %}
 
 <div class="col-12 col-md-12 col-lg-9">
-    {% if user.type_user == "Преподаватель" %}
+   
       
     <div class="hstack gap-2 d-flex align-items-center">
         <input type="text"class="form-control text-h5-custom " style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2">
@@ -21,166 +21,19 @@
             </ul>
         </div>
 
-        {% if user_profile == user %}
+        {% if user_profile == user and user.type_user == "Преподаватель" %}
         <a href="{% url 'new_material' %}" class="btn btn-success text-h5-custom dropdown-toggle d-flex align-items-center justify-content-between"  style="width: 70px; height: 35px; border-top-right-radius: 15px;" type="button">
             <img src="{% static 'image/white_plus_icon.png' %}" alt="" style="width: 15px;">
         </a>
         {% endif %}
-        
 
     </div>
-
-    {% else %}
-    <div class="hstack gap-2 d-flex align-items-center">
-        <input type="text"class="form-control text-h5-custom" style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2">
-
-        <div class="dropdown">
-
-            <button class="btn btn-light text-h5-custom dropdown-toggle d-flex justify-content-center align-items-center justify-content-between" style="width: 70px; height: 35px;"  type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{% static 'image/filter_icon_black.png' %}" alt="" style="width: 15px;">
-            </button>
-            
-            <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2">
-                <li><a class="dropdown-item text-h5-custom" href="">Добавить материал</a></li>
-                <li><a class="dropdown-item text-h5-custom" href="#">Another action</a></li>
-            </ul>
-        </div>
-
-    </div>
-    {% endif %}
-
 
     <hr>
 
     <div class="row">
 
-        {% for material in materials %}
-        <div class="col-12">
-
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-3 col-lg-3" style="width: 100px;">
-                    <img src="/media/{{material.icon}}" alt="" style="border-radius: 15px; width: 70px; height: 70px; overflow: hidden; object-fit: cover;">
-                </div>
-                <div class="col-9 col-lg-7">
-                    <div class="hstack gap-3 d-flex align-items-center mb-2">
-                        <a href="" class="text-h5-custom text-success" style="text-decoration: none;">{{material.name}}</a>
-                        {% if material.isPublic %}
-                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(Публичный)</p>
-                        {% else %}
-                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(Приватный)</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="hstack gap-4 d-flex align-items-center mb-2">
-                        <a href="/{{material.user.name}}" class="text-h6-custom text-dark">{{material.user.name}}</a>
-
-                        <a href="" class="text-h6-custom text-dark" style="text-decoration: none;">{{material.theme}}</a>
-
-                        <div class="hstack gap-1 d-flex align-items-center ">
-                            <img src="{% static 'image/star_fill.png' %}" alt=""  style="width: 15px; height: 15x;">
-                            <h1 class="text-h6-custom mt-2" id="count_mark_{{material.id}}"></h1>
-                        </div>
-
-                        <h1 class="text-h6-custom text-dark mt-2">{{material.created_at}}</h1>
-
-                    </div>
-                </div>
-
-                <div class="col-12 col-lg-2 d-flex justify-content-end" id="del_form_{{material.id}}" style="display: none !important;">
-                    <form action="/mark/" id="deleteForm">
-                        {% csrf_token %}
-                        <input type="text" value="{{ user.id }}" name="user" id="del_mark_user_input_{{material.id}}" hidden>
-                        <input type="text" value="{{ material.id }}" name="material" id="del_mark_material_input_{{material.id}}" hidden>
-
-                        <button type="button" onclick="deleteItem('{{material.id}}')" class="btn btn-success d-flex align-items-center justify-content-between" style="height: 35px; width: 100%;">
-                            <img src="{% static 'image/star_fill.png' %}" alt="" style="width: 15px; height: 15x;">
-                            <h1 class="text-h6-custom mt-2">Отслеживать</h1>
-                        </button>
-                    </form>
-                </div>
-                <div class="col-12 col-lg-2 d-flex justify-content-end" id="create_form_{{material.id}}" style="display: none !important;">
-                    <form action="/mark/" method="post">
-                        {% csrf_token %}
-                        <input type="text" value="{{ user.id }}" name="user" hidden>
-                        <input type="text" value="{{ material.id }}" name="material" hidden>
-
-                        <button type="submit" class="btn btn-outline-success d-flex align-items-center justify-content-between" style="height: 35px; width: 100%;">
-                            <img src="{% static 'image/star_blank.png' %}" alt="" style="width: 15px; height: 15x;">
-                            <h1 class="text-h6-custom mt-2">Отслеживать</h1>
-                        </button>
-                    </form>
-                </div>
-                
-            </div>
-
-            <hr class="mt-3">
-
-        </div>
-        {% endfor %}
-        
-        {% for material in follow_materials %}
-        <div class="col-12">
-
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-3 col-lg-3" style="width: 100px;">
-                    <img src="/media/{{material.icon}}" alt="" style="border-radius: 15px; width: 70px; height: 70px; overflow: hidden; object-fit: cover;">
-                </div>
-                <div class="col-9 col-lg-7">
-                    <div class="hstack gap-3 d-flex align-items-center mb-2">
-                        <a href="" class="text-h5-custom text-success" style="text-decoration: none;">{{material.name}}</a>
-                        {% if material.isPublic %}
-                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(Публичный)</p>
-                        {% else %}
-                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(Приватный)</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="hstack gap-4 d-flex align-items-center mb-2">
-                        <a href="/{{material.user.name}}" class="text-h6-custom text-dark">{{material.user.name}}</a>
-
-                        <a href="" class="text-h6-custom text-dark" style="text-decoration: none;">{{material.theme}}</a>
-
-                        <div class="hstack gap-1 d-flex align-items-center ">
-                            <img src="{% static 'image/star_fill.png' %}" alt=""  style="width: 15px; height: 15x;">
-                            <h1 class="text-h6-custom mt-2" id="count_mark_{{material.id}}"></h1>
-                        </div>
-
-                        <h1 class="text-h6-custom text-dark mt-2">{{material.created_at}}</h1>
-
-                    </div>
-                </div>
-
-                <div class="col-12 col-lg-2 d-flex justify-content-end" id="del_form_{{material.id}}" style="display: none !important;">
-                    <form action="/mark/" id="deleteForm">
-                        {% csrf_token %}
-                        <input type="text" value="{{ user.id }}" name="user" id="del_mark_user_input_{{material.id}}" hidden>
-                        <input type="text" value="{{ material.id }}" name="material" id="del_mark_material_input_{{material.id}}" hidden>
-
-                        <button type="button" onclick="deleteItem('{{material.id}}')" class="btn btn-success d-flex align-items-center justify-content-between" style="height: 35px; width: 100%;">
-                            <img src="{% static 'image/star_fill.png' %}" alt="" style="width: 15px; height: 15x;">
-                            <h1 class="text-h6-custom mt-2">Отслеживать</h1>
-                        </button>
-                    </form>
-                </div>
-                <div class="col-12 col-lg-2 d-flex justify-content-end" id="create_form_{{material.id}}" style="display: none !important;">
-                    <form action="/mark/" method="post">
-                        {% csrf_token %}
-                        <input type="text" value="{{ user.id }}" name="user" hidden>
-                        <input type="text" value="{{ material.id }}" name="material" hidden>
-
-                        <button type="submit" class="btn btn-outline-success d-flex align-items-center justify-content-between" style="height: 35px; width: 100%;">
-                            <img src="{% static 'image/star_blank.png' %}" alt="" style="width: 15px; height: 15x;">
-                            <h1 class="text-h6-custom mt-2">Отслеживать</h1>
-                        </button>
-                    </form>
-                </div>
-                
-            </div>
-
-            <hr class="mt-3">
-
-        </div>
-        {% endfor %}
+        {% include 'profile/materials_example.html' %}
 
         {% if materials|length == 0 %}
           

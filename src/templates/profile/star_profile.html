@@ -1,0 +1,37 @@
+{% extends 'profile/profile.html' %}
+{% load static %}
+
+{% block profile_content %}
+<div class="col-12 col-md-12 col-lg-9">
+
+    <div class="hstack gap-2 d-flex align-items-center">
+        <input type="text"class="form-control text-h5-custom " style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2">
+
+        <div class="dropdown">
+
+            <button class="btn btn-light text-h5-custom dropdown-toggle d-flex justify-content-center align-items-center justify-content-between" style="width: 70px; height: 35px;"  type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="{% static 'image/filter_icon_black.png' %}" alt="" style="width: 15px;">
+            </button>
+            
+            <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2">
+                <li><a class="dropdown-item text-h5-custom" href="#">Добавить материал</a></li>
+                <li><a class="dropdown-item text-h5-custom" href="#">Another action</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <hr>
+
+    <div class="row">
+        {% include 'profile/materials_example.html' %}
+    </div>
+</div>
+
+{% if user != user_profile %}
+<script>
+    location.replace("/{{ user_profile.name }}");
+</script>
+{% endif %}
+
+{% endblock %}
+

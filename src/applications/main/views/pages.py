@@ -58,12 +58,18 @@ def ProfilePageMain(self, request, username, user):
 
 def ProfilePageFollowing(self, request, username, user):
         
+        materials = EducationMaterial.objects.all()
+        marks, ids = create_json_list(materials, user, True)
+        materials = EducationMaterial.objects.exclude(id__in=ids)
+        
         context = {
             'user_profile': user,
             'title': username,
-            'tab' : 'main',
+            'tab' : 'star',
+            'materials': materials,
+            'marks': json.dumps(marks, sort_keys=True) if marks else []
         }
-        return render(request, 'profile/main_profile.html', context=context)
+        return render(request, 'profile/star_profile.html', context=context)
 
     
 class NewMaterial(View):

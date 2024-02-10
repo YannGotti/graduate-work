@@ -12,13 +12,18 @@
                 {% endif %}
             </div>
 
-            <div>
-                <a href="/{{ user.name }}?tab=star" class="text-h5-custom text-dark" style="text-decoration: none;">Отслеживаемые</a>
-                {% if tab == 'star' %}
-                    <hr class="hr-show m-0 p-0">
-                {% endif %}
-            </div>
+            {% if user.type_user == "Преподаватель" %}
             
+                <div>
+                    <a href="/{{ user.name }}?tab=star" class="text-h5-custom text-dark" style="text-decoration: none;">Отслеживаемые</a>
+                    {% if tab == 'star' %}
+                        <hr class="hr-show m-0 p-0">
+                    {% endif %}
+                </div>
+
+            {% endif %}
+            
+
     </div>
 </div>
 {% endblock %}
@@ -35,12 +40,17 @@
     <div class="row d-flex justify-content-center">
 
         <div class="col-12 col-md-12 col-lg-3">
+            {% if user == user_profile %}
             <div class="row">
                 <input type="file" id="fileInput" accept="image/png, image/jpeg" style="display: none;">
                 <label  for="fileInput" id="imagePreview">
                     <img src="/media/{{ user_profile.photo_profile }}" class="imagePreview" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-content="Сменить фото" alt="" style="border-radius: 10%; width: 270px; height: 270px;" >
                 </label>
             </div>
+            {% else %}
+            <img src="/media/{{ user_profile.photo_profile }}" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover" alt="" style="border-radius: 10%; width: 270px; height: 270px;" >
+            {% endif %}
+            
 
             <div class="row mt-3 mb-3">
                 <h1 class="text-h4-custom">{{ user_profile.name }}</h1>
