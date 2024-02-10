@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block nav-content %}
+<div class="container-fluid d-flex justify-content-start">
+    <div class="hstack gap-3 d-flex align-items-center">
+
+            <div>
+                <a href="/{{ user.name }}" class="text-h5-custom text-dark" style="text-decoration: none;">{{ user.name }}</a>
+                {% if tab == 'main' %}
+                    <hr class="hr-show m-0 p-0">
+                {% endif %}
+            </div>
+
+            <div>
+                <a href="/{{ user.name }}?tab=star" class="text-h5-custom text-dark" style="text-decoration: none;">Отслеживаемые</a>
+                {% if tab == 'star' %}
+                    <hr class="hr-show m-0 p-0">
+                {% endif %}
+            </div>
+            
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<script  src="{% static 'js/profile/draw_elements.js' %}"></script>
+
+
+<div class="container animate__animated animate__fadeIn"  style="height: 120vh;">
+
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-12 col-md-12 col-lg-3">
+            <div class="row">
+                <input type="file" id="fileInput" accept="image/png, image/jpeg" style="display: none;">
+                <label  for="fileInput" id="imagePreview">
+                    <img src="/media/{{ user_profile.photo_profile }}" class="imagePreview" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-content="Сменить фото" alt="" style="border-radius: 10%; width: 270px; height: 270px;" >
+                </label>
+            </div>
+
+            <div class="row mt-3 mb-3">
+                <h1 class="text-h4-custom">{{ user_profile.name }}</h1>
+                <h1 class="text-h5-custom">{{ user_profile.fullName }}</h1>
+                <h1 class="text-h5-custom">{{ user_profile.type_user }}</h1>
+                <h1 class="text-h6-custom">{{ user_profile.userPlaceOfStudy }}</h1>
+
+            </div>
+            
+        
+        </div>
+
+        {% block profile_content %}
+        {% endblock %}
+
+
+    </div>
+
+    
+
+</div>
+
+<script  src="{% static 'js/base/jquery.min.js' %}"></script>
+<script  src="{% static 'js/profile/ajax.js' %}"></script>
+
+<script>
+    drawMarkMaterials(JSON.parse('{{ marks|safe }}'));
+</script>
+
+{% endblock %}

@@ -4,7 +4,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -14,8 +13,8 @@ SECRET_KEY = 'django-insecure-lanizqo*bno%di#+s9+p0t$ti_dc4tohbilqk$0pmggu#gsq!o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "0624-85-249-167-115.ngrok-free.app"]
-CSRF_TRUSTED_ORIGINS=["https://0624-85-249-167-115.ngrok-free.app"]
+ALLOWED_HOSTS = ["127.0.0.1", "73ae-85-249-161-223.ngrok-free.app"]
+CSRF_TRUSTED_ORIGINS=["https://73ae-85-249-161-223.ngrok-free.app"]
 
 
 # Application definition
@@ -28,8 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'main.apps.MainConfig',
-    'user.apps.UserConfig',
+    'applications.main.apps.MainConfig',
+    'applications.user.apps.UserConfig',
 
     'rest_framework',
 ]

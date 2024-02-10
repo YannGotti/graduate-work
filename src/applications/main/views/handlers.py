@@ -2,10 +2,10 @@ from django.shortcuts import redirect, HttpResponse, get_object_or_404
 from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import login
-from user.models import CustomUser
-from main.models import EducationMaterial, MaterialMark
-from main.smtp import SMTPServer
-from main.forms import CreateMaterialForm, MaterialMarkForm
+from applications.user.models import CustomUser
+from applications.main.models import EducationMaterial, MaterialMark
+from applications.main.smtp import SMTPServer
+from applications.main.forms import CreateMaterialForm, MaterialMarkForm
 from django.core.serializers import serialize
 from rest_framework.views import APIView
 import random
