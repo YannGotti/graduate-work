@@ -99,7 +99,7 @@ class CreateMaterial(View):
 
             if form.is_valid():
                 name = form.cleaned_data['name']
-
+                
                 try:
                     user = form.cleaned_data['user']
                 except CustomUser.DoesNotExist:
@@ -138,6 +138,10 @@ class MarkMaterial(APIView):
                 owner_material = form.cleaned_data['material'].user
 
                 mark_material = form.save(commit=False)
+
+                if (MaterialMark.objects.get(material = mark_material.material, user = mark_material.user)):
+                    return JsonResponse({'status': 'error'})
+
                 mark_material.save()
 
                 return redirect(f'/{owner_material.name}')

@@ -9,7 +9,7 @@
             </div>
             <div class="col-9 col-lg-7">
                 <div class="hstack gap-3 d-flex align-items-center mb-2">
-                    <a href="" class="text-h5-custom text-success" style="text-decoration: none;">{{material.name}}</a>
+                    <a href="/{{ material.user.name }}/{{material.name }}" class="text-h5-custom text-success" style="text-decoration: none;">{{material.name}}</a>
                     {% if material.isPublic %}
                         <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(Публичный)</p>
                     {% else %}
@@ -63,3 +63,27 @@
 
     </div>
 {% endfor %}
+
+
+
+{% if materials|length == 0 %}
+    {% for _ in "123"|slice:":3" %}
+    <div class="col-12 col-lg-12 ">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-3" style="width: 100px;">
+                <div class="sub-rect pure-background animated-background" ></div>
+            </div>
+            <div class="col-9 animated-background">
+            </div>
+        </div>
+
+        <hr class="mt-3">
+
+    </div>
+    {% endfor %}
+
+    <div class="row d-flex justify-content-center">
+        <h1 class="text-h6-custom text-center">Пока еще материалы отсутствуют</h1>
+    </div>
+{% endif %}

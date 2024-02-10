@@ -21,12 +21,24 @@ class ProfilePage(View):
 
         tab_param = request.GET.get('tab')
 
-        if (tab_param == 'star'):
+        if (tab_param == 'stars'):
             return ProfilePageFollowing(self, request, username, user)
 
         else:
             return ProfilePageMain(self, request, username, user)
 
+
+class MaterialPage(View):
+    def get(self, request, username, material_name):
+        user = get_object_or_404(CustomUser, name=username)
+        material = get_object_or_404(EducationMaterial, name=material_name)
+
+        context = {
+            'user_profile' : user,
+            'material' : material
+        }
+
+        return render(request, 'profile/material.html', context=context)
 
 
 def ProfilePageMain(self, request, username, user):
@@ -49,8 +61,8 @@ def ProfilePageMain(self, request, username, user):
     context = {
         'user_profile': user,
         'title': username,
-        'materials': materials,
         'tab' : 'main',
+        'materials': materials,
         'marks': json.dumps(marks, sort_keys=True) if marks else []
     }
 
@@ -64,12 +76,12 @@ def ProfilePageFollowing(self, request, username, user):
         
         context = {
             'user_profile': user,
-            'title': username,
-            'tab' : 'star',
+            'title': f'{username} - Отслеживание',
+            'tab' : 'stars',
             'materials': materials,
             'marks': json.dumps(marks, sort_keys=True) if marks else []
         }
-        return render(request, 'profile/star_profile.html', context=context)
+        return render(request, 'profile/stars_profile.html', context=context)
 
     
 class NewMaterial(View):

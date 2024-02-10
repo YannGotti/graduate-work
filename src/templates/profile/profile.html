@@ -15,8 +15,8 @@
             {% if user.type_user == "Преподаватель" %}
             
                 <div>
-                    <a href="/{{ user.name }}?tab=star" class="text-h5-custom text-dark" style="text-decoration: none;">Отслеживаемые</a>
-                    {% if tab == 'star' %}
+                    <a href="/{{ user.name }}?tab=stars" class="text-h5-custom text-dark" style="text-decoration: none;">Отслеживаемые</a>
+                    {% if tab == 'stars' %}
                         <hr class="hr-show m-0 p-0">
                     {% endif %}
                 </div>
@@ -79,5 +79,26 @@
 <script>
     drawMarkMaterials(JSON.parse('{{ marks|safe }}'));
 </script>
+
+
+{% if user != user_profile %}
+<script>
+
+    function getKey(key) {
+      var p = window.location.search;
+      p = p.match(new RegExp(key + '=([^&=]+)'));
+      return p ? p[1] : false;
+    }
+  
+    let tab = getKey('tab');
+  
+    if (tab){
+        location.replace("/{{ user_profile.name }}");
+    }
+  
+</script>
+{% endif %}
+
+
 
 {% endblock %}

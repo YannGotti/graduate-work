@@ -9,6 +9,8 @@ urlpatterns = [
     path('auth/', AuthPage.as_view(), name='auth_page'),
     path('new/', NewMaterial.as_view(), name='new_material'),
     path('<username>', ProfilePage.as_view(), name='profile_page'),
+    
+    path('<username>/<material_name>', MaterialPage.as_view()),
 
 
     path('auth/reset_password/', SendResetPassword.as_view()),
