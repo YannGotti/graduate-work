@@ -196,10 +196,19 @@
                             <input type="text" class="form-control shadow animate__animated animate__fadeInDown" id="study_input" placeholder="ЮРГПУ НПИ Имени Платова">
                         </div>
 
-                        <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown mt-3" onclick="userRegistration()" id="registration_final" style="width: 100%;">Зарегистрироваться</button>
+                        <div class="hstack gap-2 d-flex align-items-center">
+
+                            <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown mt-3" onclick="registerBackStep()">
+                                <img class="" src="{% static 'image/arrow_back.png' %}" style="width: 25px;" alt="" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-content="Назад">
+                            </button>
+
+
+
+                            <button type="button" class="btn btn-light text-h5-custom animate__animated animate__fadeInDown mt-3" onclick="userRegistration()" id="registration_final" style="width: 100%;">Зарегистрироваться</button>
+                        </div>
+
                         <span id="field_validation_register" class="text-h6-custom" style="color: red;"></span>
 
-                        <img src="{% static 'image/arrow_left.png' %}" onclick="registerBackStep()" style="width: 25px;" alt="">
 
                         
                     </div>
@@ -265,11 +274,18 @@
       
     </script>
 
+    
+
 
     <script src="{% static 'js/base/jquery.min.js' %}"></script>
     <script src="{% static 'js/base/jquery.inputmask.min.js' %}"></script>
     <script src="{% static 'js/base/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/base/popper.min.js' %}"></script>
+
+    <script>
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+    </script>
 
 
     <script  src="{% static 'js/auth/client_validation.js' %}"></script>
