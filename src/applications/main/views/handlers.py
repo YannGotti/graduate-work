@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, HttpResponse, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import login
@@ -94,28 +95,27 @@ class ResetPassword(View):
 
 class Material(APIView):
     def post(self, request):
-        if request.method == 'POST':
-            form = CreateMaterialForm(request.POST, request.FILES)
+        form = CreateMaterialForm(request.POST, request.FILES)
 
-            if form.is_valid():
-                name = form.cleaned_data['name']
-                
-                try:
-                    user = form.cleaned_data['user']
-                except CustomUser.DoesNotExist:
-                    return redirect(f'/new/?error=UserExist')
-
-                if (EducationMaterial.objects.filter(name = name, user=user)):
-                    return redirect(f'/new/?error=MaterialExist')
-
-
-                education_material = form.save(commit=False)
-                education_material.user = user  
-                education_material.save()
-                return redirect(f'/{user.name}')
+        if form.is_valid():
+            name = form.cleaned_data['name']
             
-            else:
-                return redirect(f'/new/?error=NotValidation')
+            try:
+                user = form.cleaned_data['user']
+            except CustomUser.DoesNotExist:
+                return redirect(f'/new/?error=UserExist')
+
+            if (EducationMaterial.objects.filter(name = name, user=user)):
+                return redirect(f'/new/?error=MaterialExist')
+
+
+            education_material = form.save(commit=False)
+            education_material.user = user  
+            education_material.save()
+            return redirect(f'/{user.name}')
+        
+        else:
+            return redirect(f'/new/?error=NotValidation')
             
     def put(self, request, material_id):
         if request.method == 'PUT':
