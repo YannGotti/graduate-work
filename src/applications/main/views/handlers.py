@@ -92,7 +92,7 @@ class ResetPassword(View):
         return JsonResponse({'status': 'success'})
 
 
-class CreateMaterial(View):
+class Material(APIView):
     def post(self, request):
         if request.method == 'POST':
             form = CreateMaterialForm(request.POST, request.FILES)
@@ -116,6 +116,30 @@ class CreateMaterial(View):
             
             else:
                 return redirect(f'/new/?error=NotValidation')
+            
+    def put(self, request, material_id):
+        if request.method == 'PUT':
+            material = get_object_or_404(EducationMaterial, id=material_id)
+            form = CreateMaterialForm(request.POST, request.FILES, instance=material)
+
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'status': 'success', 'name': material.name})
+            else:
+                return JsonResponse({'status': 'error'})
+        else:
+            return JsonResponse({'status': 'error'})
+        
+    
+    def delete(self, request, material_id):
+        if request.method == 'DELETE':
+            material = get_object_or_404(EducationMaterial, id=material_id)
+            material.delete()
+            return JsonResponse({'status': 'success', 'username': material.user.name})
+        else:
+            return JsonResponse({'status': 'error'})
+
+
 
 
 class MarkMaterial(APIView):

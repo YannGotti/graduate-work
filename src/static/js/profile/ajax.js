@@ -14,10 +14,8 @@ function deleteItem(id) {
         data: formData,
         processData: false,
         contentType: false,
-        beforeSend: function (xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
+        headers: {
+            "X-CSRFToken": csrftoken  
         },
         success: function (response) {
             if (response.status == "error"){
@@ -34,6 +32,61 @@ function deleteItem(id) {
 }
 
 
+function editMaterialPut(username, id_material) {
+    const csrftoken = Cookies.get('csrftoken');
+    const formData = new FormData(document.getElementById('editMaterialForm'));
+
+    formData.append('description', document.getElementById('description_input').value);
+
+    $.ajax({
+        url: `/material/edit/${id_material}/`, 
+        type: 'PUT',
+        data: formData,
+        processData: false,
+        contentType: false,
+        headers: {
+            "X-CSRFToken": csrftoken  
+        },
+        success: function(data) {
+            location.replace(`/${username}/${data.name}`);
+        },
+        error: function(error) {
+            console.error('Error:', error);
+            const validation_form = document.getElementById('validation_form');
+            validation_form.innerText = 'Непредвиденная ошибка. Пожалуйста, попробуйте позже.';
+        }
+    });
+}
+
+function deleteMaterialDel(id_material){
+    const csrftoken = Cookies.get('csrftoken');
+
+    $.ajax({
+        url: `/material/delete/${id_material}/`, 
+        type: 'DELETE',
+        headers: {
+            "X-CSRFToken": csrftoken  
+        },
+        success: function(data) {
+            location.replace(`/${data.username}`);
+        },
+        error: function(error) {
+            console.error('Error:', error);
+            const validation_form = document.getElementById('validation_form');
+            validation_form.innerText = 'Непредвиденная ошибка. Пожалуйста, попробуйте позже.';
+        }
+    });
+
+}
+
+
+
 function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+
+function isDeleteMaterial(){
+    const validateButtonDeleteMaterial = document.getElementById('validateButtonDeleteMaterial');
+    validateButtonDeleteMaterial.style.display = 'block';
 }

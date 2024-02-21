@@ -1,13 +1,398 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% if user == user_profile %}
+    {% block nav-content %}
+    <div class="container-fluid d-flex justify-content-around justify-content-lg-start">
+        <div class="hstack gap-3 d-flex align-items-center">
 
-{% block content %}
-<div class="container animate__animated animate__fadeIn"  style="height: 100vh;">
-    <div class="row d-flex justify-content-center">
-        <div class="col-12 col-lg-8">
-            {{ material }}
+            <div>
+                <a href="/{{ material.user.name }}/{{material.name }}?tab=main" class="text-h5-custom text-dark" style="text-decoration: none;">Материал</a>
+                {% if tab == 'main' %}
+                    <hr class="hr-show m-0 p-0">
+                {% endif %}
+            </div>
+
+            <div>
+                <a href="/{{ material.user.name }}/{{material.name }}?tab=settings" class="text-h5-custom text-dark" style="text-decoration: none;">Настройки</a>
+                {% if tab == 'settings' %}
+                    <hr class="hr-show m-0 p-0">
+                {% endif %}
+            </div>
+
         </div>
     </div>
-</div>
+    {% endblock %}
+{% endif %}
+
+
+
+{% block content %}
+
+    {% if tab == 'main' %}
+
+    <div class="container animate__animated animate__fadeIn"  style="height: 110vh;">
+        <div class="row d-flex justify-content-center">
+            
+
+            <div class="col-12 col-lg-8">
+                <div class="row">
+                    <div class="hstack gap-2 d-flex align-items-center">
+                        <a href="/{{material.user.name}}" class="btn btn-light d-flex align-items-center text-h6-custom" style="font-weight: 600;">{{material.user.name}}</a>
+
+                        <h1 class="text-h4-custom mt-1">/</h1>
+
+                        <a href="/{{material.user.name}}/{{material.name}}" class="btn btn-light d-flex align-items-center text-h6-custom" style="font-weight: 600;">{{material.name}}</a>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+
+
+                <div class="row d-flex justify-content-between">
+
+                    <div class="col-12 col-lg-5 hstack gap-2 d-flex align-items-center">
+                        <img src="/media/{{material.icon }}" style="width: 50px; height: 50px; border-radius: 100%;" alt="">
+                        <h1 class="text-h5-custom mt-2">{{material.name}}</h1>
+
+                        {% if material.isPublic %}
+                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(Публичный)</p>
+                        {% else %}
+                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(Приватный)</p>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="col-12 col-lg-3 hstack gap-2 d-flex justify-content-lg-end">
+                        <div class="vstack gap-2">
+                            <h1 class="btn btn-light text-h6-custom">{{material.theme}}</h1>
+                            <h1 class="btn btn-light text-h6-custom">{{material.created_at}}</h1>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% if material.fullName %}
+                    <div class="hstack gap-3">
+                        <img src="{% static 'image/name_document_img.png' %}" style="width: 50px; height: 50px;">
+                        <h1 class="text-h5-custom mt-4 mb-4">{{material.fullName}}</h1>
+                    </div>
+                {% endif %}
+
+
+                <div class="row">
+                    <hr class="mt-4">
+                    <div class="col-12">
+                        {% if material.description %}
+                        <div class="hstack gap-3">
+                            <img src="{% static 'image/description_img.png' %}" style="width: 50px; height: 50px;">
+                            <div>
+                                <h1 class="text-h6-custom">Описание материала</h1>
+                                <h1 class="text-h5-custom">{{material.description}}</h1>
+                                
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <hr class="mt-4">
+
+                        {% if material.file %}
+
+                            <div class="hstack gap-3">
+                                <img src="{% static 'image/document_img.png' %}" style="width: 50px; height: 50px;">
+
+                                <div>
+                                    <h1 class="text-h6-custom">Прикрепленный документ</h1>
+                                    <a href="/media/{{material.file}}" target="_blank" class="text-h5-custom" style="text-decoration: none;">{{material.file}}</a>
+                                </div>
+                            </div>
+                            
+                            <hr>
+                        {% endif %}
+
+                        {% if material.source %}
+                            <div class="hstack gap-3">
+                                <img src="{% static 'image/link_img.png' %}" style="width: 50px; height: 50px;">
+
+                                <div>
+                                    <h1 class="text-h6-custom">Источник материала</h1>
+                                    <a href="{{material.source}}" target="_blank" class="text-h5-custom" style="text-decoration: none;">{{material.source}}</a>
+                                </div>
+                            </div>
+                            <hr>
+                        {% endif %}
+
+                            
+    
+                        <div class="hstack gap-3">
+                            
+                            <img src="{% static 'image/creator_img.png' %}" style="width: 50px; height: 50px;">
+                            <div>
+                                
+                                <h1 class="text-h6-custom">Создатель материала</h1>
+                                <a href="/{{material.user.name}}" target="_blank" class="text-h5-custom" style="text-decoration: none;">{{material.user.name}}</a>
+                            </div>
+                        </div>
+                        
+                        <hr>
+
+                    </div>
+                </div>
+
+                <!--div class="row">
+                    <div class="hstack gap-3">
+                        <h5>assad</h5>
+                    </div>
+                </div-->
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tab == 'settings' and user ==  user_profile %}
+        <div class="container animate__animated animate__fadeIn"  style="height: 110vh;">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-12 col-lg-7">
+                    <h1 class="text-h4-custom" style="font-weight: 600;">Настройки материала</h1>
+                    <hr>
+        
+                    <form enctype="multipart/form-data" id="editMaterialForm" >
+                        {% csrf_token %}
+        
+                        <div class="hstack gap-3 d-flex align-items-center">
+                            <div>
+                                <p class="text-h5-custom">Владелец *</p>
+        
+                                <button type="button" class="btn btn-light d-flex justify-content-between " style="height: 35px; width: 120px;">
+                                    <img src="/media/{{ user.photo_profile }}" alt="" style="width: 20px; height: 20px; border-radius: 10px;">
+                                    <p class="text-h6-custom">{{ user.name }}</p>
+                                </button>
+                            </div>
+                            
+        
+                            <h1 class="text-h3-custom " style="margin-top: 45px;">/</h1>
+        
+                            <div style="width: 100%;">
+                                <p class="text-h5-custom">Название *</p>
+                                <input type="name" class="form-control text-h5-custom bg-light" value="{{material.name}}" id="input_name" name="name" style="height: 35px;">
+                            </div>
+        
+        
+                        </div>
+        
+                        <div class="hstack gap-1 d-flex align-items-center">
+                            <p class="text-h6-custom">Короткое наименование для быстрого поиска.</p>
+                            <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(пример - программирование-в-среде-vscode)</p>
+                        </div>
+        
+                        <div>
+                            <div class="hstack gap-1 d-flex align-items-center">
+                                <p class="text-h6-custom">Полное название </p>
+                                <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                            </div>
+        
+        
+                            <input type="fullName" class="form-control text-h5-custom bg-light mb-2" value="{{material.fullName}}" name="fullName" id="fullName" style="height: 35px;">
+        
+                            <div class="hstack gap-1 d-flex align-items-center">
+                                <p class="text-h6-custom">Описание</p>
+                                <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                            </div>
+        
+                            <textarea rows="5" type="description" class="form-control text-h5-custom bg-light mb-2" name="description" id="description_input">{{material.description}}</textarea>
+                        </div>
+        
+                        <hr>
+        
+                        <div class="hstack gap-3 d-flex align-items-center">
+                            <div>
+                                <p class="text-h6-custom">Всеобщедоступный материал?</p>
+                                <div class="form-check form-switch" style="height: 35px;">
+                                    {% if material.isPublic %}
+                                        <input class="form-check-input bg-success" type="checkbox" role="switch" id="isPublic" name="isPublic" checked>
+                                    {% else %}
+                                        <input class="form-check-input bg-success" type="checkbox" role="switch" id="isPublic" name="isPublic">
+                                    {% endif %}
+                                </div>
+                                <p class="text-h6-custom">по умолчанию - да</p>
+                            </div>
+        
+                            <div style="width: 100%;">
+                                <p class="text-h6-custom mb-4">Тематика / Предмет *</p>
+                                <select class="form-select form-select-sm mb-3 text-h6-custom " id="theme" name="theme" aria-label=".form-select-sm" style="height: 35px;">
+                                    {% if material.theme == 'Учебник' %}
+                                        <option value="Учебник" selected>Учебник</option>
+                                    {% else %}
+                                        <option value="Учебник">Учебник</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Лекция' %}
+                                        <option value="Лекция" selected>Лекция</option>
+                                    {% else %}
+                                        <option value="Лекция">Лекция</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Задачник' %}
+                                        <option value="Задачник" selected>Задачник</option>
+                                    {% else %}
+                                        <option value="Задачник">Задачник</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Статья' %}
+                                        <option value="Статья" selected>Статья</option>
+                                    {% else %}
+                                        <option value="Статья">Статья</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Видеоурок' %}
+                                        <option value="Видеоурок" selected>Видеоурок</option>
+                                    {% else %}
+                                        <option value="Видеоурок">Видеоурок</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Презентация' %}
+                                        <option value="Презентация" selected>Презентация</option>
+                                    {% else %}
+                                        <option value="Презентация">Презентация</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Тест' %}
+                                        <option value="Тест" selected>Тест</option>
+                                    {% else %}
+                                        <option value="Тест">Тест</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Исследование' %}
+                                        <option value="Исследование" selected>Исследование</option>
+                                    {% else %}
+                                        <option value="Исследование">Исследование</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Эксперимент' %}
+                                        <option value="Эксперимент" selected>Эксперимент</option>
+                                    {% else %}
+                                        <option value="Эксперимент">Эксперимент</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Курс' %}
+                                        <option value="Курс" selected>Курс</option>
+                                    {% else %}
+                                        <option value="Курс">Курс</option>
+                                    {% endif %}
+
+                                    {% if material.theme == 'Другое' %}
+                                        <option value="Другое" selected>Другое</option>
+                                    {% else %}
+                                        <option value="Другое">Другое</option>
+                                    {% endif %}
+
+                                </select>
+                                <p class="text-h6-custom">Параметр фильтрации</p>
+                            </div>
+        
+                        </div>
+        
+                        <hr>
+        
+                        <div class="hstack gap-3 d-flex align-items-center">
+                            <div style="width: 100%;">
+                                <div class="hstack gap-1 d-flex align-items-center">
+                                    <p class="text-h6-custom">Автор </p>
+                                    <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                                </div>
+                                <input type="author" class="form-control text-h5-custom bg-light mb-2" value="{{material.author}}" name="author" style="height: 35px;">
+                            </div>
+            
+                            <div style="width: 100%;">
+                                <div class="hstack gap-1 d-flex align-items-center">
+                                    <p class="text-h6-custom">Источник</p>
+                                    <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                                </div>
+                                <input type="source" class="form-control text-h5-custom bg-light mb-2" value="{{material.source}}" name="source" style="height: 35px;">
+                            </div>
+                        </div>
+        
+                        <div class="hstack gap-3 d-flex align-items-center">
+        
+                            <div style="width: 100%;">
+                                <div class="hstack gap-1 d-flex align-items-center">
+                                    <p class="text-h6-custom">Файл материала </p>
+                                    <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                                </div>
+                                <input class="form-control text-h6-custom" type="file" accept=".pdf, .doc, .docx, .ppt, .pptx" name="file" id="file" >
+                            </div>
+                            <div style="width: 100%;">
+                                <div class="hstack gap-1 d-flex align-items-center">
+                                    <p class="text-h6-custom">Иконка материала </p>
+                                    <p class="text-h6-custom" style="color: rgb(71, 71, 71);">(необязательно)</p>
+                                </div>
+                                <input class="form-control text-h6-custom" type="file" accept=".png, .jpg, .webp" name="icon" id="icon" >
+                            </div>
+        
+                        </div>
+        
+                        <hr>
+        
+                        <input class="form-control text-h6-custom" value="{{material.user.id}}" type="user" name="user" id="user" hidden>
+
+        
+                        <div class="row d-flexjustify-content-between mb-5">
+                            <div class="col-2">
+                                <button type="button" class="btn btn-danger text-h6-custom" style="width: 100%; height: 35px;" onclick="isDeleteMaterial()">Удалить</button>
+                                <div class="hstack gap-2 mt-2 animate__animated animate__fadeInDown" style="display: none;" id="validateButtonDeleteMaterial">
+                                    <h5 class="text-h6-custom">Вы уверены?</h5>
+
+                                    <button type="button" class="btn btn-success text-h6-custom" onclick="deleteMaterialDel('{{material.id}}');">Да</button>
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <p class="text-h6-custom text-danger" id="validation_form"></p>
+                            </div>
+
+                            <div class="col-2">
+                                <button type="button" class="btn btn-success text-h6-custom" style="width: 100%; height: 35px;" onclick="editMaterialPut('{{material.user.name}}', '{{material.id}}')">Сохранить</button>
+                            </div>
+                        </div>
+        
+        
+        
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    {% endif %} 
+
+
+    {% if tab != 'main' and user !=  user_profile %}
+      <script>window.location.replace("/{{material.user.name}}/{{material.name}}");</script>
+    {% endif %}
+
+    <script  src="{% static 'js/base/jquery.min.js' %}"></script>
+    <script src="{% static 'js/base/jquery.inputmask.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#input_name').inputmask({
+                regex: "[^\\s]*",
+                greedy: false,
+                clearIncomplete: true,
+                placeholder: '',
+                showMaskOnHover: false,
+            });
+        });
+        
+    </script>
+
+    <script src="{% static 'js/profile/ajax.js' %}"></script>
 {% endblock %}
+
+    
+
+
+

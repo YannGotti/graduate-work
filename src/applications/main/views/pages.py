@@ -33,12 +33,34 @@ class MaterialPage(View):
         user = get_object_or_404(CustomUser, name=username)
         material = get_object_or_404(EducationMaterial, name=material_name)
 
-        context = {
+        tab_param = request.GET.get('tab')
+
+        if (tab_param == 'settings'):
+            return MaterialSettingsPage(self, request, user, material)
+
+        else:
+            return MaterialMainPage(self, request, user, material)
+
+        
+def MaterialSettingsPage(self, request, user, material):
+    context = {
             'user_profile' : user,
-            'material' : material
+            'material' : material,
+            'tab' : 'settings',
+            'title': f'Настройки {material.name}'
         }
 
-        return render(request, 'profile/material.html', context=context)
+    return render(request, 'profile/material.html', context=context)
+
+def MaterialMainPage(self, request, user, material):
+    context = {
+            'user_profile' : user,
+            'material' : material,
+            'tab' : 'main',
+            'title': material.name
+        }
+
+    return render(request, 'profile/material.html', context=context)
 
 
 def ProfilePageMain(self, request, username, user):
