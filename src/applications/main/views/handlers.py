@@ -1,17 +1,19 @@
-from django.shortcuts import redirect, HttpResponse, get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
+import random
+import json
+
+from django.shortcuts import redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import login
+from django.core.serializers import serialize
+
 from applications.user.models import CustomUser
 from applications.main.models import EducationMaterial, MaterialMark
-from applications.main.smtp import SMTPServer
 from applications.main.forms import CreateMaterialForm, MaterialMarkForm
-from django.forms.models import model_to_dict
-from django.core.serializers import serialize
+from applications.main.smtp import SMTPServer
+
 from rest_framework.views import APIView
-import random
-import json
+
 
 class RegisterUser(View):
     def post(self, request):
@@ -44,7 +46,7 @@ class RegisterUser(View):
 
         login(self.request, user)
         return JsonResponse({'status': True})
-    
+
 
 class SendResetPassword(View):
     def post(self, request):
@@ -64,7 +66,8 @@ class SendResetPassword(View):
         smtp_server.send_message(f'Ваша учетная запись - {user.username}. АКТИВАЦИЯ АККАУНТА', GenerateMail(reset_code), user.email, html_content = None)
 
         return JsonResponse({'status': True})
-        
+
+
 class VerifyCode(View):
     def post(self, request):
         data = json.loads(request.body)
@@ -85,6 +88,7 @@ class VerifyCode(View):
             user.save()
             return JsonResponse({'status': True})
 
+
 class ResetPassword(View):
     def post(self, request):
         data = json.loads(request.body)
@@ -103,6 +107,7 @@ class ResetPassword(View):
         user.save()
 
         return JsonResponse({'status': True})
+
 
 class Material(APIView):
     def post(self, request):
@@ -153,8 +158,6 @@ class Material(APIView):
             return JsonResponse({'status': False})
 
 
-
-
 class MarkMaterial(APIView):
     def get(self, request):
         data = request.GET
@@ -199,9 +202,6 @@ class MarkMaterial(APIView):
             
             mark_material.delete()
             return JsonResponse({'status': True})
-
-
-
 
 
 def GenerateMail(reset_code):

@@ -79,7 +79,7 @@
                 {% if material.fullName %}
                     <div class="hstack gap-3">
                         <img src="{% static 'image/name_document_img.png' %}" style="width: 50px; height: 50px;">
-                        <h1 class="text-h5-custom mt-4 mb-4">{{material.fullName}}</h1>
+                        <h1 class="text-h5-custom mt-4 mb-4" style="word-break: break-all;">{{material.fullName}}</h1>
                     </div>
                 {% endif %}
 
@@ -92,7 +92,7 @@
                             <img src="{% static 'image/description_img.png' %}" style="width: 50px; height: 50px;">
                             <div>
                                 <h1 class="text-h6-custom">Описание материала</h1>
-                                <h1 class="text-h5-custom">{{material.description}}</h1>
+                                <h1 class="text-h5-custom" style="word-break: break-all;">{{material.description}}</h1>
                                 
                             </div>
                         </div>
@@ -107,7 +107,7 @@
 
                                 <div>
                                     <h1 class="text-h6-custom">Прикрепленный документ</h1>
-                                    <a href="/media/{{material.file}}" target="_blank" class="text-h5-custom" style="text-decoration: none;">{{material.file}}</a>
+                                    <a href="/media/{{material.file}}" target="_blank" class="text-h5-custom" style="text-decoration: none; word-break: break-all;">{{material.file}}</a>
                                 </div>
                             </div>
                             
@@ -120,7 +120,7 @@
 
                                 <div>
                                     <h1 class="text-h6-custom">Источник материала</h1>
-                                    <a href="{{material.source}}" target="_blank" class="text-h5-custom" style="text-decoration: none;">{{material.source}}</a>
+                                    <a href="{{material.source}}" target="_blank" class="text-h5-custom" style="text-decoration: none; word-break: break-all;">{{material.source}}</a>
                                 </div>
                             </div>
                             <hr>
@@ -211,7 +211,7 @@
         
                         <div class="hstack gap-3 d-flex align-items-center">
                             <div>
-                                <p class="text-h6-custom">Всеобщедоступный материал?</p>
+                                <p class="text-h6-custom">Общедоступный материал?</p>
                                 <div class="form-check form-switch" style="height: 35px;">
                                     {% if material.isPublic %}
                                         <input class="form-check-input bg-success" type="checkbox" role="switch" id="isPublic" name="isPublic" checked>
@@ -342,7 +342,7 @@
 
         
                         <div class="row d-flex justify-content-between mb-2">
-                            <div class="col-2">
+                            <div class="col-4 col-lg-2">
                                 <button type="button" class="btn btn-danger text-h6-custom" style="width: 100%; height: 35px;" onclick="isDeleteMaterial()">Удалить</button>
                                 <div class="hstack gap-2 mt-2 animate__animated animate__fadeInDown" style="display: none;" id="validateButtonDeleteMaterial">
                                     <h5 class="text-h6-custom">Вы уверены?</h5>
@@ -351,7 +351,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-2">
+                            <div class="col-4 col-lg-2">
                                 <button type="button" class="btn btn-success text-h6-custom" style="width: 100%; height: 35px;" onclick="editMaterialPut('{{material.user.name}}', '{{material.id}}')">Сохранить</button>
                             </div>
                         </div>
