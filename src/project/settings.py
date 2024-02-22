@@ -17,6 +17,9 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS=["https://d177-87-117-53-44.ngrok-free.app"]
 
 
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+
 # Application definition
 
 INSTALLED_APPS = [

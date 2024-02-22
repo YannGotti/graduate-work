@@ -20,6 +20,7 @@ urlpatterns = [
     path('new/create', Material.as_view(), name='create_material'),
     path('material/edit/<material_id>/', Material.as_view()),
     path('material/delete/<material_id>/', Material.as_view()),
+
     path('mark', MarkMaterial.as_view(), name='mark_material'),
 
 ]

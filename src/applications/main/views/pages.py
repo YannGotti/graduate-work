@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
+from django.views.decorators.cache import cache_control
+from django.utils.decorators import method_decorator
 from django.views.generic.base import View
 from applications.user.models import CustomUser
 from applications.main.models import EducationMaterial, MaterialMark
 from django.template import RequestContext
 import json
 
-
 class MainPage(View):
     def get(self, request):
         return render(request, 'main/index.html' , context={'title':'Главная'})
     
+
 class AuthPage(View):
     def get(self, request):
         return render(request, 'main/auth.html' , context={'title':'Вход'})
@@ -64,37 +66,46 @@ def MaterialMainPage(self, request, user, material):
 
 
 def ProfilePageMain(self, request, username, user):
-    if user == request.user:
-        if user.type_user == "Преподаватель":
-            materials = EducationMaterial.objects.filter(user=user)
-            marks = create_json_list(materials, user)
-        else:
-            materials = EducationMaterial.objects.all()
-            marks, ids = create_json_list(materials, user, True)
-            materials = EducationMaterial.objects.exclude(id__in=ids)
-    else:
-        materials = EducationMaterial.objects.filter(user=user, isPublic=True)
+    data = request.GET
+    materials = EducationMaterial.objects.filter(user=user)
+
+    if user != request.user:
+        materials = materials.filter(isPublic=True)
+
+    if data.get('filter'):
+        materials = materials.filter(theme=data.get('filter'))
+
+    if user != request.user:
         try:
             marks = create_json_list(materials, request.user)
-        except:
+        except Exception as e:
             marks = []
-
+    else:
+        if user.type_user == "Преподаватель":
+            marks = create_json_list(materials, user)
+        else:
+            marks, ids = create_json_list(materials, user, True)
+            materials = materials.exclude(id__in=ids)
 
     context = {
         'user_profile': user,
         'title': username,
-        'tab' : 'main',
+        'tab': 'main',
         'materials': materials,
         'marks': json.dumps(marks, sort_keys=True) if marks else []
     }
 
-    return render(request, 'profile/main_profile.html', context)
+    return render(request, 'profile/profile_content.html', context)
 
 def ProfilePageFollowing(self, request, username, user):
-        
+        data = request.GET
         materials = EducationMaterial.objects.all()
+
+        if data.get('filter'):
+            materials = materials.filter(theme=data.get('filter'))
+
         marks, ids = create_json_list(materials, user, True)
-        materials = EducationMaterial.objects.exclude(id__in=ids)
+        materials = materials.exclude(id__in=ids)
         
         context = {
             'user_profile': user,
@@ -103,7 +114,7 @@ def ProfilePageFollowing(self, request, username, user):
             'materials': materials,
             'marks': json.dumps(marks, sort_keys=True) if marks else []
         }
-        return render(request, 'profile/stars_profile.html', context=context)
+        return render(request, 'profile/profile_content.html', context=context)
 
     
 class NewMaterial(View):

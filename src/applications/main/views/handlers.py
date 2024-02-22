@@ -7,6 +7,7 @@ from applications.user.models import CustomUser
 from applications.main.models import EducationMaterial, MaterialMark
 from applications.main.smtp import SMTPServer
 from applications.main.forms import CreateMaterialForm, MaterialMarkForm
+from django.forms.models import model_to_dict
 from django.core.serializers import serialize
 from rest_framework.views import APIView
 import random
@@ -102,7 +103,6 @@ class ResetPassword(View):
         user.save()
 
         return JsonResponse({'status': True})
-
 
 class Material(APIView):
     def post(self, request):

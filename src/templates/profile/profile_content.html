@@ -4,24 +4,22 @@
 {% block profile_content %}
 
 <div class="col-12 col-md-12 col-lg-9">
-   
       
     <div class="hstack gap-2 d-flex align-items-center">
         <input type="text"class="form-control text-h5-custom " style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2">
 
         <div class="dropdown">
 
-            <button class="btn btn-light text-h5-custom dropdown-toggle d-flex justify-content-center align-items-center justify-content-between" style="width: 70px; height: 35px;"  type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-light text-h5-custom dropdown-toggle d-flex justify-content-center align-items-center justify-content-between" style="width: 70px; height: 35px;" title="Поиск по фильтру"  type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="{% static 'image/filter_icon_black.png' %}" alt="" style="width: 15px;">
             </button>
             
-            <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2">
-                <li><a class="dropdown-item text-h5-custom" href="#">Добавить материал</a></li>
-                <li><a class="dropdown-item text-h5-custom" href="#">Another action</a></li>
+            <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2" id="filter_list">
+                
             </ul>
         </div>
 
-        {% if user_profile == user and user.type_user == "Преподаватель" %}
+        {% if user_profile == user and user.type_user == "Преподаватель" and tab == "main" %}
         <a href="{% url 'new_material' %}" class="btn btn-success text-h5-custom dropdown-toggle d-flex align-items-center justify-content-between"  style="width: 70px; height: 35px; border-top-right-radius: 15px;" type="button">
             <img src="{% static 'image/white_plus_icon.png' %}" alt="" style="width: 15px;">
         </a>
@@ -32,9 +30,7 @@
     <hr>
 
     <div class="row">
-
         {% include 'profile/materials_example.html' %}
-
     </div>
     
       

@@ -75,10 +75,18 @@
 
 <script  src="{% static 'js/base/jquery.min.js' %}"></script>
 <script  src="{% static 'js/profile/ajax.js' %}"></script>
+<script  src="{% static 'js/profile/logic.js' %}"></script>
 
 <script>
     drawMarkMaterials(JSON.parse('{{ marks|safe }}'));
+    
 </script>
+
+{% if user == user_profile %}
+    <script>fillFilterList('{{user.name}}', '{{tab}}');</script>
+{% else %}
+    <script>fillFilterList('{{user_profile.name}}', '{{tab}}');</script>
+{% endif %}
 
 
 {% if user != user_profile %}

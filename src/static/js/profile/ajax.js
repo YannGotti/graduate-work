@@ -92,6 +92,45 @@ function deleteMaterialDel(id_material) {
     });
 }
 
+
+function getFilterMaterial(filter){
+    fetch(`/material/filter?filter=${filter}`, {
+        method: 'get',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const list_materials = document.getElementById('list_materials');
+        let materials = JSON.parse(data.materials);
+        let user = data.user;
+
+        console.log(materials);
+        console.log(user);
+
+        let template_materials = []
+
+        list_materials.innerHTML = ``;
+
+        for (const material of materials) {
+            template_materials.push(getMaterialTemplate(material.fields, user));
+
+            list_materials.innerHTML += getMaterialTemplate(material.fields, user);
+        }
+
+        console.log(template_materials);
+
+        return data;
+    })
+    
+    .catch(error => {
+        console.error('Ошибка:', error);
+    });
+}
+
 function isDeleteMaterial(){
     const validateButtonDeleteMaterial = document.getElementById('validateButtonDeleteMaterial');
     validateButtonDeleteMaterial.style.display = 'block';
