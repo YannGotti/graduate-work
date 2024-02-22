@@ -1,6 +1,5 @@
 
 function deleteItem(id) {
-    const csrftoken = Cookies.get('csrftoken');
     const del_mark_user_input = document.getElementById('del_mark_user_input_' + id);
     const del_mark_material_input = document.getElementById('del_mark_material_input_' + id);
 
@@ -8,83 +7,90 @@ function deleteItem(id) {
     formData.append('user', del_mark_user_input.value);
     formData.append('material', del_mark_material_input.value);
 
-    $.ajax({
-        url: $('#deleteForm').attr('action'),
-        method: 'delete',
-        data: formData,
+    fetch($('#deleteForm').attr('action'), {
+        method: 'DELETE',
+        body: formData,
         processData: false,
         contentType: false,
         headers: {
-            "X-CSRFToken": csrftoken  
-        },
-        success: function (response) {
-            if (response.status == "error"){
-            }
-
-            if (response.status == "success") {
-                location.reload()
-            }
-        },
-        error: function (error) {
-            console.log(error);
+            "X-CSRFToken": Cookies.get('csrftoken')
         }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(response => {
+        if (response.status) {
+            location.reload();
+        } else {
+            
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка:', error);
     });
 }
-
 
 function editMaterialPut(username, id_material) {
-    const csrftoken = Cookies.get('csrftoken');
     const formData = new FormData(document.getElementById('editMaterialForm'));
+    const descriptionValue = document.getElementById('description_input').value;
+    const validation_form = document.getElementById('validation_form');
 
-    formData.append('description', document.getElementById('description_input').value);
+    formData.append('description', descriptionValue);
 
-    $.ajax({
-        url: `/material/edit/${id_material}/`, 
-        type: 'PUT',
-        data: formData,
-        processData: false,
-        contentType: false,
+    fetch(`/material/edit/${id_material}/`, {
+        method: 'PUT',
+        body: formData,
         headers: {
-            "X-CSRFToken": csrftoken  
-        },
-        success: function(data) {
-            location.replace(`/${username}/${data.name}`);
-        },
-        error: function(error) {
-            console.error('Error:', error);
-            const validation_form = document.getElementById('validation_form');
-            validation_form.innerText = 'Непредвиденная ошибка. Пожалуйста, попробуйте позже.';
+            "X-CSRFToken": Cookies.get('csrftoken')
         }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (!data.status) validation_form.innerText = data.error;
+        return data;
+    })
+    .then(data => {
+        if (data.status) location.replace(`/${username}/${data.material_name}/`);
+        return data;
+    })
+    .catch(error => {
+        validation_form.innerText = 'Непредвиденная ошибка. Пожалуйста, попробуйте позже.';
+        console.error('Ошибка:', error);
     });
 }
 
-function deleteMaterialDel(id_material){
-    const csrftoken = Cookies.get('csrftoken');
-
-    $.ajax({
-        url: `/material/delete/${id_material}/`, 
-        type: 'DELETE',
+function deleteMaterialDel(id_material) {
+    fetch(`/material/delete/${id_material}/`, {
+        method: 'DELETE',
         headers: {
-            "X-CSRFToken": csrftoken  
-        },
-        success: function(data) {
-            location.replace(`/${data.username}`);
-        },
-        error: function(error) {
-            console.error('Error:', error);
-            const validation_form = document.getElementById('validation_form');
-            validation_form.innerText = 'Непредвиденная ошибка. Пожалуйста, попробуйте позже.';
+            "X-CSRFToken": Cookies.get('csrftoken')
         }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        location.replace(`/${data.username}`);
+        return data;
+    })
+    .catch(error => {
+        console.error('Ошибка:', error);
+        const validation_form = document.getElementById('validation_form');
+        validation_form.innerText = 'Непредвиденная ошибка. Пожалуйста, попробуйте позже.';
     });
-
 }
-
-
-
-function csrfSafeMethod(method) {
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-
 
 function isDeleteMaterial(){
     const validateButtonDeleteMaterial = document.getElementById('validateButtonDeleteMaterial');

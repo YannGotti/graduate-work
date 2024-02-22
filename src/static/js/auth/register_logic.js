@@ -38,24 +38,7 @@ function replaceTypeInDropdown(type){
     type_input.textContent = type.textContent;
 }
 
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-
 function userRegistration() {
-    const csrftoken = getCookie('csrftoken');
     const fieldValidation = document.getElementById('field_validation_register');
 
     const email = document.getElementById('email_input').value;
@@ -74,28 +57,29 @@ function userRegistration() {
         type_user: type,
     };
 
-    $.ajax({
-        url: '/auth/register/',
-        method: 'post',
-        data: userData,
-        beforeSend: function (xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
+    fetch('/auth/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            "X-CSRFToken": Cookies.get('csrftoken')
         },
-        success: function (data) {
-            if (data === "Not") {
-                fieldValidation.innerText = `Пользователь с такой почтой уже существует!`;
-            } else if (data === 'Ok') {
-                window.location.replace("/auth/?success=Успешная регистрация!");
-            }
-        },
-        error: function (jqXHR, exception) {
-            // Обработка ошибок, если необходимо
+        body: JSON.stringify(userData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        return response.json();
+    })
+    .then(data => {
+        if (!data.status) fieldValidation.innerText = 'Пользователь с такой почтой уже существует!'
+        
+        return data;
+    })
+    .then(data => {
+        if (data.status) window.location.replace('/auth/?success=Успешная регистрация!');
+    })
+    .catch(error => {
+        console.error('Ошибка:', error);
     });
-}
-
-function csrfSafeMethod(method) {
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }

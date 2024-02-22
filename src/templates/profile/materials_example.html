@@ -33,7 +33,7 @@
             </div>
 
             <div class="col-12 col-lg-2 d-flex justify-content-end" id="del_form_{{material.id}}" style="display: none !important;">
-                <form action="/mark/" id="deleteForm">
+                <form action="/mark" id="deleteForm">
                     {% csrf_token %}
                     <input type="text" value="{{ user.id }}" name="user" id="del_mark_user_input_{{material.id}}" hidden>
                     <input type="text" value="{{ material.id }}" name="material" id="del_mark_material_input_{{material.id}}" hidden>
@@ -45,7 +45,7 @@
                 </form>
             </div>
             <div class="col-12 col-lg-2 d-flex justify-content-end" id="create_form_{{material.id}}" style="display: none !important;">
-                <form action="/mark/" method="post">
+                <form action="/mark" method="post">
                     {% csrf_token %}
                     <input type="text" value="{{ user.id }}" name="user" hidden>
                     <input type="text" value="{{ material.id }}" name="material" hidden>

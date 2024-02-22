@@ -341,7 +341,7 @@
                         <input class="form-control text-h6-custom" value="{{material.user.id}}" type="user" name="user" id="user" hidden>
 
         
-                        <div class="row d-flexjustify-content-between mb-5">
+                        <div class="row d-flex justify-content-between mb-2">
                             <div class="col-2">
                                 <button type="button" class="btn btn-danger text-h6-custom" style="width: 100%; height: 35px;" onclick="isDeleteMaterial()">Удалить</button>
                                 <div class="hstack gap-2 mt-2 animate__animated animate__fadeInDown" style="display: none;" id="validateButtonDeleteMaterial">
@@ -351,16 +351,12 @@
                                 </div>
                             </div>
 
-                            <div class="col-8">
-                                <p class="text-h6-custom text-danger" id="validation_form"></p>
-                            </div>
-
                             <div class="col-2">
                                 <button type="button" class="btn btn-success text-h6-custom" style="width: 100%; height: 35px;" onclick="editMaterialPut('{{material.user.name}}', '{{material.id}}')">Сохранить</button>
                             </div>
                         </div>
-        
-        
+
+                        <p class="text-h6-custom text-danger" id="validation_form"></p>
         
                     </form>
                     

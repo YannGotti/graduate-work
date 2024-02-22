@@ -12,14 +12,14 @@ urlpatterns = [
     path('<username>/<material_name>/', MaterialPage.as_view()),
 
 
-    path('auth/reset_password/', SendResetPassword.as_view()),
-    path('auth/reset_password/reset/', ResetPassword.as_view()),
-    path('auth/reset_password/verify_code/', VerifyCode.as_view()),
-    path('auth/register/', RegisterUser.as_view()),
+    path('auth/reset_password', SendResetPassword.as_view()),
+    path('auth/reset_password/reset', ResetPassword.as_view()),
+    path('auth/reset_password/verify_code', VerifyCode.as_view()),
+    path('auth/register', RegisterUser.as_view()),
 
     path('new/create', Material.as_view(), name='create_material'),
     path('material/edit/<material_id>/', Material.as_view()),
     path('material/delete/<material_id>/', Material.as_view()),
-    path('mark/', MarkMaterial.as_view(), name='mark_material'),
+    path('mark', MarkMaterial.as_view(), name='mark_material'),
 
 ]
