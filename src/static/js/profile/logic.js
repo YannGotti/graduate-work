@@ -27,3 +27,25 @@ function fillFilterList(username, tab = 'main'){
     `
                 
 }
+
+
+
+
+function fillSearchInput(value){
+    const searchModal = document.getElementById('searchModal')
+
+    const searchInput = searchModal.querySelector('.modal-content input')
+
+    searchInput.value = `@${value} `
+
+    console.log(searchInput)
+
+    /*if (searchModal) {
+        searchModal.addEventListener('show.bs.modal', event => {
+
+
+        
+        })
+    }*/
+
+}

@@ -37,8 +37,8 @@
           <div class="hstack gap-2 d-flex align-items-center">
 
             <div class="input-group">
-              <input type="text"class="form-control text-h5-custom" style="height: 35px; width: 200px;" placeholder="@username/материал" aria-describedby="button-addon2">
-              <button class="btn btn-light d-flex align-items-center" style="height: 35px;" type="button" id="button-addon2"><img src="{% static 'image/search_icon.png' %}" alt="" style="width: 20px;"></button>
+              <input type="text"class="form-control text-h5-custom" style="height: 35px; width: 200px;" placeholder="@username/материал" aria-describedby="button-addon2"  data-bs-toggle="modal" data-bs-target="#searchModal">
+              <button class="btn btn-light d-flex align-items-center" style="height: 35px;" type="button" id="button-addon2"><img src="{% static 'image/search_icon.png' %}" data-bs-toggle="modal" data-bs-target="#searchModal" alt="" style="width: 20px;"></button>
             </div>
 
             {% if user.type_user == "Преподаватель" %}

@@ -14,7 +14,6 @@ from applications.main.smtp import SMTPServer
 
 from rest_framework.views import APIView
 
-
 class RegisterUser(View):
     def post(self, request):
         data = json.loads(request.body)

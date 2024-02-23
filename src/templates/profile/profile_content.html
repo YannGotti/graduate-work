@@ -6,7 +6,9 @@
 <div class="col-12 col-md-12 col-lg-9">
       
     <div class="hstack gap-2 d-flex align-items-center">
-        <input type="text"class="form-control text-h5-custom " style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2">
+        
+        
+        <input type="text"class="form-control text-h5-custom " style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2" data-bs-toggle="modal" data-bs-target="#searchModal" onclick="fillSearchInput('{{user_profile.name}}')">
 
         <div class="dropdown">
 
