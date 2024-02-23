@@ -23,4 +23,7 @@ urlpatterns = [
 
     path('mark', MarkMaterial.as_view(), name='mark_material'),
 
+    path('api/search', SearchUserMaterial.as_view()),
+
+
 ]

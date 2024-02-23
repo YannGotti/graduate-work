@@ -37,8 +37,8 @@
           <div class="hstack gap-2 d-flex align-items-center">
 
             <div class="input-group">
-              <input type="text"class="form-control text-h5-custom" style="height: 35px; width: 200px;" placeholder="@username/материал" aria-describedby="button-addon2"  data-bs-toggle="modal" data-bs-target="#searchModal">
-              <button class="btn btn-light d-flex align-items-center" style="height: 35px;" type="button" id="button-addon2"><img src="{% static 'image/search_icon.png' %}" data-bs-toggle="modal" data-bs-target="#searchModal" alt="" style="width: 20px;"></button>
+              <input type="text"class="form-control text-h5-custom" style="height: 35px; width: 200px;" placeholder="@username/материал" aria-describedby="button-addon2"  data-bs-toggle="modal" onclick="fillSearchInput('')" data-bs-target="#searchModal">
+              <button class="btn btn-light d-flex align-items-center" style="height: 35px;" type="button" id="button-addon2"><img src="{% static 'image/search_icon.png' %}" data-bs-toggle="modal" data-bs-target="#searchModal" onclick="fillSearchInput('')" alt="" style="width: 20px;"></button>
             </div>
 
             {% if user.type_user == "Преподаватель" %}
@@ -71,6 +71,12 @@
     </nav>
 
 
+    
+    <script  src="{% static 'js/base/jquery.min.js' %}"></script>
+    <script src="{% static 'js/base/jquery.inputmask.min.js' %}"></script>
+    <script  src="{% static 'js/profile/logic.js' %}"></script>
+    <script  src="{% static 'js/profile/ajax.js' %}"></script>
+    <script  src="{% static 'js/profile/draw_elements.js' %}"></script>
     {% block content %}
     {% endblock %}
 
@@ -85,11 +91,40 @@
       </div>
     </div>
 
+
+    <div class="modal dark fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog modal-xl modal-fullscreen-lg-down mt-1">
+  
+          <div class="modal-content modal-background p-3">
+  
+              <div class="input-group">
+                  <span class="input-group-text" style="height: 35px; border: none !important;"><img src="{% static 'image/search_icon.png' %}" style="height: 15px; width: 15px;" alt=""></span>
+                  <input type="text" class="form-control text-h6-custom" id="searchInput" style="height: 35px;max-width: 100%; border: none !important;" placeholder="@username программирование-в-среде-1с" aria-describedby="button-addon2">
+                </div>
+  
+              <h5 class="text-h6-custom m-2 mt-3" id="title_materials_search">Материалы</h5>
+  
+              <div class="searched_list_materials" id="searched_list_materials">
+  
+              </div>
+  
+              <h5 class="text-h6-custom m-2 mt-3" id="title_users_search">Пользователи</h5>
+  
+              <div class="searched_list_users" id="searched_list_users">
+  
+              </div>
+          </div>
+  
+      </div>
+      
+  </div>
+
     
 
 
-    <script  src="{% static 'js/base/jquery.min.js' %}"></script>
-    <script src="{% static 'js/base/jquery.inputmask.min.js' %}"></script>
+    
+    
+    
 
     <script src="{% static 'js/base/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/base/popper.min.js' %}"></script>

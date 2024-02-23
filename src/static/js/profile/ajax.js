@@ -131,6 +131,27 @@ function getFilterMaterial(filter){
     });
 }
 
+function getSearchMaterial() {
+    const searchQuery = searchInput.value;
+
+    const result = parseUsernameMaterial(searchQuery);
+
+    fetch(`/api/search?username=${result.username.substring(1)}&material=${result.material}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            drawSearchMaterialsUsers(JSON.parse(data.materials), JSON.parse(data.users));
+            return data
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
+
 function isDeleteMaterial(){
     const validateButtonDeleteMaterial = document.getElementById('validateButtonDeleteMaterial');
     validateButtonDeleteMaterial.style.display = 'block';

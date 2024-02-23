@@ -8,6 +8,11 @@
     cursor: pointer;
 }
 
+.search-material:hover{
+    background-color: #cacaca9f;
+    border-radius: 10px;
+}
+
 .card-custom{
     border: 2px solid rgb(189, 189, 189);
     border-radius: 15px;

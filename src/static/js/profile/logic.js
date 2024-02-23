@@ -28,24 +28,35 @@ function fillFilterList(username, tab = 'main'){
                 
 }
 
+function parseUsernameMaterial(text) {
+    const regex = /^(@\w*|)\s?(.*)$|^(\S+)\s?(.*)$/;
+
+    const matches = text.match(regex);
+
+    if (matches) {
+        const username = (matches[1] || matches[3] || '').trim();
+        const material = (matches[2] || matches[4] || '').trim();
+
+        return { username, material };
+    } else {
+        return { username: '', material: '' };
+    }
+}
+
 
 
 
 function fillSearchInput(value){
-    const searchModal = document.getElementById('searchModal')
+    const searchModal = document.getElementById('searchModal');
 
-    const searchInput = searchModal.querySelector('.modal-content input')
+    const searchInput = searchModal.querySelector('.modal-content input');
 
-    searchInput.value = `@${value} `
+    if (value === '')  searchInput.value = ``;
+    else searchInput.value = `@${value} `;
 
-    console.log(searchInput)
+    getSearchMaterial();
 
-    /*if (searchModal) {
-        searchModal.addEventListener('show.bs.modal', event => {
+    searchInput.removeEventListener('input', getSearchMaterial);
 
-
-        
-        })
-    }*/
-
+    searchInput.addEventListener('input', getSearchMaterial);
 }

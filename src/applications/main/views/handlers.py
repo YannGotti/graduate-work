@@ -14,6 +14,8 @@ from applications.main.smtp import SMTPServer
 
 from rest_framework.views import APIView
 
+from django.db.models import F
+
 class RegisterUser(View):
     def post(self, request):
         data = json.loads(request.body)
@@ -202,6 +204,40 @@ class MarkMaterial(APIView):
             mark_material.delete()
             return JsonResponse({'status': True})
 
+class SearchUserMaterial(APIView):
+    def get(self, request):
+        data = request.GET
+
+        materials, users = [], []
+
+        if (data.get('material')):
+            materials = (
+                EducationMaterial.objects
+                .filter(name__icontains=data.get('material'))
+                .annotate(username=F('user__name'))
+                .values('name', 'icon', 'username')
+            )
+
+        if (data.get('username')):
+            users = (
+                CustomUser.objects
+                .filter(name__icontains=data.get('username'))
+                .values('name', 'photo_profile')
+            )
+
+        if (data.get('username') and data.get('material')):
+            materials = (
+                EducationMaterial.objects
+                .filter(user=CustomUser.objects.get(name=data.get('username')), name__icontains=data.get('material'))
+                .annotate(username=F('user__name'))
+                .values('name', 'icon', 'username')
+            )
+
+        return JsonResponse({
+            'status': True,
+            'users': json.dumps(list(users)),
+            'materials': json.dumps(list(materials))
+        })
 
 def GenerateMail(reset_code):
     message = f"<p>Здравствуйте, ваш код для восстановления пароля: {reset_code}</p>"
