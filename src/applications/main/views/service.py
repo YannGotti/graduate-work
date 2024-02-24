@@ -1,4 +1,4 @@
-from applications.main.models import EducationMaterial, MaterialMark
+from applications.main.models import EducationMaterial, MaterialMark, FollowingUser
 
 def create_json_list(materials, user, include_ids=False):
     marks = []
@@ -26,6 +26,7 @@ def create_json_list(materials, user, include_ids=False):
         return marks
 
 def get_materials_marks_list(user, request, materials):
+    
     data = request.GET
 
     if user != request.user:
@@ -49,3 +50,11 @@ def get_materials_marks_list(user, request, materials):
             materials = materials.exclude(id__in=ids)
 
     return materials, marks
+
+
+
+def get_following_and_followers(user):
+    followers = FollowingUser.objects.filter(owner = user).count()
+    following = FollowingUser.objects.filter(followingUser = user).count()
+
+    return followers, following

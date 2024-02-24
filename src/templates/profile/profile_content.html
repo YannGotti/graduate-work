@@ -3,39 +3,127 @@
 
 {% block profile_content %}
 
-<div class="col-12 col-md-12 col-lg-9">
-      
-    <div class="hstack gap-2 d-flex align-items-center">
-        
-        
-        <input type="text"class="form-control text-h5-custom " style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2" data-bs-toggle="modal" data-bs-target="#searchModal" onclick="fillSearchInput('{{user_profile.name}}')">
+{% if tab == 'following' %}
+    <div class="col-12 col-md-12 col-lg-9">
+        <h5 class="text-h4-custom m-3 mt-0">Подписчики</h5>
+        {% for follow in follows %}
+        <div class="hstack gap-3 m-3 mt-4">
+            <img src="/media/{{follow.owner.photo_profile}}" style="width: 60px;height: 60px; border-radius: 15px;" alt="">
 
-        <div class="dropdown">
-
-            <button class="btn btn-light text-h5-custom dropdown-toggle d-flex justify-content-center align-items-center justify-content-between" style="width: 70px; height: 35px;" title="Поиск по фильтру"  type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{% static 'image/filter_icon_black.png' %}" alt="" style="width: 15px;">
-            </button>
-            
-            <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2" id="filter_list">
-                
-            </ul>
+            <div class="vstack gap-1">
+                <a href="/{{follow.owner.name}}" class="text-h5-custom text-success" style="text-decoration: none;">{{follow.owner.name}}</a>
+                <h5 class="text-h6-custom">{{follow.owner.userPlaceOfStudy}}</h5>
+            </div>
         </div>
+        <hr class="m-3">
+        {% endfor %}
 
-        {% if user_profile == user and user.type_user == "Преподаватель" and tab == "main" %}
-        <a href="{% url 'new_material' %}" class="btn btn-success text-h5-custom dropdown-toggle d-flex align-items-center justify-content-between"  style="width: 70px; height: 35px; border-top-right-radius: 15px;" type="button">
-            <img src="{% static 'image/white_plus_icon.png' %}" alt="" style="width: 15px;">
-        </a>
+        {% if follows|length == 0 %}
+            {% for _ in "123"|slice:":3" %}
+            <div class="col-12 col-lg-12 ">
+
+                <div class="row d-flex justify-content-center m-3 mt-0">
+                    <div class="col-3" style="width: 100px;">
+                        <div class="sub-rect pure-background animated-background" ></div>
+                    </div>
+                    <div class="col-9 animated-background">
+                    </div>
+                </div>
+
+                <hr class="m-3">
+
+            </div>
+            {% endfor %}
+
+            <div class="row d-flex justify-content-center">
+                <h1 class="text-h6-custom text-center">Пока нет подписчиков</h1>
+            </div>
         {% endif %}
 
     </div>
+{% elif  tab == 'followers' %}
+    <div class="col-12 col-md-12 col-lg-9">
+        <h5 class="text-h4-custom m-3 mt-0">Подписки</h5>
+        {% for follow in follows %}
+        <div class="hstack gap-3 m-3 mt-4">
+            <img src="/media/{{follow.followingUser.photo_profile}}" style="width: 60px;height: 60px; border-radius: 15px;" alt="">
 
-    <hr>
+            <div class="vstack gap-1">
+                <a href="/{{follow.followingUser.name}}" class="text-h5-custom text-success" style="text-decoration: none;">{{follow.followingUser.name}}</a>
+                <h5 class="text-h6-custom">{{follow.followingUser.userPlaceOfStudy}}</h5>
+            </div>
+        </div>
+        <hr class="m-3">
+        {% endfor %}
 
-    <div class="row">
-        {% include 'profile/materials_example.html' %}
+        {% if follows|length == 0 %}
+            {% for _ in "123"|slice:":3" %}
+            <div class="col-12 col-lg-12 ">
+
+                <div class="row d-flex justify-content-center m-3 mt-0">
+                    <div class="col-3" style="width: 100px;">
+                        <div class="sub-rect pure-background animated-background" ></div>
+                    </div>
+                    <div class="col-9 animated-background">
+                    </div>
+                </div>
+
+                <hr class="m-3">
+
+            </div>
+            {% endfor %}
+
+            <div class="row d-flex justify-content-center">
+                <h1 class="text-h6-custom text-center">Пока нет подписок</h1>
+            </div>
+        {% endif %}
     </div>
-    
-      
-</div>
+{% else %}
+    <div class="col-12 col-md-12 col-lg-9">
+        
+        <div class="hstack gap-2 d-flex align-items-center">
+            
+            
+            <input type="text"class="form-control text-h5-custom " style="height: 35px;" placeholder="Поиск документа.." aria-describedby="button-addon2" data-bs-toggle="modal" data-bs-target="#searchModal" onclick="fillSearchInput('{{user_profile.name}}')">
+
+            <div class="dropdown">
+
+                <button class="btn btn-light text-h5-custom dropdown-toggle d-flex justify-content-center align-items-center justify-content-between" style="width: 70px; height: 35px;" title="Поиск по фильтру"  type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{% static 'image/filter_icon_black.png' %}" alt="" style="width: 15px;">
+                </button>
+                
+                <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2" id="filter_list">
+                    
+                </ul>
+            </div>
+
+            {% if user_profile == user and user.type_user == "Преподаватель" and tab == "main" %}
+            <a href="{% url 'new_material' %}" class="btn btn-success text-h5-custom dropdown-toggle d-flex align-items-center justify-content-between"  style="width: 70px; height: 35px; border-top-right-radius: 15px;" type="button">
+                <img src="{% static 'image/white_plus_icon.png' %}" alt="" style="width: 15px;">
+            </a>
+            {% endif %}
+
+        </div>
+
+        <hr>
+
+        <div class="row">
+            {% include 'profile/materials_example.html' %}
+        </div>
+        
+        
+    </div>
+
+    <script>
+        drawMarkMaterials(JSON.parse('{{ marks|safe }}'));
+    </script>
+
+    {% if user == user_profile %}
+        <script>fillFilterList('{{user.name}}', '{{tab}}');</script>
+    {% else %}
+        <script>fillFilterList('{{user_profile.name}}', '{{tab}}');</script>
+    {% endif %}
+
+    {% endif %}
 
 {% endblock %}
