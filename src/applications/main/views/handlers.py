@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import login
 from django.core.serializers import serialize
+from django.db.models import F
 
 from applications.user.models import CustomUser
 from applications.main.models import EducationMaterial, MaterialMark
@@ -14,7 +15,6 @@ from applications.main.smtp import SMTPServer
 
 from rest_framework.views import APIView
 
-from django.db.models import F
 
 class RegisterUser(View):
     def post(self, request):
@@ -209,7 +209,6 @@ class SearchUserMaterial(APIView):
         data = request.GET
 
         materials = []
-
         users = CustomUser.objects.all()[:5].values('name', 'photo_profile')
         
 

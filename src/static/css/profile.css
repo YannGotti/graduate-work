@@ -1,17 +1,14 @@
 
-.modal-background{
+/*.modal-background{
     background: rgb(235,229,255) !important;
     background: linear-gradient(180deg, rgb(179, 252, 224) 0%, rgba(255,255,255,1) 50%, rgb(226, 215, 255) 100%) !important;
-}
+}*/
 
 .imagePreview:hover{
     cursor: pointer;
 }
 
-.search-material:hover{
-    background-color: #cacaca9f;
-    border-radius: 10px;
-}
+
 
 .card-custom{
     border: 2px solid rgb(189, 189, 189);

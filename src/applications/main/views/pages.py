@@ -50,7 +50,7 @@ def ProfilePageFollowing(self, request, username, user):
             materials = materials.filter(theme=data.get('filter'))
 
         marks, ids = create_json_list(materials, user, True)
-        materials = materials.exclude(id__in=ids)
+        materials = materials.exclude(id__in=ids).filter(isPublic = True)
         
         context = {
             'user_profile': user,
