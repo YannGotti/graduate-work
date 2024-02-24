@@ -208,7 +208,10 @@ class SearchUserMaterial(APIView):
     def get(self, request):
         data = request.GET
 
-        materials, users = [], []
+        materials = []
+
+        users = CustomUser.objects.all()[:5].values('name', 'photo_profile')
+
 
         if (data.get('material')):
             materials = (
