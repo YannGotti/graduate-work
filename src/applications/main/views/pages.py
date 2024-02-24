@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.base import View
 from applications.user.models import CustomUser
-from applications.main.models import EducationMaterial
+from applications.main.models import EducationMaterial, FollowingUser
 from django.template import RequestContext
 from .service import create_json_list, get_materials_marks_list
 
@@ -32,11 +32,17 @@ def ProfilePageMain(self, request, username, user):
 
     materials, marks = get_materials_marks_list(user, request, materials)
 
+    followers = FollowingUser.objects.filter(owner = user).count()
+
+    following = FollowingUser.objects.filter(followingUser = user).count()
+
     context = {
         'user_profile': user,
         'title': username,
         'tab': 'main',
         'materials': materials,
+        'followers': followers,
+        'following': following,
         'marks': json.dumps(marks, sort_keys=True) if marks else []
     }
 

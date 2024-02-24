@@ -114,6 +114,71 @@ function getSearchMaterial() {
         });
 }
 
+
+async function getIsFollowingUser(user, following) {
+    const buttonFollowingUser = document.getElementById('buttonFollowingUser');
+    let status;
+
+    try {
+        const response = await fetch(`/api/getIsFollowing?username=${user}&following=${following}`);
+
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.status) {
+            buttonFollowingUser.innerText = 'Отписаться';
+            status = data.status;
+        }
+
+        if (!data.status) {
+            buttonFollowingUser.innerText = 'Подписаться';
+            status = data.status;
+        }
+
+        return status;
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        throw error;
+    }
+}
+
+async function followingUser(user, following) {
+        const status = await getIsFollowingUser(user, following);
+        
+        try {
+            const response = await fetch('/api/following_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-CSRFToken": Cookies.get('csrftoken')
+                },
+                body: JSON.stringify({
+                    username: user,
+                    following: following,
+                    status: status
+                }),
+            });
+        
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+            }
+        
+            const data = await response.json();
+        
+            if (data.status) {
+                location.reload()
+            }
+        
+            return status;
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            throw error;
+        }
+}
+
 function isDeleteMaterial(){
     const validateButtonDeleteMaterial = document.getElementById('validateButtonDeleteMaterial');
     validateButtonDeleteMaterial.style.display = 'block';

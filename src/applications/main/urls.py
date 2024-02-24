@@ -24,6 +24,8 @@ urlpatterns = [
     path('mark', MarkMaterial.as_view(), name='mark_material'),
 
     path('api/search', SearchUserMaterial.as_view()),
+    path('api/getIsFollowing', FollowingUsers.as_view()),
+    path('api/following_user', FollowingUsers.as_view()),
 
 
 ]

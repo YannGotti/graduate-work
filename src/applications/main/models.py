@@ -37,13 +37,15 @@ class MaterialMark(models.Model):
         verbose_name = 'Закладка'
         verbose_name_plural = 'Закладки'
 
-#class FilmsOnMainPage(models.Model):
-#    film_id = models.IntegerField('ID Фильма')
-#    category = models.CharField('Категория', max_length=30)
-#
-#    def __str__(self):
-#        return f'{self.film_id}, {self.category}'
-#
-#    class Meta:
-#        verbose_name = 'Фильм на главной странице'
-#        verbose_name_plural = 'Фильмы на главной сранице'
+
+class FollowingUser(models.Model):
+    owner = models.ForeignKey("user.CustomUser", related_name='following_users', on_delete=models.CASCADE)
+    followingUser = models.ForeignKey("user.CustomUser", related_name='followers', on_delete=models.CASCADE)
+    created_at = models.DateTimeField('Дата отслеживания', auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.owner}, {self.created_at}'
+
+    class Meta:
+        verbose_name = 'Отслеживание'
+        verbose_name_plural = 'Отслеживаемые'

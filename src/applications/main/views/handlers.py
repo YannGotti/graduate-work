@@ -9,11 +9,12 @@ from django.core.serializers import serialize
 from django.db.models import F
 
 from applications.user.models import CustomUser
-from applications.main.models import EducationMaterial, MaterialMark
+from applications.main.models import EducationMaterial, MaterialMark, FollowingUser
 from applications.main.forms import CreateMaterialForm, MaterialMarkForm
 from applications.main.smtp import SMTPServer
 
 from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 class RegisterUser(View):
@@ -247,6 +248,36 @@ class SearchUserMaterial(APIView):
             'users': json.dumps(list(users)),
             'materials': json.dumps(list(materials))
         })
+
+class FollowingUsers(APIView):
+    def get(self, request):
+        username = request.GET.get('username')
+        following_username = request.GET.get('following')
+
+        owner = get_object_or_404(CustomUser, name=username)
+        following_user = get_object_or_404(CustomUser, name=following_username)
+
+        follow = FollowingUser.objects.filter(owner=owner, followingUser=following_user).exists()
+
+        return Response({'status': follow})
+
+    def post(self, request):
+        username = request.data.get('username')
+        following_username = request.data.get('following')
+        status = request.data.get('status')
+
+        owner = get_object_or_404(CustomUser, name=username)
+        following_user = get_object_or_404(CustomUser, name=following_username)
+
+        if status:
+            follow = FollowingUser.objects.filter(owner=owner, followingUser=following_user).first()
+            if follow:
+                follow.delete()
+        else:
+            follow, created = FollowingUser.objects.get_or_create(owner=owner, followingUser=following_user)
+
+        return Response({'status': True})
+
 
 def GenerateMail(reset_code):
     message = f"<p>Здравствуйте, ваш код для восстановления пароля: {reset_code}</p>"
