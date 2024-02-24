@@ -28,7 +28,7 @@
 
                     <div style="width: 100%;">
                         <p class="text-h5-custom">Название *</p>
-                        <input type="name" class="form-control text-h5-custom bg-light " id="input_name" name="name" style="height: 35px;">
+                        <input type="name" class="form-control text-h5-custom bg-light " id="input_name" name="name" style="height: 35px;" placeholder="программирование-в-среде-vscode">
                     </div>
 
 
@@ -183,7 +183,7 @@
 <script>
     $(document).ready(function () {
         $('#input_name').inputmask({
-            regex: "[^\\s]*",
+            regex: "[a-zа-я-]*",
             greedy: false,
             clearIncomplete: true,
             placeholder: '',

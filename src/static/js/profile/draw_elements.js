@@ -61,7 +61,7 @@ function drawSearchMaterials(materials){
                 <h6 class="text-h6-custom text-dark mt-1" style="text-decoration: none;">${material.name}</h6>
             </div>
 
-            <h6 class="text-h6-custom text-dark m-2">Перейти</h6>
+            <h6 class="text-h6-custom text-dark m-2">@${material.username}</h6>
         </a>
         `
     }
