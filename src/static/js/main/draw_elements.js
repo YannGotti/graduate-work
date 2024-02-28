@@ -20,7 +20,7 @@ function drawMaterialTrackedUsers(material, stats = false){
         <div class="hstack d-flex justify-content-between p-2">
 
             <div class="hstack gap-2">
-                <a href="/${material.user.name}"><img class="mt-2" src="${material.user.photo_profile}" style="width: 25px; height: 25px; border-radius: 10px;"></a>
+                <a href="/${material.user.name}"><img class="mt-2" src="${material.user.photo_profile}" style="object-fit: cover; width: 25px; height: 25px; border-radius: 10px;"></a>
                 <a href="/${material.user.name}" style="text-decoration: none;" class="text-h5-custom text-dark mt-1">${material.user.name}</a>
                 `
 
@@ -63,7 +63,7 @@ function drawMaterialTrackedUsers(material, stats = false){
 
         <div class="m-2 p-2" style="border-radius: 5px; background-color: rgba(83, 83, 83, 0.085);">
             <div class="hstack gap-2" >
-                <a href="/${material.user.name}/${material.name}"><img class="mt-1" src="${material.icon}" style="width: 25px; height: 25px; border-radius: 10px;"></a>
+                <a href="/${material.user.name}/${material.name}"><img class="mt-1" src="${material.icon}" style="object-fit: cover; width: 25px; height: 25px; border-radius: 10px;"></a>
                 <a href="/${material.user.name}/${material.name}" style="text-decoration: none;" class="text-h5-custom text-success">${material.name}</a>
             </div>
 
