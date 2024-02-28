@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
 
-<div class="container animate__animated animate__fadeIn"  style="height: 120vh;">
+<div class="container animate__animated animate__fadeIn" >
 
 
     <div class="row d-flex justify-content-center">
@@ -55,8 +55,11 @@
 
             {% endif %}
 
-
-            <h6 class="text-h6-custom m-1 mt-3 "><a class="text-success" href="?tab=followers" style="text-decoration: none;">Подписок {{followers}}</a> | <a class="text-success" href="?tab=following" style="text-decoration: none;">Подписчиков {{following}}</a></h6>
+            <div class="hstack gap-0">
+                
+                <h6 class="text-h6-custom m-1 mt-3 "><a class="text-success" href="?tab=followers" style="text-decoration: none;">Подписок {{followers}}</a>  |  <a class="text-success" href="?tab=following" style="text-decoration: none;">Подписчиков {{following}}</a></h6>
+                <img class="mt-1" src="{% static 'image/followers_image.png' %}" style="width: 20px; height: 20px;" alt="">
+            </div>
 
             
 

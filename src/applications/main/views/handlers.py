@@ -6,15 +6,18 @@ from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import login
 from django.core.serializers import serialize
-from django.db.models import F
+from django.db.models import F, Count
+from django.utils import timezone
 
 from applications.user.models import CustomUser
 from applications.main.models import EducationMaterial, MaterialMark, FollowingUser
 from applications.main.forms import CreateMaterialForm, MaterialMarkForm
 from applications.main.smtp import SMTPServer
+from applications.main.views.serializers import EducationMaterialSerializer, MaterialMarkCountSerializer, EducationMaterialNumsSerializer
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
 
 
 class RegisterUser(View):
@@ -277,6 +280,41 @@ class FollowingUsers(APIView):
             follow, created = FollowingUser.objects.get_or_create(owner=owner, followingUser=following_user)
 
         return Response({'status': True})
+
+
+class ContentTrackedUsers(APIView):
+    def get(self, request):
+        try:
+            user = request.user
+        except:
+            return Response({'status': False})
+
+        subscribed_users = FollowingUser.objects.filter(owner_id=user.id).values_list('followingUser_id', flat=True)
+    
+        materials = EducationMaterial.objects.filter(isPublic=True, user_id__in=subscribed_users).order_by('-created_at')
+
+        serializer = EducationMaterialSerializer(materials, many=True)
+
+        return Response({
+            'status': True,
+            'materials': serializer.data
+            })
+    
+
+class LastPopularMaterials(APIView):
+    def get(self, request, days=7):
+        start_date = timezone.now() - timezone.timedelta(days=days)
+
+        materials = EducationMaterial.objects.filter(
+            materialmark__created_at__gte=start_date
+        ).annotate(num_marks=Count('materialmark')).order_by('-num_marks')[:3]
+
+        serializer = EducationMaterialNumsSerializer(materials, many=True)
+
+        return Response({
+            'status': True,
+            'materials' : serializer.data,
+            })
 
 
 def GenerateMail(reset_code):

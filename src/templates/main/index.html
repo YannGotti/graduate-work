@@ -3,9 +3,37 @@
 
 {% block content %}
 
-<div class="container d-flex justify-content-center"  style="height: 83vh;">
-    
+<div class="container animate__animated animate__fadeIn " style="min-height: 83vh;">
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-lg-8">
+
+        
+        <div id="content_tracked_users">
+            <h4 class="text-h4-custom m-2 mb-3" id="followers_materials_text">Отслеживаемые пользователи</h4>
+
+        </div>
+
+
+
+        <div id="not_content_tracked_users" class="text-center m-2" style="display: none;">
+            <h4 class="text-h4-custom mt-1 mb-3">В данный момент вы не отслеживаете ни одного пользователя.</h4>
+        </div>
+
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="m-2" id="popular-materials">
+                <div id="popular_materials">
+                    <h4 class="text-h4-custom m-2 mb-3" id="populars_materials_text">Топ материалов<p class="text-h6-custom m-1">Последние 7 дней</p></h4>
+        
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+<script src="{% static 'js/main/draw_elements.js' %}"></script>
+<script src="{% static 'js/main/ajax.js' %}"></script>
 
 
 {% endblock %}

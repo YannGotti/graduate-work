@@ -27,5 +27,9 @@ urlpatterns = [
     path('api/getIsFollowing', FollowingUsers.as_view()),
     path('api/following_user', FollowingUsers.as_view()),
 
+    path('api/getContentTrackedUsers', ContentTrackedUsers.as_view()),
+    path('api/getLastPopularMaterials', LastPopularMaterials.as_view()),
+
+
 
 ]
