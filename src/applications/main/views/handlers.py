@@ -6,20 +6,20 @@ from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import login
 from django.core.serializers import serialize
-from django.db.models import F, Count
+from django.db.models import Count
 from django.utils import timezone
 
 from applications.user.models import CustomUser
 from applications.main.models import EducationMaterial, MaterialMark, FollowingUser
 from applications.main.forms import CreateMaterialForm, MaterialMarkForm
 from applications.main.smtp import SMTPServer
-from applications.main.views.serializers import EducationMaterialSerializer, MaterialMarkCountSerializer, EducationMaterialNumsSerializer
+from applications.main.views.serializers import EducationMaterialSerializer, EducationMaterialNumsSerializer
+from applications.main.views.service import get_search_materials
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 
 
 class RegisterUser(View):
@@ -228,37 +228,8 @@ class SearchUserMaterial(APIView):
 
         materials = []
         users = CustomUser.objects.all()[:5].values('name', 'photo_profile')
-        
 
-        if (data.get('username')):
-            users = (
-                CustomUser.objects
-                .filter(name__icontains=data.get('username'))[:5]
-                .values('name', 'photo_profile')
-        )
-
-        if (data.get('material')):
-            materials = (
-                EducationMaterial.objects
-                .filter(isPublic=True, name__icontains=data.get('material'))[:10]
-                .annotate(username=F('user__name'))
-                .values('name', 'icon', 'username')
-            )
-
-        if (data.get('username')):
-
-            try:
-                user = CustomUser.objects.get(name=data.get('username'))
-
-                materials = (
-                EducationMaterial.objects
-                .filter(user=user, isPublic=True, name__icontains=data.get('material'))[:10]
-                .annotate(username=F('user__name'))
-                .values('name', 'icon', 'username')
-            )
-            except:
-                materials = []
-            
+        materials = get_search_materials(data, materials, users)
 
         return JsonResponse({
             'status': True,

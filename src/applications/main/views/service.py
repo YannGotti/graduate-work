@@ -1,4 +1,6 @@
 from applications.main.models import EducationMaterial, MaterialMark, FollowingUser
+from applications.user.models import CustomUser
+from django.db.models import F
 
 def create_json_list(materials, user, include_ids=False):
     marks = []
@@ -51,10 +53,41 @@ def get_materials_marks_list(user, request, materials):
 
     return materials, marks
 
-
-
 def get_following_and_followers(user):
     followers = FollowingUser.objects.filter(owner = user).count()
     following = FollowingUser.objects.filter(followingUser = user).count()
 
     return followers, following
+
+def get_search_materials(data, materials, users):
+
+    if (data.get('username')):
+        users = (
+            CustomUser.objects
+            .filter(name__icontains=data.get('username'))[:5]
+            .values('name', 'photo_profile')
+        )
+
+    if (data.get('material')):
+        materials = (
+            EducationMaterial.objects
+            .filter(isPublic=True, name__icontains=data.get('material'))[:10]
+            .annotate(username=F('user__name'))
+            .values('name', 'icon', 'username')
+        )
+
+    if (data.get('username')):
+
+        try:
+            user = CustomUser.objects.get(name=data.get('username'))
+
+            materials = (
+            EducationMaterial.objects
+            .filter(user=user, isPublic=True, name__icontains=data.get('material'))[:10]
+            .annotate(username=F('user__name'))
+            .values('name', 'icon', 'username')
+        )
+        except:
+            materials = []
+                
+    return materials
