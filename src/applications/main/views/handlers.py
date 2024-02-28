@@ -145,6 +145,7 @@ class Material(APIView):
             material = get_object_or_404(EducationMaterial, id=material_id)
             old_icon_path = material.icon.path if material.icon else None
             old_file_path = material.file.path if material.file else None
+            icon_name = material.icon.name
             icon_file = request.FILES.get('icon', None)
             file_file = request.FILES.get('file', None)
 
@@ -154,7 +155,7 @@ class Material(APIView):
                 material.save()
 
 
-                if old_icon_path and icon_file:
+                if old_icon_path and icon_file and not icon_name.startswith('icons_materials/default.png'): 
                     default_storage.delete(old_icon_path)
 
                 if old_file_path and file_file:
@@ -171,6 +172,8 @@ class Material(APIView):
     def delete(self, request, material_id):
         if request.method == 'DELETE':
             material = get_object_or_404(EducationMaterial, id=material_id)
+            old_icon_path = material.icon.path if material.icon else None
+            default_storage.delete(old_icon_path)
             material.delete()
             return JsonResponse({'status': True, 'username': material.user.name})
         else:
@@ -276,7 +279,8 @@ class UploadProfileImage(APIView):
                     user = request.user
 
                     old_photo_path = user.photo_profile.path
-                    default_storage.delete(old_photo_path)
+                    if(not user.photo_profile.name.startswith('photo_profile/default_profile.png')):
+                        default_storage.delete(old_photo_path)
 
                     user.photo_profile = uploaded_file
                     user.save()
