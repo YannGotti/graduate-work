@@ -53,7 +53,9 @@
                   
                   <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton1" style="margin-left: -55px;">
                     <li><a class="dropdown-item text-h5-custom" href="{% url 'new_material' %}">Добавить материал</a></li>
-                    <li><a class="dropdown-item text-h5-custom" href="#">Another action</a></li>
+                    <li><a class="dropdown-item text-h5-custom" href="/{{user.name}}/?tab=followers">Подписки</a></li>
+                    <li><a class="dropdown-item text-h5-custom" href="/{{user.name}}/?tab=following">Подписчики</a></li>
+
                   </ul>
                 </div>
             {% endif %}

@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
 
-<div class="container animate__animated animate__fadeIn" >
+<div class="container animate__animated animate__fadeIn" style="min-height: 80vh;">
 
 
     <div class="row d-flex justify-content-center">
@@ -42,8 +42,8 @@
         <div class="col-12 col-md-12 col-lg-3">
             {% if user == user_profile %}
             <div class="row">
-                <input type="file" id="fileInput" accept="image/png, image/jpeg" style="display: none;">
-                <label  for="fileInput" id="imagePreview">
+                <input type="file" id="profileImageInput" onchange="uploadProfileImage()" accept="image/png, image/jpeg" style="display: none;" >
+                <label  for="profileImageInput" id="imagePreview">
                     <img src="/media/{{ user_profile.photo_profile }}" class="imagePreview" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-content="Сменить фото" alt="" style="border-radius: 10%; width: 270px; height: 270px;" >
                 </label>
             </div>

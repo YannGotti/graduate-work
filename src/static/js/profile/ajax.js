@@ -179,6 +179,42 @@ async function followingUser(user, following) {
         }
 }
 
+
+function uploadProfileImage() {
+    const fileInput = document.getElementById('profileImageInput');
+
+    if (fileInput.files.length == 0) {
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('profile_image', fileInput.files[0]);
+
+    console.log(formData)
+
+    fetch('/api/uploadProfileImage', {
+        method: 'POST',
+        headers: {
+            "X-CSRFToken": Cookies.get('csrftoken')
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        location.reload();
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+    
+}
+
 function isDeleteMaterial(){
     const validateButtonDeleteMaterial = document.getElementById('validateButtonDeleteMaterial');
     validateButtonDeleteMaterial.style.display = 'block';

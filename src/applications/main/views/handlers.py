@@ -18,6 +18,8 @@ from applications.main.views.serializers import EducationMaterialSerializer, Mat
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 
 class RegisterUser(View):
@@ -141,11 +143,23 @@ class Material(APIView):
     def put(self, request, material_id):
         if request.method == 'PUT':
             material = get_object_or_404(EducationMaterial, id=material_id)
+            old_icon_path = material.icon.path if material.icon else None
+            old_file_path = material.file.path if material.file else None
+            icon_file = request.FILES.get('icon', None)
+            file_file = request.FILES.get('file', None)
+
             form = CreateMaterialForm(request.POST, request.FILES, instance=material)
-
-
             if form.is_valid():
-                form.save()
+                material = form.save(commit=False)
+                material.save()
+
+
+                if old_icon_path and icon_file:
+                    default_storage.delete(old_icon_path)
+
+                if old_file_path and file_file:
+                    default_storage.delete(old_file_path)
+
                 material_name = form.cleaned_data['name']
                 return JsonResponse({'status': True, 'material_name': material_name})
             else:
@@ -281,6 +295,32 @@ class FollowingUsers(APIView):
 
         return Response({'status': True})
 
+
+class UploadProfileImage(APIView):
+    def post(self, request):
+        if request.method == 'POST':
+            uploaded_file = request.FILES.get('profile_image')
+            if uploaded_file:
+                try:
+                    user = request.user
+
+                    old_photo_path = user.photo_profile.path
+                    default_storage.delete(old_photo_path)
+
+                    user.photo_profile = uploaded_file
+                    user.save()
+                except:
+                    return Response({
+                        'status': False,
+                        })
+
+                return Response({
+                    'status': True,
+                    })
+    
+        return Response({
+            'status': False,
+            })
 
 class ContentTrackedUsers(APIView):
     def get(self, request):

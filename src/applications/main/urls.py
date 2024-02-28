@@ -30,6 +30,5 @@ urlpatterns = [
     path('api/getContentTrackedUsers', ContentTrackedUsers.as_view()),
     path('api/getLastPopularMaterials', LastPopularMaterials.as_view()),
 
-
-
+    path('api/uploadProfileImage', UploadProfileImage.as_view()),
 ]

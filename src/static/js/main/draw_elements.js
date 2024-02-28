@@ -67,7 +67,7 @@ function drawMaterialTrackedUsers(material, stats = false){
                 <a href="/${material.user.name}/${material.name}" style="text-decoration: none;" class="text-h5-custom text-success">${material.name}</a>
             </div>
 
-            <h5 class="text-h6-custom m-1 mt-2">${material.description}</h5>
+            <h5 class="text-h6-custom m-1 mt-2" style="word-wrap: break-word;">${material.description}</h5>
 
             <div class="hstack gap-2 m-1 mt-0">
 

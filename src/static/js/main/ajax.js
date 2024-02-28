@@ -67,8 +67,6 @@ function getLastPopularMaterials(){
                     popular_materials.innerHTML += html;
                 }
 
-                console.log(data);
-
             }
             return data;
         })
