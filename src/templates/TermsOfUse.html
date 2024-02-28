@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+
+
+    <link href="{% static 'css/base/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base/animate.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script  src="{% static 'js/base/js.cookie.min.js' %}"></script>
+
+</head>
+<body>
+    <div class="container mt-5" style="min-height: 85vh;">
+        <div class="hstack gap-2 d-flex ">
+            <a href="/" style="text-decoration: none;"><img src="{% static 'image/logo.ico' %}" style="width: 25px; height: 25px;" alt=""></a>
+            <a href="/" class="text-success" style="text-decoration: none;"><h1 class="text-h5-custom mt-2 me-5">Главная</h1></a>
+        </div>
+
+        <h2 class="text-h3-custom">Пользовательское соглашение</h2>
+        <div class="p-2">
+            <p class="text-h5-custom">
+                Добро пожаловать на наш веб-сайт! Прошу вас внимательно ознакомиться с условиями использования,
+                прежде чем продолжить использование наших услуг.
+            </p>
+            <p class="text-h5-custom">
+                <strong>1. Условия использования</strong>
+                <br>
+                <div class="p-1">
+                    Мы стремимся обеспечить лучший опыт использования нашего веб-сайта. Продолжая использование сайта,
+                    вы соглашаетесь с нашими условиями.
+                </div>
+                
+            </p>
+            <p class="text-h5-custom">
+                <strong>2. Конфиденциальность</strong>
+                <br>
+                <div class="p-1">
+                    Мы обязуемся защищать вашу конфиденциальность. Мы не будем передавать ваши личные данные третьим лицам.
+                </div>
+            </p>
+            <p class="text-h5-custom">
+                <strong>3. Отказ от ответственности</strong>
+                <br>
+                <div class="p-1">
+                    Мы не несем ответственности за любые убытки или ущерб, возникшие в результате использования нашего сайта.
+                </div>
+            </p>
+        </div>
+        
+    </div>
+
+
+    <div class="container mt-4 mb-4">
+        <div class="hstack gap-2 d-flex align-items-center justify-content-center">
+            <a href="/" style="text-decoration: none;"><img src="{% static 'image/logo.ico' %}" style="width: 25px; height: 25px;" alt=""></a>
+            <h1 class="text-h6-custom mt-2 me-5">© 2024 Mironov, Inc.</h1>
+  
+            <a href="{% url 'TermsOfUse' %}" class="text-h6-custom" style="text-decoration: none;">Пользовательское соглашение</a>
+            <a href="{% url 'AboutUs' %}" class="text-h6-custom" style="text-decoration: none;">Обратная связь</a>
+        </div>
+    </div>
+</body>

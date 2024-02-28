@@ -8,6 +8,8 @@ urlpatterns = [
     path('', MainPage.as_view(), name='main_page'),
     path('auth/', AuthPage.as_view(), name='auth_page'),
     path('new/', NewMaterial.as_view(), name='new_material'),
+    path('TermsOfUse/', TermsOfUse.as_view(), name='TermsOfUse'),
+    path('AboutUs/', AboutUs.as_view(), name='AboutUs'),
     path('<username>/', ProfilePage.as_view(), name='profile_page'),
     path('<username>/<material_name>/', MaterialPage.as_view()),
 
@@ -31,4 +33,5 @@ urlpatterns = [
     path('api/getLastPopularMaterials', LastPopularMaterials.as_view()),
 
     path('api/uploadProfileImage', UploadProfileImage.as_view()),
+
 ]

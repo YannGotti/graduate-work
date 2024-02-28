@@ -172,6 +172,8 @@
 
                         </div>
 
+                        <h5 class="text-h6-custom mt-1 animate__animated animate__fadeInDown">Нажимая клавишу зарегистрироваться вы соглашаетесь с <a href="{% url 'TermsOfUse' %}" style="text-decoration: none;">пользовательским соглашением</a></h5>
+
                     </div>
 
                     <div class="col-12 col-md-12 col-lg-12 animate__animated animate__fadeIn mt-3" id="registration_form_two_step" style="display: none; width:350px;">
@@ -234,11 +236,11 @@
 
     <div class="container mt-4 mb-4">
         <div class="hstack gap-2 d-flex align-items-center justify-content-center">
-            <a href="/" style="text-decoration: none;"><img src="{% static 'image/main_icon2.png' %}" style="width: 25px; height: 25px;" alt=""></a>
+            <a href="/" style="text-decoration: none;"><img src="{% static 'image/logo.ico' %}" style="width: 25px; height: 25px;" alt=""></a>
             <h1 class="text-h6-custom mt-2 me-5">© 2024 Mironov, Inc.</h1>
   
-            <a href="/" class="text-h6-custom" style="text-decoration: none;">Пользовательское соглашение</a>
-            <a href="/" class="text-h6-custom" style="text-decoration: none;">Обратная связь</a>
+            <a href="{% url 'TermsOfUse' %}" class="text-h6-custom" style="text-decoration: none;">Пользовательское соглашение</a>
+            <a href="{% url 'AboutUs' %}" class="text-h6-custom" style="text-decoration: none;">Обратная связь</a>
         </div>
     </div>
 

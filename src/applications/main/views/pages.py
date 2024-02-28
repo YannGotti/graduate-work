@@ -11,6 +11,14 @@ class MainPage(View):
     def get(self, request):
         return render(request, 'main/index.html' , context={'title':'Главная'})
 
+class TermsOfUse(View):
+    def get(self, request):
+        return render(request, 'TermsOfUse.html' , context={'title':'Пользовательское соглашение'})
+
+class AboutUs(View):
+    def get(self, request):
+        return render(request, 'AboutUs.html' , context={'title':'Обратная связь'})
+
 class AuthPage(View):
     def get(self, request):
         return render(request, 'main/auth.html' , context={'title':'Вход'})
