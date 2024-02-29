@@ -61,7 +61,7 @@ function userRegistration() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            "X-CSRFToken": input_name
+            "X-CSRFToken": Cookies.get('csrftoken')
         },
         body: JSON.stringify(userData)
     })
