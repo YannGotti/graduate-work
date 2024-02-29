@@ -34,4 +34,9 @@ urlpatterns = [
 
     path('api/uploadProfileImage', UploadProfileImage.as_view()),
 
+    path('api/editInformationUser', EditInformationUser.as_view()),
+    path('api/editPasswordUser', EditPasswordUser.as_view()),
+
+
+
 ]

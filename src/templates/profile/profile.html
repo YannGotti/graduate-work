@@ -23,6 +23,13 @@
                 </div>
 
             {% endif %}
+
+            <div>
+                <a href="/{{ user.name }}?tab=settings" class="text-h5-custom text-dark" style="text-decoration: none;">Настройки</a>
+                {% if tab == 'settings' %}
+                    <hr class="hr-show m-0 p-0">
+                {% endif %}
+            </div>
             
 
     </div>

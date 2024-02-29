@@ -25,7 +25,7 @@ function drawMaterialTrackedUsers(material, stats = false){
                 `
 
                 if (!stats) {
-                    html += '<h5 class="text-h6-custom me-1" style="color: rgba(85, 85, 85, 0.712);">опубликовал материал</h5>';
+                    html += '<h5 class="text-h6-custom me-1" style="color: rgb(71, 71, 71);">опубликовал материал</h5>';
                 }
                 else{
                     html += `<h1 class="text-h6-custom">${formatDate(material.created_at)}</h1>`;

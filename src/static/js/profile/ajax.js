@@ -190,8 +190,6 @@ function uploadProfileImage() {
     const formData = new FormData();
     formData.append('profile_image', fileInput.files[0]);
 
-    console.log(formData)
-
     fetch('/api/uploadProfileImage', {
         method: 'POST',
         headers: {
@@ -206,13 +204,91 @@ function uploadProfileImage() {
         return response.json();
     })
     .then(data => {
-        console.log(data);
         location.reload();
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
     
+}
+
+function editInformationUser(){
+
+    const formData = new FormData();
+    formData.append('email', document.getElementById('email_input').value);
+    formData.append('fullName', document.getElementById('fullname_input').value);
+    formData.append('name', document.getElementById('name_input').value);
+    formData.append('userPlaceOfStudy', document.getElementById('study_input').value);
+
+    fetch('/api/editInformationUser', {
+        method: 'POST',
+        headers: {
+            "X-CSRFToken": Cookies.get('csrftoken')
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.status){
+            location.reload();
+        }
+        return data;
+    })
+    .then(data => {
+        if (!data.status){
+            const field_validation_register = document.getElementById('field_validation_register');
+            field_validation_register.innerText = 'Проверьте правильность ввода полей';
+        }
+        return data;
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+}
+
+function editPasswordUser(){
+
+    const formData = new FormData();
+    formData.append('old_password', document.getElementById('old_password_input').value);
+    formData.append('new_password', document.getElementById('new_password_input').value);
+
+    fetch('/api/editPasswordUser', {
+        method: 'POST',
+        headers: {
+            "X-CSRFToken": Cookies.get('csrftoken')
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.status){
+            console.log(data);
+            location.reload();
+        }
+        return data;
+    })
+    .then(data => {
+        if (!data.status){
+            const field_validation_register = document.getElementById('field_validation_edit_password');
+            field_validation_register.innerText = data.message;
+        }
+        return data;
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
 }
 
 function isDeleteMaterial(){

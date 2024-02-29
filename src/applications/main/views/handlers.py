@@ -5,13 +5,14 @@ from django.shortcuts import redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import login
+from django.contrib.auth.hashers import check_password
 from django.core.serializers import serialize
 from django.db.models import Count
 from django.utils import timezone
 
 from applications.user.models import CustomUser
 from applications.main.models import EducationMaterial, MaterialMark, FollowingUser
-from applications.main.forms import CreateMaterialForm, MaterialMarkForm
+from applications.main.forms import CreateMaterialForm, MaterialMarkForm, CreateUserForm
 from applications.main.smtp import SMTPServer
 from applications.main.views.serializers import EducationMaterialSerializer, EducationMaterialNumsSerializer
 from applications.main.views.service import get_search_materials
@@ -330,6 +331,49 @@ class LastPopularMaterials(APIView):
             'status': True,
             'materials' : serializer.data,
             })
+    
+class EditInformationUser(APIView):
+    def post(self, request):
+        user = get_object_or_404(CustomUser, id=request.user.id)
+
+        form = CreateUserForm(request.POST, instance=user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+
+           
+            return Response({
+                'status': True,
+                })
+        else:
+            return Response({
+                'status': False,
+                })
+        
+
+class EditPasswordUser(APIView):
+    def post(self, request):
+        user = get_object_or_404(CustomUser, id=request.user.id)
+
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('new_password')
+
+        if check_password(old_password, user.password):
+
+            user.set_password(new_password)
+            user.save()
+            login(self.request, user)
+           
+            return Response({
+                'status': True,
+                })
+        else:
+            return Response({
+                'status': False,
+                'message': 'Старый пароль не верный'
+                })
+
+        
 
 
 def GenerateMail(reset_code):

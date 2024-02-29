@@ -29,7 +29,10 @@ class ProfilePage(View):
 
         tab_param = request.GET.get('tab')
 
-        if (tab_param == 'stars'):
+        if (tab_param == 'settings' and user == request.user):
+            return ProfileSettings(self, request, user, tab_param)
+
+        elif (tab_param == 'stars' and user == request.user):
             return ProfilePageFollowing(self, request, username, user, tab_param)
         
         elif (tab_param == 'following' or tab_param == 'followers'):
@@ -38,6 +41,18 @@ class ProfilePage(View):
         else:
             return ProfilePageMain(self, request, username, user)
 
+
+def ProfileSettings(self, request, user, tab):
+    followers, following = get_following_and_followers(user)
+    context = {
+            'user_profile': user,
+            'title': 'Настройки',
+            'tab': tab,
+            'followers': followers,
+            'following': following,
+        }
+
+    return render(request, 'profile/profile_content.html', context)
 
 def ProfileFollowUsers(self, request, user, tab):
     followers, following = get_following_and_followers(user)

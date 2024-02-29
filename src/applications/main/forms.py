@@ -1,5 +1,6 @@
 from django import forms
 from .models import EducationMaterial, MaterialMark
+from applications.user.models import CustomUser
 
 class CreateMaterialForm(forms.ModelForm):
     class Meta:
@@ -11,3 +12,8 @@ class MaterialMarkForm(forms.ModelForm):
     class Meta:
         model = MaterialMark
         fields = ['user', 'material']
+
+class CreateUserForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['name', 'fullName', 'email', 'userPlaceOfStudy']
