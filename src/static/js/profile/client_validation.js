@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const emailInput = $('#email_input');
     const emailError = $('#email_input_error');
 
-    const registration_next_button = $('#registration_next_button');
+    const edit_info_button = $('#edit_info_button');
 
     function updateError(element, isValid, errorMessage) {
 
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function(){
         updateSubmitButton();
     });
 
-    registration_next_button.click(function() {
+    edit_info_button.click(function() {
         updateSubmitButton();
         return
     });
@@ -89,8 +89,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function showOrHideButtoEditInformation(isValid) {
 
-    const registrationNextButton = document.getElementById('edit_info_button');
-    registrationNextButton.style.display = isValid ? 'block' : 'none';
+    const edit_info_button = document.getElementById('edit_info_button');
+    edit_info_button.style.display = isValid ? 'block' : 'none';
 
 }
 
@@ -99,6 +99,8 @@ function showOrHideButtoEditInformation(isValid) {
 document.addEventListener('DOMContentLoaded', function(){
     const matchError = '#match-error';
     const passwordField = $('#new_password_input');
+
+    const edit_password_button = $('#edit_password_button');
 
 
     function updateErrorText(element, isValid, errorMessage) {
@@ -120,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function updateSubmitButton() {
-
         const passwordValid = validatePass();
 
         const isValid = passwordValid;
@@ -132,6 +133,13 @@ document.addEventListener('DOMContentLoaded', function(){
         updateSubmitButton();
     });
 
+    edit_password_button.click(function() {
+        updateSubmitButton();
+        return;
+    });
+
+    
+
     function validatePassword(password) {
       const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
       return regex.test(password);
@@ -140,8 +148,11 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 function showOrHideEditPassword(isValid) {
+    const edit_password_button = document.getElementById('edit_password_button');
+    edit_password_button.style.display = isValid ? 'block' : 'none';
 
-    const registrationNextButton = document.getElementById('edit_password_button');
-    registrationNextButton.style.display = isValid ? 'block' : 'none';
+    if (isValid){
+        edit_password_button.onclick = editPasswordUser;
+    }
 
 }
