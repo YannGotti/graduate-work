@@ -29,7 +29,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg animate__animated animate__fadeInDown mb-4 shadow-sm">
+    <nav class="navbar navbar-expand-lg  mb-4 shadow-sm">
       <div class="vstack gap-2">
 
         <div class="container-fluid d-flex justify-content-between">
@@ -45,7 +45,7 @@
 
             {% if user.type_user == "Преподаватель" %}
 
-                <div class="dropdown">
+                <div class="dropdown" >
 
                   <button class="btn btn-light text-h5-custom dropdown-toggle d-flex align-items-center justify-content-between"  style="width: 70px; height: 35px; " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{% static 'image/plus_icon.png' %}" alt="" style="width: 15px;">
