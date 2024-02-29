@@ -235,7 +235,7 @@ function editInformationUser(){
     })
     .then(data => {
         if (data.status){
-            location.reload();
+            location.replace('/' + document.getElementById('name_input').value + '?tab=settings');
         }
         return data;
     })
