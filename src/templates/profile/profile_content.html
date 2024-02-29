@@ -78,7 +78,7 @@
         <h5 class="text-h4-custom m-3 mt-0">Подписчики</h5>
         {% for follow in follows %}
         <div class="hstack gap-3 m-3 mt-4">
-            <img src="/media/{{follow.owner.photo_profile}}" style="width: 60px;height: 60px; border-radius: 15px;" alt="">
+            <a href="/{{follow.owner.name}}"><img src="/media/{{follow.owner.photo_profile}}" style="width: 60px;height: 60px; border-radius: 15px;" alt=""></a>
 
             <div class="vstack gap-1">
                 <a href="/{{follow.owner.name}}" class="text-h5-custom text-success" style="text-decoration: none;">{{follow.owner.name}}</a>
@@ -116,7 +116,7 @@
         <h5 class="text-h4-custom m-3 mt-0">Подписки</h5>
         {% for follow in follows %}
         <div class="hstack gap-3 m-3 mt-4">
-            <img src="/media/{{follow.followingUser.photo_profile}}" style="width: 60px;height: 60px; border-radius: 15px;" alt="">
+            <a href="/{{follow.followingUser.name}}"><img src="/media/{{follow.followingUser.photo_profile}}" style="width: 60px;height: 60px; border-radius: 15px;" alt=""></a>
 
             <div class="vstack gap-1">
                 <a href="/{{follow.followingUser.name}}" class="text-h5-custom text-success" style="text-decoration: none;">{{follow.followingUser.name}}</a>
