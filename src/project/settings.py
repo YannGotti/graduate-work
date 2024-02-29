@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-lanizqo*bno%di#+s9+p0t$ti_dc4tohbilqk$0pmggu#gsq!o
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS=["https://19f5-31-23-148-203.ngrok-free.app"]
+CSRF_TRUSTED_ORIGINS=["https://47f1-31-23-148-203.ngrok-free.app"]
 
 
 SESSION_COOKIE_SECURE = True
