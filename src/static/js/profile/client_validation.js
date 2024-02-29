@@ -1,6 +1,158 @@
-document.addEventListener("DOMContentLoaded",function(){Inputmask({regex:".{0,45}"}).mask("#fullname_input");Inputmask({regex:".{0,45}"}).mask("#password_input");Inputmask({regex:".{0,45}"}).mask("#repeat_password_input")});
-document.addEventListener("DOMContentLoaded",function(){function a(c,d,e){d?$(c).text(""):$(c).text(e);return d}function b(){var c=f.val(),d=g.val(),e=h.val();d=a(k,/^[\u0410-\u042f\u0430-\u044f\u0401\u0451\s\-']+$/.test(d),"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u044b\u0435 \u0438\u043c\u044f, \u0444\u0430\u043c\u0438\u043b\u0438\u044e \u0438 \u043e\u0442\u0447\u0435\u0441\u0442\u0432\u043e.");c=a(l,/^[A-Za-z\d\s\-']{5,27}$/.test(c),"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u044b\u0439 \u043d\u0438\u043a\u043d\u0435\u0439\u043c.");
-e=a(m,/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e),"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043a\u043e\u0440\u0440\u0435\u043a\u0442\u043d\u044b\u0439 email.");const [n,p,q]=[d,e,c];showOrHideButtoEditInformation(n&&p&&q)}const g=$("#fullname_input"),k=$("#fullname_input_error"),f=$("#name_input"),l=$("#name_input_error"),h=$("#email_input"),m=$("#email_input_error"),r=$("#registration_next_button");g.on("input",function(){b()});f.on("input",function(){b()});h.on("input",function(){b()});r.click(function(){b()})});
-function showOrHideButtoEditInformation(a){document.getElementById("edit_info_button").style.display=a?"block":"none"}
-document.addEventListener("DOMContentLoaded",function(){const a=$("#new_password_input");a.on("input",function(){var b=a.val();(b=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(b))?$("#match-error").text(""):$("#match-error").text("\u041f\u0430\u0440\u043e\u043b\u044c \u0434\u043e\u043b\u0436\u0435\u043d \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u0442\u044c \u043c\u0438\u043d\u0438\u043c\u0443\u043c 8 \u0441\u0438\u043c\u0432\u043e\u043b\u043e\u0432, \u0432\u043a\u043b\u044e\u0447\u0430\u044f \u0431\u0443\u043a\u0432\u044b \u0438 \u0446\u0438\u0444\u0440\u044b.");showOrHideEditPassword(b)})});
-function showOrHideEditPassword(a){document.getElementById("edit_password_button").style.display=a?"block":"none"};
+document.addEventListener('DOMContentLoaded', function () {
+    Inputmask({ regex: ".{0,45}" }).mask('#fullname_input');
+
+    Inputmask({ regex: ".{0,45}" }).mask('#password_input');
+    Inputmask({ regex: ".{0,45}" }).mask('#repeat_password_input');
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function(){
+    const fullNameInput = $('#fullname_input');
+    const fullNameError = $('#fullname_input_error');
+
+    const nameInput = $('#name_input');
+    const nameError = $('#name_input_error');
+
+    const emailInput = $('#email_input');
+    const emailError = $('#email_input_error');
+
+    const edit_info_button = $('#edit_info_button');
+
+    function updateError(element, isValid, errorMessage) {
+
+        if (isValid) {
+            $(element).text('');
+        } else {
+            $(element).text(errorMessage);
+        }
+        return isValid;
+    }
+
+    function validateFullNameAndEmailAndName() {
+        const name = nameInput.val();
+        const fullName = fullNameInput.val();
+        const email = emailInput.val();
+
+        const fullNameValid = updateError(fullNameError, validateFullName(fullName), 'Введите корректные имя, фамилию и отчество.');
+        const nameValid = updateError(nameError, validateName(name), 'Введите корректный никнейм.');
+        const emailValid = updateError(emailError, validateEmail(email), 'Введите корректный email.');
+
+        return [fullNameValid, emailValid, nameValid];
+    }
+    
+
+    function updateSubmitButton() {
+
+        const [fullNameValid, emailValid, nameValid] = validateFullNameAndEmailAndName();
+
+        const isValid = fullNameValid && emailValid && nameValid 
+        showOrHideButtoEditInformation(isValid)
+    }
+
+    fullNameInput.on('input', function() {
+        updateSubmitButton();
+    });
+
+    nameInput.on('input', function() {
+        updateSubmitButton();
+    });
+
+    emailInput.on('input', function() {
+        updateSubmitButton();
+    });
+
+    edit_info_button.click(function() {
+        updateSubmitButton();
+        return
+    });
+
+    function validateEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    function validateFullName(fullName) {
+        const regex = /^[А-Яа-яЁё\s\-']+$/;
+        return regex.test(fullName);
+    }
+
+    function validateName(name) {
+        const regex = /^[A-Za-z\d\s\-']{5,27}$/;
+        return regex.test(name);
+    }
+
+});
+
+
+
+
+function showOrHideButtoEditInformation(isValid) {
+
+    const edit_info_button = document.getElementById('edit_info_button');
+    edit_info_button.style.display = isValid ? 'block' : 'none';
+
+}
+
+
+
+document.addEventListener('DOMContentLoaded', function(){
+    const matchError = '#match-error';
+    const passwordField = $('#new_password_input');
+
+    const edit_password_button = $('#edit_password_button');
+
+
+    function updateErrorText(element, isValid, errorMessage) {
+        if (isValid) {
+            $(element).text('');
+        } else {
+            $(element).text(errorMessage);
+        }
+        return isValid;
+    }
+    
+
+    function validatePass() {
+        const password1 = passwordField.val()
+
+        const passwordValid = updateErrorText(matchError, validatePassword(password1), 'Пароль должен содержать минимум 8 символов, включая буквы и цифры.');
+
+        return passwordValid;
+    }
+
+    function updateSubmitButton() {
+        const passwordValid = validatePass();
+
+        const isValid = passwordValid;
+
+        showOrHideEditPassword(isValid)
+    }
+
+    passwordField.on('input', function() {
+        updateSubmitButton();
+    });
+
+    edit_password_button.click(function() {
+        updateSubmitButton();
+        return;
+    });
+
+    
+
+    function validatePassword(password) {
+      const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+      return regex.test(password);
+    }
+
+});
+
+function showOrHideEditPassword(isValid) {
+    const edit_password_button = document.getElementById('edit_password_button');
+    edit_password_button.style.display = isValid ? 'block' : 'none';
+
+    if (isValid){
+        edit_password_button.onclick = editPasswordUser;
+    }
+
+}

@@ -7,20 +7,20 @@
 <div class="col-12 col-md-12 col-lg-9">
 
     <h4 class="text-h5-custom">Основная информация</h4>
-    <h4 class="text-h6-custom p-2">Начните ввод для принятие изменений</h4>
+    <!--h4 class="text-h6-custom p-2">Начните ввод для принятие изменений</h4-->
 
     <div class="vstack gap-3 p-2">
         <div class="d-lg-flex flex-row gap-2">
             <div class="mb-3 vstack" style="width: 100%;">
                 <label for="exampleFormControlInput1" class="form-label text-h5-custom">Почта</label>
                 <input type="email" class="form-control shadow animate__animated animate__fadeInDown" value="{{user.email}}" id="email_input" placeholder="user@mail.ru">
-                <span id="email_input_error" class="text-h6-custom " style="color: red;"></span>
+                <span id="email_input_error" class="text-h6-custom p-2" style="color: red;"></span>
             </div>
         
             <div class="mb-3 vstack" style="width: 100%;">
                 <label for="exampleFormControlInput1" class="form-label text-h5-custom">Полное имя</label>
                 <input type="fullname" class="form-control shadow animate__animated animate__fadeInDown" value="{{user.fullName}}" id="fullname_input" placeholder="Иванов Иван Иванович">
-                <span id="fullname_input_error" class="text-h6-custom " style="color: red;"></span>
+                <span id="fullname_input_error" class="text-h6-custom p-2" style="color: red;"></span>
             </div>
         </div>
 
@@ -30,19 +30,19 @@
                 <label for="exampleFormControlInput1" class="form-label text-h5-custom">Имя пользователя</label>
                 <input type="name" class="form-control shadow animate__animated animate__fadeInDown" value="{{user.name}}" id="name_input" placeholder="username">
                 <label class="form-label text-h6-custom">Уникальное имя пользователя по которому можно вас найти.</label>
-                <span id="name_input_error" class="text-h6-custom " style="color: red;"></span>
+                <span id="name_input_error" class="text-h6-custom p-2" style="color: red;"></span>
             </div>
         
             <div class="mb-3 vstack" style="width: 100%;">
                 <label for="exampleFormControlInput1" class="form-label text-h5-custom">Место обучения / работы</label>
                 <input type="text" class="form-control shadow animate__animated animate__fadeInDown" value="{{user.userPlaceOfStudy}}" id="study_input" placeholder="ЮРГПУ НПИ Имени Платова">
-                <label class="form-label text-h6-custom">Ваше место обучения.</label>
+                <label class="form-label text-h6-custom p-2">Ваше место обучения.</label>
 
             </div>
         </div>
 
-        <button type="button" class="btn btn-success animate__animated animate__fadeInDown" style="width: 150px; display: none;" id="edit_info_button" onclick="editInformationUser()" >Сохранить</button>
-        <span id="field_validation_register" class="text-h6-custom" style="color: red;"></span>
+        <button type="button" class="btn btn-success animate__animated animate__fadeInDown" style="width: 150px; display: block;" id="edit_info_button" onclick="editInformationUser()">Сохранить</button>
+        <span id="field_validation_register" class="text-h6-custom p-2" style="color: red;"></span>
     </div>
 
     <hr class="p-2">
@@ -58,12 +58,12 @@
             <div class="mb-3 vstack" style="width: 100%;">
                 <label for="exampleFormControlInput1" class="form-label text-h5-custom">Новый пароль</label>
                 <input type="password" class="form-control shadow animate__animated animate__fadeInDown" id="new_password_input" placeholder="******">
-                <span id="match-error" class="text-h6-custom " style="color: red;"></span>
+                <span id="match-error" class="text-h6-custom p-2" style="color: red;"></span>
             </div>
         </div>
 
-        <button type="button" class="btn btn-success animate__animated animate__fadeInDown" style="width: 150px; display: none;" id="edit_password_button" onclick="editPasswordUser()">Изменить</button>
-        <span id="field_validation_edit_password" class="text-h6-custom" style="color: red;"></span>
+        <button type="button" class="btn btn-success animate__animated animate__fadeInDown" style="width: 150px; display: block;" id="edit_password_button">Изменить</button>
+        <span id="field_validation_edit_password" class="text-h6-custom p-2" style="color: red;"></span>
     </div>
 
 
